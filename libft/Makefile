@@ -64,7 +64,7 @@ $(NAME): ${OBJ} libft.h
 clean:
 	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
 	rm -rf ${OBJ} ${OBJ_BONUS}
-	printf "$(ERASE)$(GREEN)Clean finished!\n$(RESET)"
+	printf "$(ERASE)$(GREEN)Clean finished!$(RESET)"
 
 fclean: clean
 	printf "$(GREEN)Fcleaning up...$(RESET)"

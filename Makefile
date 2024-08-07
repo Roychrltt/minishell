@@ -6,36 +6,54 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/08/07 12:19:33 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/08/07 12:45:02 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-SRC = main.c
+CC = cc -Wall -Wextra -Werror -O2
+
+SRC_DIR = ./src/
 	  
-OBJ = ${SRC:.c=.o}
+SRC_FILES = main.c
 
-CC = cc -Wall -Wextra -Werror
+SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-all: ${NAME}
+INC = -Iincludes/ -Ilibft
 
-$(NAME): ${OBJ} minishell.h
-	ar rc ${NAME} ${OBJ}
+OBJ = $(SRC:.c=.o)
+
+LIBFT_LIB = ./libft/libft.a
+
+LIBFT = ./libft/
+
+RM = rm -rf
+
+all: $(NAME)
+
+$(NAME): $(LIBFT_LIB) $(OBJ)
+	printf "$(ERASE)$(CYAN)$(BOLD)$@$(RESET) $(GREEN)creating...$(RESET)"
+	$(CC) $(INC) $(SRC) -L$(LIBFT) -lft -o $(NAME)
 	printf "$(ERASE)$(CYAN)$(BOLD)$@$(RESET) $(GREEN)created!\n$(RESET)"
 
-%.o: %.c minishell.h
-	${CC} -I. -c $< -o $@
+$(LIBFT_LIB):
+	$(MAKE) -sC libft
+
+%.o: %.c 
+	${CC} $(INC) -c $< -o $@
 	printf "$(ERASE)$(BLUE) > Compilation: $(RESET) $<"
 
 clean:
 	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
-	rm -rf ${OBJ} ${OBJ_BONUS}
-	printf "$(ERASE)$(GREEN)Clean finished!\n$(RESET)"
+	$(MAKE) -sC libft clean
+	$(RM) ${OBJ}
+	printf "$(ERASE)$(GREEN)Clean finished!$(RESET)"
 
 fclean: clean
-	printf "$(GREEN)Fcleaning up...$(RESET)"
-	rm -rf ${NAME}
+	printf "$(ERASE)$(GREEN)Fcleaning up...$(RESET)"
+	$(RM) ${NAME}
+	$(RM) ${LIBFT_LIB}
 	printf "$(ERASE)$(GREEN)Fclean finished!\n$(RESET)"
 
 re: fclean all
