@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/08/07 12:45:02 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/08/10 12:12:34 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,12 @@ RM = rm -rf
 all: $(NAME)
 
 $(NAME): $(LIBFT_LIB) $(OBJ)
-	printf "$(ERASE)$(CYAN)$(BOLD)$@$(RESET) $(GREEN)creating...$(RESET)"
-	$(CC) $(INC) $(SRC) -L$(LIBFT) -lft -o $(NAME)
-	printf "$(ERASE)$(CYAN)$(BOLD)$@$(RESET) $(GREEN)created!\n$(RESET)"
+	if [ ! -f $(NAME) ] || [ `find $(OBJ) -newer $(NAME) | wc -l` -ne 0 ]; then \
+	$(CC) $(CFLAGS) $(OBJ) -o $(NAME); \
+		printf "$(ERASE)$(GREEN)Program$(RESET) $(CYAN)$(BOLD)$(NAME)$(RESET) $(GREEN)created!\n$(RESET)"; \
+	else \
+		printf "$(ERASE)$(YELLOW)No relink needed for$(RESET) $(CYAN)$(BOLD)$(NAME)\n$(RESET)"; \
+	fi \
 
 $(LIBFT_LIB):
 	$(MAKE) -sC libft
