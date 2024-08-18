@@ -6,13 +6,15 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/08/10 12:12:34 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/08/15 15:34:01 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 
-CC = cc -Wall -Wextra -Werror -O2
+CC = cc 
+
+CFLAGS = -Wall -Wextra -Werror -O2
 
 SRC_DIR = ./src/
 	  
@@ -21,6 +23,8 @@ SRC_FILES = main.c
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
 INC = -Iincludes/ -Ilibft
+
+LDFLAGS = -Llibft -lft -lreadline
 
 OBJ = $(SRC:.c=.o)
 
@@ -34,7 +38,7 @@ all: $(NAME)
 
 $(NAME): $(LIBFT_LIB) $(OBJ)
 	if [ ! -f $(NAME) ] || [ `find $(OBJ) -newer $(NAME) | wc -l` -ne 0 ]; then \
-	$(CC) $(CFLAGS) $(OBJ) -o $(NAME); \
+	$(CC) $(CFLAGS) $(INC) $(OBJ) -o $(NAME) $(LDFLAGS); \
 		printf "$(ERASE)$(GREEN)Program$(RESET) $(CYAN)$(BOLD)$(NAME)$(RESET) $(GREEN)created!\n$(RESET)"; \
 	else \
 		printf "$(ERASE)$(YELLOW)No relink needed for$(RESET) $(CYAN)$(BOLD)$(NAME)\n$(RESET)"; \
@@ -44,7 +48,7 @@ $(LIBFT_LIB):
 	$(MAKE) -sC libft
 
 %.o: %.c 
-	${CC} $(INC) -c $< -o $@
+	${CC} $(CFLAGS) $(INC) -c $< -o $@
 	printf "$(ERASE)$(BLUE) > Compilation: $(RESET) $<"
 
 clean:
