@@ -21,6 +21,7 @@ SRC = ft_atoi.c \
 	  ft_putstr_fd.c \
 	  ft_split.c \
 	  ft_strchr.c \
+	  ft_strcmp.c \
 	  ft_strdup.c \
 	  ft_striteri.c \
 	  ft_strjoin.c \
@@ -64,7 +65,7 @@ $(NAME): ${OBJ} libft.h
 clean:
 	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
 	rm -rf ${OBJ} ${OBJ_BONUS}
-	printf "$(ERASE)$(GREEN)Clean finished!$(RESET)"
+	printf "$(ERASE)$(GREEN)Clean finished!\n$(RESET)"
 
 fclean: clean
 	printf "$(GREEN)Fcleaning up...$(RESET)"
