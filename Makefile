@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/08/15 15:34:01 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/08/18 16:36:53 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -O2
 
 SRC_DIR = ./src/
 	  
-SRC_FILES = main.c
+SRC_FILES = main.c parsing.c echo.c pipex.c utils.c utils1.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 

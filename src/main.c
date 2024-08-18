@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/18 15:28:35 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/18 16:13:51 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	main(int argc, char **argv)
 	(void)argc;
 	(void)argv;
 	char	*input;
+	char	**tokens;
+	t_mem	mem;
 
 	// Set up signal handler for SIGINT
 	signal(SIGINT, sigint_handler);
@@ -51,6 +53,9 @@ int	main(int argc, char **argv)
 			break;
 		if (*input)
 			add_history(input);
+		tokens = ft_split(input, ' ');
+		if (!ft_strcmp(tokens[0], "echo"))
+			ft_echo(tokens, &mem);
 		free(input);
 	}
 	rl_clear_history();
