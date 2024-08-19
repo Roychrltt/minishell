@@ -6,11 +6,11 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/18 16:49:59 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/19 12:42:32 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell"
+#include "../includes/minishell.h"
 
 static void	exec_command(char *param, char **envp)
 {

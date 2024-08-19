@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/18 16:36:38 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/19 16:45:58 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,19 @@
 
 extern pid_t	g_pid;
 
-# define PATH "/home/xiaxu/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
-
 typedef struct s_mem
 {
 	int	exit_stat;
 }	t_mem;
 
+int		is_builtins(char *s);
+//int		do_builtins(char *s, t_params *params, char **tokens);
+int		do_builtins(char *s, t_mem *mem, char **tokens, char **envp);
+
 int		ft_echo(char **s, t_mem *mem);
+int		ft_pwd(void);
+int		ft_cd(char **tokens);
+int		ft_env(char **envp);
 char	*ft_getenv(char *path, char **envp);
 char	*get_command(char *path, char *cmd);
 void	free_tab(char **tab);
