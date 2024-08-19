@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/08/19 15:33:16 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/08/19 19:30:02 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,13 @@ SRC_FILES = main.c parsing.c builtins.c #pipex.c utils.c utils1.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-INC = -Iincludes/ -Ilibft
+#INC = -Iincludes/ -Ilibft 
 
-LDFLAGS = -Llibft -lft -lreadline
+INC = -Iincludes/ -Ilibft -I/opt/homebrew/include
+
+#LDFLAGS = -Llibft -lft -lreadline
+
+LDFLAGS = -Llibft -lft -L/opt/homebrew/lib -lreadline
 
 OBJ = $(SRC:.c=.o)
 
