@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/15 12:24:34 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/20 16:41:43 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/20 17:13:27 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int main(void)
 				i++;
 			}
 			status = 0;
+			printf(" ");
 		}
 		else if (status == 2)
 		{
@@ -115,6 +116,7 @@ int main(void)
 
 			}
 			status = 0;
+			printf(" ");
 		}
 		else
 		{
