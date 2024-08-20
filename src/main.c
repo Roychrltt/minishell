@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/19 16:45:31 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/20 13:41:54 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,6 @@
 // void add_history(const char *line)
 int	g_pid = 0;
 
-static void	sigint_handler(int signum) {
-	(void)signum; // Unused parameter
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
-
-static void	sigquit_handler(int signum) {
-	(void)signum;
-	// Ignore SIGQUIT
-	printf("\b\b  \b\b");
-	rl_on_new_line();
-	rl_redisplay();
-}
-
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
@@ -44,9 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	char	**tokens;
 	t_mem	mem;
 
-	// Set up signal handler for SIGINT
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, sigquit_handler);
+	sig_init_signals();
 	while (1)
 	{
 		input = readline("minishell$>");
