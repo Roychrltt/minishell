@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/20 13:42:24 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/20 14:25:44 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <string.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <../libft/libft.h>
+# include "../libft/libft.h"
 
 extern pid_t	g_pid;
 
