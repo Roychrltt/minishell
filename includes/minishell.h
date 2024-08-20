@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/20 14:25:44 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/20 17:18:47 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 extern pid_t	g_pid;
 
-/*typedef enum e_token_type
+typedef enum e_token_type
 {
 	INFILE,
 	OUTFILE,
@@ -46,13 +46,13 @@ extern pid_t	g_pid;
 	COMMAND,
 	FILENAME,
 	ARGUMENT
-}	t_token_type;*/
+}	t_token_type;
 
 typedef struct s_mem
 {
 	int	exit_stat;
 }	t_mem;
-/*
+
 typedef struct s_token
 {
 	char			*value;
@@ -60,7 +60,7 @@ typedef struct s_token
 	t_token_type	type;
 	struct s_token	*next;
 }	t_token;
-*/
+
 int		is_builtins(char *s);
 //int		do_builtins(char *s, t_params *params, char **tokens);
 int		do_builtins(char *s, t_mem *mem, char **tokens, char **envp);

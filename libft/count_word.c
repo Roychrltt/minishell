@@ -1,15 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   count_word.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/20 17:21:43 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/20 17:21:58 by xiaxu            ###   ########.fr       */
+/*   Created: 2024/08/20 17:19:46 by xiaxu             #+#    #+#             */
+/*   Updated: 2024/08/20 17:20:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
+int	count_word(char const *s, char c)
+{
+	size_t	i;
+	int		count;
 
+	i = 0;
+	count = 0;
+	while (s[i])
+	{
+		if (s[i] != c && (s[i + 1] == c || !s[i + 1]))
+			count++;
+		i++;
+	}
+	return (count);
+}
