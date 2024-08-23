@@ -2,4 +2,5 @@ a.out
 *.o
 libft.a
 *.swp
+*.txt
 minishell
