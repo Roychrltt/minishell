@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/23 15:26:42 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/23 16:51:47 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_env
 {
 	char			*key;
 	char			*value;
+	int				is_unset;
 	struct s_env	*next;
 }	t_env;
 
@@ -71,14 +72,15 @@ typedef struct s_mem
 
 // builtins
 int		is_builtins(char *s);
-int		do_builtins(char *s, t_mem *mem, char **tokens, char **envp);
+int		do_builtins(char *s, t_mem *mem, char **tokens);
 
 int		ft_echo(char **s, t_mem *mem);
-int		ft_pwd(void);
-int		ft_cd(char **tokens);
-int		ft_env(char **envp);
-int		add_env(char *s, t_env *env);
-int		ft_export(char **tokens, t_env *env);
+int		ft_cd(t_env *env, char **tokens);
+int		ft_pwd(t_env *env);
+int		ft_env(t_env *env);
+t_env	*add_env(char *s, t_env *env);
+int		ft_export(t_env *env, char **tokens);
+int		ft_unset(t_env *env, char **tokens);
 
 // pipex
 char	*ft_getenv(char *path, char **envp);
