@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 11:42:39 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/20 13:42:41 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:38:23 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	sig_init_signals(void)
 void	sigint_handler(int signum)
 {
 	(void)signum;
-
 	printf("\n");
 	rl_on_new_line();
 	rl_replace_line("", 0);

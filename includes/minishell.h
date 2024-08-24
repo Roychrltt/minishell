@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 15:04:29 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:31:16 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_env*	env_dup(char **envp);
 int		ft_env(t_env *env);
 t_env	*add_env(char *s, t_env **env);
 int		ft_export(t_env *env, char **tokens);
-int		ft_unset(t_env *env, char **tokens);
+int		ft_unset(t_env *my_env, t_env *values, char **tokens);
 
 // pipex
 char	*ft_getenv(char *path, char **envp);

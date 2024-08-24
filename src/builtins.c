@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:21:31 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 12:53:48 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:36:06 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	is_builtins(char *s)
 	if (!s)
 		return (0);
 	if (!ft_strcmp(s, "echo") || !ft_strcmp(s, "cd") || !ft_strcmp(s, "pwd")
-			|| !ft_strcmp(s, "export") || !ft_strcmp(s, "unset")
-			|| !ft_strcmp(s, "env"))
+		|| !ft_strcmp(s, "export") || !ft_strcmp(s, "unset")
+		|| !ft_strcmp(s, "env"))
 		return (1);
 	if (!ft_strcmp(s, "exit"))
 		return (2);
@@ -37,7 +37,7 @@ int	do_builtins(char *s, t_mem *mem, char **tokens)
 	else if (!ft_strcmp(s, "export"))
 		return (ft_export(mem->values, tokens));
 	else if (!ft_strcmp(s, "unset"))
-		return (ft_unset(mem->values, tokens));
+		return (ft_unset(mem->my_env, mem->values, tokens));
 	else if (!ft_strcmp(s, "env"))
 		return (ft_env(mem->my_env));
 /*	else if (!ft_strcmp(s, "exit"))

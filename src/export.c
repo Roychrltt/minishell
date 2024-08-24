@@ -6,16 +6,16 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 15:59:05 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 15:05:20 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:37:12 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	is_valid_for_export(char* s)
+static int	is_valid_for_export(char *s)
 {
 	int	i;
-	int j;
+	int	j;
 
 	if (!ft_isalpha(s[0]) && s[0] != '_')
 		return (0);
@@ -56,7 +56,7 @@ t_env	*add_env(char *s, t_env **env)
 			return (free(node), NULL);
 		}
 		if (!temp->next || ft_strcmp(node->key, temp->next->key) < 0)
-			break;
+			break ;
 		temp = temp->next;
 	}
 	node->next = temp->next;
@@ -99,30 +99,35 @@ int	ft_export(t_env *env, char **tokens)
 		else
 		{
 			printf("minishell: export: '%s': not a valid identifier\n",
-					tokens[i]);
+				tokens[i]);
 		}
 		i++;
 	}
 	return (1);
 }
 
-int	ft_unset(t_env *env, char **tokens)
+int	ft_unset(t_env *my_env, t_env *values, char **tokens)
 {
-	t_env	*temp;
+	t_env	*temp_env;
+	t_env	*temp_val;
 	int		i;
 
 	i = 0;
 	while (tokens[i])
 	{
-		temp = env;
-		while (temp->next)
+		temp_env = my_env;
+		temp_val = values;
+		while (temp_env->next)
 		{
-			if (!ft_strcmp(temp->key, tokens[i]))
-			{
-				temp->is_unset = 1;
-				break;
-			}
-			temp = temp->next;
+			if (!ft_strcmp(temp_env->key, tokens[i]))
+				temp_env->is_unset = 1;
+			temp_env = temp_env->next;
+		}
+		while (temp_val->next)
+		{
+			if (!ft_strcmp(temp_val->key, tokens[i]))
+				temp_val->is_unset = 1;
+			temp_val = temp_val->next;
 		}
 		i++;
 	}

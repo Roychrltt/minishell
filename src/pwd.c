@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:00:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 15:01:16 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:38:01 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_pwd(t_env *env)
 		if (!ft_strcmp(temp->key, "PWD"))
 		{
 			pwd = temp->value;
-			break;
+			break ;
 		}
 		temp = temp->next;
 	}
@@ -49,7 +49,7 @@ static void	update_oldpwd(t_env *env)
 		if (!ft_strcmp(temp->key, "PWD"))
 		{
 			s = temp->value;
-			break;
+			break ;
 		}
 		temp = temp->next;
 	}
@@ -60,7 +60,7 @@ static void	update_oldpwd(t_env *env)
 		{
 			free(temp->value);
 			temp->value = ft_strdup(s);
-			break;
+			break ;
 		}
 		temp = temp->next;
 	}
@@ -77,7 +77,7 @@ static void	update_pwd(t_env *env)
 		{
 			free(temp->value);
 			temp->value = getcwd(NULL, 0);
-			break;
+			break ;
 		}
 		temp = temp->next;
 	}
