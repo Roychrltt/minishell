@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 13:50:49 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:04:29 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_token
 typedef struct s_mem
 {
 	int		exit_stat;
+	char	*input;
+	char	**tokens;
 	t_env	*my_env;
 	t_env	*values;
 }	t_mem;
@@ -98,5 +100,6 @@ void	sig_init_signals(void);
 void	sigint_handler(int signum);
 
 // utils
+void	free_tab(char **tab);
 
 #endif

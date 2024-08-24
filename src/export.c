@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 15:59:05 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 13:54:52 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:05:20 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,27 @@ int	ft_export(t_env *env, char **tokens)
 		i++;
 	}
 	return (1);
+}
+
+int	ft_unset(t_env *env, char **tokens)
+{
+	t_env	*temp;
+	int		i;
+
+	i = 0;
+	while (tokens[i])
+	{
+		temp = env;
+		while (temp->next)
+		{
+			if (!ft_strcmp(temp->key, tokens[i]))
+			{
+				temp->is_unset = 1;
+				break;
+			}
+			temp = temp->next;
+		}
+		i++;
+	}
+	return (0);
 }

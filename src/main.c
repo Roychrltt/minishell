@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 13:51:16 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:03:25 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,26 @@ static t_env	*copy_env(char **envp)
 	return (list);
 }
 
+static int	init_mem(t_mem *mem, char **envp)
+{
+	mem->exit_stat = 0;
+	mem->values = copy_env(envp);
+	mem->my_env = env_dup(envp);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_mem	mem;
 
 	(void)argc, (void)argv;
 	char	*input;
-	char	**tokens;
-	// init_mem(&mem);
-	mem.values = copy_env(envp);
-	mem.my_env = env_dup(envp);
+	init_mem(&mem, envp);
 	sig_init_signals();
 	while (1)
 	{
 		input = readline("minishell$>");
+		mem.input = input;
 		if (!input || !ft_strcmp(input, "exit"))
 		{
 			printf("exit\n");
@@ -54,10 +60,11 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*input)
 			add_history(input);
-		tokens = ft_split(input, ' ');
-		if (is_builtins(tokens[0]))
-			do_builtins(tokens[0], &mem, tokens);
+		mem.tokens = ft_split(input, ' ');
+		if (is_builtins(mem.tokens[0]))
+			do_builtins(mem.tokens[0], &mem, mem.tokens);
 		free(input);
+		free_tab(mem.tokens);
 	}
 	rl_clear_history();
 	return (0);

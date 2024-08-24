@@ -6,12 +6,12 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:36:30 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/18 16:36:33 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 15:06:16 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inlcudes/minishell.h"
-
+#include "../includes/minishell.h"
+/*
 int	open_file(char *file, int n)
 {
 	int	fd;
@@ -87,7 +87,7 @@ char	*get_command(char *path, char *cmd)
 	}
 	return (NULL);
 }
-
+*/
 void	free_tab(char **tab)
 {
 	int	i;
