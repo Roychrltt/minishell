@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/23 16:51:47 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 13:50:49 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ typedef struct s_token
 
 typedef struct s_mem
 {
-	int	exit_stat;
-	t_env	*env;
+	int		exit_stat;
+	t_env	*my_env;
+	t_env	*values;
 }	t_mem;
 
 // builtins
@@ -75,10 +76,12 @@ int		is_builtins(char *s);
 int		do_builtins(char *s, t_mem *mem, char **tokens);
 
 int		ft_echo(char **s, t_mem *mem);
-int		ft_cd(t_env *env, char **tokens);
+int		ft_cd(t_env *my_env, t_env *values, char **tokens);
 int		ft_pwd(t_env *env);
+t_env*	env_new_node(char *s);
+t_env*	env_dup(char **envp);
 int		ft_env(t_env *env);
-t_env	*add_env(char *s, t_env *env);
+t_env	*add_env(char *s, t_env **env);
 int		ft_export(t_env *env, char **tokens);
 int		ft_unset(t_env *env, char **tokens);
 

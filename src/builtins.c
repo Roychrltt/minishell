@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:21:31 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/23 17:08:53 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 12:53:48 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,15 @@ int	do_builtins(char *s, t_mem *mem, char **tokens)
 	if (!ft_strcmp(s, "echo"))
 		return (ft_echo(tokens, mem));
 	else if (!ft_strcmp(s, "cd"))
-		return (ft_cd(mem->env, tokens));
+		return (ft_cd(mem->my_env, mem->values, tokens));
 	else if (!ft_strcmp(s, "pwd"))
-		return (ft_pwd(mem->env));
+		return (ft_pwd(mem->values));
 	else if (!ft_strcmp(s, "export"))
-		return (ft_export(mem->env, tokens));
+		return (ft_export(mem->values, tokens));
 	else if (!ft_strcmp(s, "unset"))
-		return (ft_unset(mem->env, tokens));
+		return (ft_unset(mem->values, tokens));
 	else if (!ft_strcmp(s, "env"))
-		return (ft_env(mem->env));
+		return (ft_env(mem->my_env));
 /*	else if (!ft_strcmp(s, "exit"))
 		return (ft_exit(params, args));*/
 	else

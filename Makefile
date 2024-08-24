@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/08/23 19:57:36 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/08/24 12:12:24 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,17 +18,17 @@ CFLAGS = -Wall -Wextra -Werror -O2
 
 SRC_DIR = ./src/
 	  
-SRC_FILES = main.c parsing.c builtins.c signals.c export.c echo.c #pipex.c utils.c utils1.c
+SRC_FILES = main.c parsing.c builtins.c signals.c export.c echo.c env.c #pipex.c utils.c utils1.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-#INC = -Iincludes/ -Ilibft 
+INC = -Iincludes/ -Ilibft 
 
-INC = -Iincludes/ -Ilibft -I/opt/homebrew/include
+#INC = -Iincludes/ -Ilibft -I/opt/homebrew/include
 
-#LDFLAGS = -Llibft -lft -lreadline
+LDFLAGS = -Llibft -lft -lreadline
 
-LDFLAGS = -Llibft -lft -L/opt/homebrew/lib -lreadline
+#LDFLAGS = -Llibft -lft -L/opt/homebrew/lib -lreadline
 
 OBJ = $(SRC:.c=.o)
 

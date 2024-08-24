@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/23 16:49:41 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 13:51:16 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_env	*copy_env(char **envp)
 	i = 0;
 	while (envp[i])
 	{
-		temp = add_env(envp[i], list);
+		temp = add_env(envp[i], &list);
 		if (!list)
 			list = temp;
 		i++;
@@ -41,7 +41,8 @@ int	main(int argc, char **argv, char **envp)
 	char	*input;
 	char	**tokens;
 	// init_mem(&mem);
-	mem.env = copy_env(envp);
+	mem.values = copy_env(envp);
+	mem.my_env = env_dup(envp);
 	sig_init_signals();
 	while (1)
 	{

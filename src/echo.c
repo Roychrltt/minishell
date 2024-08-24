@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:23:17 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/23 17:28:31 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 12:53:13 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,39 @@ int	ft_pwd(t_env *env)
 	return (0);
 }
 
-int	ft_cd(t_env *env, char **tokens)
+static void	update_oldpwd(t_env *env)
 {
 	t_env	*temp;
-	if (ft_strlen(tokens[2]))
+	char	*s;
+
+	temp = env;
+	s = NULL;
+	while (temp)
 	{
-		printf("ok\n");
-		//printf("%zu\n", ft_strlen(tokens[2]));
-		printf("minishell: cd: too many arguments\n");
-		return (1);
+		if (!ft_strcmp(temp->key, "PWD"))
+		{
+			s = temp->value;
+			break;
+		}
+		temp = temp->next;
 	}
-	chdir(tokens[1]);
+	temp = env;
+	while (temp)
+	{
+		if (!ft_strcmp(temp->key, "OLDPWD") && s)
+		{
+			free(temp->value);
+			temp->value = ft_strdup(s);
+			break;
+		}
+		temp = temp->next;
+	}
+}
+
+static void	update_pwd(t_env *env)
+{
+	t_env	*temp;
+
 	temp = env;
 	while (temp)
 	{
@@ -83,23 +105,24 @@ int	ft_cd(t_env *env, char **tokens)
 		}
 		temp = temp->next;
 	}
-	return (0);
 }
 
-int	ft_env(t_env *env)
+int	ft_cd(t_env *my_env, t_env *values, char **tokens)
 {
-	t_env	*temp;
-
-	temp = env;
-	if (!env || !env->key)
-		return (1);
-	printf("entered env\n");
-	while (temp)
+	if (chdir(tokens[1]) == -1 && !tokens[2])
 	{
-		if (!temp->is_unset)
-			printf("%s=\"%s\"\n", temp->key, temp->value);
-		temp = temp->next;
+		printf("minishell: cd : %s: No such file or directory\n", tokens[1]);
+		return (1);
 	}
+	if (ft_strlen(tokens[2]))
+	{
+		printf("minishell: cd: too many arguments\n");
+		return (1);
+	}
+	update_oldpwd(my_env);
+	update_oldpwd(values);
+	update_pwd(my_env);
+	update_pwd(values);
 	return (0);
 }
 

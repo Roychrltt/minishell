@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 15:59:05 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/23 17:31:34 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/24 13:54:52 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,32 @@ static int	is_valid_for_export(char* s)
 	return (1);
 }
 
-t_env	*add_env(char *s, t_env *env)
+t_env	*add_env(char *s, t_env **env)
 {
 	t_env	*node;
 	t_env	*temp;
-	int		i;
 
-	node = malloc(sizeof (t_env));
+	node = env_new_node(s);
 	if (!node)
-		return (0);
-	i = ft_strchr(s, '=');
-	node->key = ft_substr(s, 0, i);
-	node->value = ft_substr(s, i + 1, ft_strlen(s));
-	node->is_unset = 0;
-	node->next = NULL;
-	if (!env)
-		return (node);
-	temp = env;
-	while (temp->next)
+		return (NULL);
+	if (!*env || !(*env)->key)
+		return (*env = node, node);
+	if (ft_strcmp(node->key, (*env)->key) < 0)
 	{
-		if (ft_strcmp(s, temp->next->key) <= 0)
+		node->next = *env;
+		*env = node;
+		return (*env);
+	}
+	temp = *env;
+	while (temp)
+	{
+		if (!ft_strcmp(node->key, temp->key))
+		{
+			free(temp->value);
+			temp->value = ft_strdup(node->value);
+			return (free(node), NULL);
+		}
+		if (!temp->next || ft_strcmp(node->key, temp->next->key) < 0)
 			break;
 		temp = temp->next;
 	}
@@ -58,18 +64,37 @@ t_env	*add_env(char *s, t_env *env)
 	return (node);
 }
 
+static int	ft_print_export(t_env *env)
+{
+	t_env	*temp;
+
+	temp = env;
+	while (temp)
+	{
+		if (temp->is_unset == 0)
+		{
+			if (ft_strcmp(temp->value, "") > 0)
+				printf("export %s=\"%s\"\n", temp->key, temp->value);
+			else
+				printf("export %s\n", temp->key);
+		}
+		temp = temp->next;
+	}
+	return (1);
+}
+
 int	ft_export(t_env *env, char **tokens)
 {
 	size_t	i;
 
 	i = 1;
 	if (!tokens[1])
-		return (ft_env(env));
+		return (ft_print_export(env));
 	while (tokens[i])
 	{
 		if (is_valid_for_export(tokens[i]))
 		{
-			add_env(tokens[i], env);
+			add_env(tokens[i], &env);
 		}
 		else
 		{
