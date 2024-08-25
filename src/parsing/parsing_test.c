@@ -1,4 +1,4 @@
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	free_tokens(char **tokens)
 {
@@ -23,10 +23,51 @@ static void	print_tokens(char **tokens)
 	free_tokens(tokens);
 }
 
+static int	set_quotes_n(char c, int *quotes_n)
+{
+	int	cquotes;
+
+	cquotes = *quotes_n;
+	if (c == '\'')
+	{
+		if (cquotes == 0)
+			*quotes_n = 1;
+		else if (cquotes == 1)
+			*quotes_n = 0;
+	}
+	if (c == '"')
+	{
+		if (cquotes == 0)
+			*quotes_n = 2;
+		else if (cquotes == 2)
+			*quotes_n = 0;
+	}
+	return (cquotes);
+}
+
+static int	check_quotes(char *s)
+{
+	int	i;
+	int	quote_n;
+
+	i = 0;
+	quote_n = 0;
+	while (s[i])
+	{
+		set_quotes_n(s[i], &quote_n);
+		i++;
+	}
+	if (quote_n != 0)
+		return (printf("minishell: invalid input: quotes not closed\n"), 1);
+	return (0);
+}
+
 int main(void)
 {
 	char **tokens;
 	char *input = readline("test$>");
+	if (check_quotes(input))
+		return (0);
 	if ((ft_strchr(input, '"') == ft_strlen(input)) && (ft_strchr(input, 39) == ft_strlen(input)))
 	{
 		tokens = ft_split(input, ' ');

@@ -6,11 +6,11 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 11:26:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 12:10:44 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/25 18:06:42 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 t_env	*env_new_node(char *s)
 {

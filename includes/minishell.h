@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 15:31:16 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/25 17:56:33 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_mem
 	int		exit_stat;
 	char	*input;
 	char	**tokens;
+	t_token	*token;
 	t_env	*my_env;
 	t_env	*values;
 }	t_mem;
@@ -101,5 +102,10 @@ void	sigint_handler(int signum);
 
 // utils
 void	free_tab(char **tab);
+
+// parsing
+int		index_n(char *s, char *c, int n);
+int		set_quotes_n(char *c, int quotes_n);
+int		check_quotes(char *s);
 
 #endif
