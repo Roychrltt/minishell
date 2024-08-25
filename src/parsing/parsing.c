@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:21:43 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 19:47:21 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:48:59 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ if (s[i] == '>' && s[i + 1] == '>')
 	i += 2;
 }
 
-int	get_type(char *s, char *status)
+int	get_type(char *s)
 {
 	if (!ft_strcmp(s, "<<"))
 		return (HEREDOC);
@@ -65,6 +65,6 @@ int	get_type(char *s, char *status)
 		return (AND);
 	if (!ft_strcmp(s, "||"))
 		return (OR);
-	if (!ft_strcmp(status, "infile") && !ft_strcmp(s, ">>"))
-		return (APPEND);
+//	if (!ft_strcmp(status, "infile") && !ft_strcmp(s, ">>"))
+//		return (APPEND);
 }
