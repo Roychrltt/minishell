@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:54:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 18:06:11 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:11:30 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,30 @@ int	index_n(char *s, char *c, int n)
 			return (i);
 		i++;
 	}
+	return (i);
+}
+
+size_t	next_quote(char *s)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (s[i] == '"')
+			break;
+		i++;
+	}
+	while (s[j])
+	{
+		if (s[j] == '\'')
+			break;
+		j++;
+	}
+	if (i > j)
+		i = j;
 	return (i);
 }
 

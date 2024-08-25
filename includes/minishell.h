@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 17:56:33 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:11:54 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_cmd
+{
+	char	*cmd;
+	char	**args;
+	int		*fd_in;
+	int		*fd_out;
+}	t_cmd;
+
 typedef struct s_mem
 {
 	int		exit_stat;
@@ -72,6 +80,7 @@ typedef struct s_mem
 	t_token	*token;
 	t_env	*my_env;
 	t_env	*values;
+	t_cmd	*cmds;
 }	t_mem;
 
 // builtins
@@ -105,6 +114,7 @@ void	free_tab(char **tab);
 
 // parsing
 int		index_n(char *s, char *c, int n);
+size_t	next_quote(char *s);
 int		set_quotes_n(char *c, int quotes_n);
 int		check_quotes(char *s);
 

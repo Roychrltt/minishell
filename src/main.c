@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 14:55:27 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/25 18:30:14 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 		mem.tokens = ft_split(input, ' ');
 		mem.token = ft_tokenize(input);
+		mem.cmds = parsing();
 		if (is_builtins(mem.tokens[0]))
 			do_builtins(mem.tokens[0], &mem, mem.tokens);
 		free(input);
