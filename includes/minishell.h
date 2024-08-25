@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 19:11:54 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:47:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ typedef enum e_token_type
 	REDIRECT_IN,
 	REDIRECT_OUT,
 	PIPE,
+	AND,
+	OR,
 	STRING,
 	SINGLEQUOTE,
 	DOUBLEQUOTE,

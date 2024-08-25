@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 18:30:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 19:07:33 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/25 19:38:17 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ static void	add_back(t_token *list, t_token *node)
 t_token	*tokenize(char *s)
 {
 	t_token	*tokens;
+	char	**t;
 	size_t	i;
+	size_t	next;
 	size_t	x;
 	size_t	y;
 
@@ -56,6 +58,7 @@ t_token	*tokenize(char *s)
 	i = 0;
 	while (s[i])
 	{
-		x = ft_strchr(s, )
+		next = next_quote(s);
+
 	}
 }
