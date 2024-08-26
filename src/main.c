@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 18:30:14 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/26 13:45:52 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,47 @@ static int	init_mem(t_mem *mem, char **envp)
 	return (0);
 }
 
+static int	init_var(t_var *var, char **envp)
+{
+	(void)envp;
+	var->squote = 0;
+	var->dquote = 0;
+	var->word = 0;
+	var->tokens = tokenizer(var->input, var);
+	if (!var->tokens)
+		free(var->input);
+//	var->count = count_token(var->input, var);
+//	handle_signals();
+//	recup_env(var, env);
+	return (0);
+}
+
 int	main(int argc, char **argv, char **envp)
 {
+	t_var	var;
 	t_mem	mem;
 
-	(void)argc, (void)argv;
-	char	*input;
-	init_mem(&mem, envp);
+	(void)argc;
+	if (!getenv("PATH"))
+		return (0);
 	sig_init_signals();
+	var.argv = argv;
+	var.found = 0;
+	init_mem(&mem, envp);
 	while (1)
 	{
-		input = readline("minishell$>");
-		mem.input = input;
-		if (!input || !ft_strcmp(input, "exit"))
+		var.input = readline("minishell$>");
+		init_var(&var, envp);
+		mem.input = var.input;
+		if (!var.input || !ft_strcmp(var.input, "exit"))
 		{
 			printf("exit\n");
 			break;
 		}
-		if (*input)
-			add_history(input);
-		mem.tokens = ft_split(input, ' ');
-		mem.token = ft_tokenize(input);
+		if (*(var.input))
+			add_history(var.input);
+		mem.tokens = ft_split(var.input, ' ');
+		mem.token = ft_tokenize(var.tokens);
 		mem.cmds = parsing();
 		if (is_builtins(mem.tokens[0]))
 			do_builtins(mem.tokens[0], &mem, mem.tokens);

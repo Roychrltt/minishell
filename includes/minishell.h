@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 19:47:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/26 13:47:55 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,27 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
+typedef struct s_var
+{
+	char	*input;
+	int		squote;
+	int		dquote;
+	int		word;
+	int		count;
+	char	**tokens;
+	char	*temp_path;
+	char	**path;
+	char	**argv;
+	int		found;
+	t_list	*env;
+}	t_var;
+
 typedef struct s_token
 {
 	char			*value;
-//	t_params		*params;
 	t_token_type	type;
 	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
 typedef struct s_cmd
@@ -119,5 +134,6 @@ int		index_n(char *s, char *c, int n);
 size_t	next_quote(char *s);
 int		set_quotes_n(char *c, int quotes_n);
 int		check_quotes(char *s);
+char	**tokenizer(char *str, t_var *var);
 
 #endif
