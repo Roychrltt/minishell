@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 15:54:32 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/27 20:23:00 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/27 20:37:01 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,8 @@ int	check_quotes(char *s)
 		i++;
 	}
 	if (quote_n != 0)
-		return (printf("minishell: invalid input: quotes not closed\n"), 1);
-	return (0);
+		return (printf("minishell: invalid input: quotes not closed\n"), 0);
+	return (1);
 }
 
 int	is_meta_char(char *s)

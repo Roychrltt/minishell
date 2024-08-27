@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/27 16:37:35 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/27 20:54:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*(var.input))
 			add_history(var.input);
-		mem.tokens = ft_split(var.input, ' ');
-		mem.token = parsing(var.tokens);
-		mem.cmds = parsing();
-		if (is_builtins(mem.tokens[0]))
-			do_builtins(mem.tokens[0], &mem, mem.tokens);
-		free(input);
-		free_tab(mem.tokens);
+		mem.tokens = parsing(var);
+		if (mem.tokens)
+			execute(var, mem);
+		if (is_builtins(var.tokens[0]))
+			do_builtins(var.tokens[0], &mem, var.tokens);
+		free(var.input);
+		free_tab(var.tokens);
 	}
 	rl_clear_history();
 	return (0);

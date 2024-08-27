@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 18:30:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/27 20:29:22 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/27 21:24:47 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ char	**tokenizer(char *str, t_var *var)
 	return (tokens);
 }
 
-static t_token	*gen_new_token(char	*s, int type)
+static t_token	*gen_new_token(char	*s)
 {
 	t_token	*node;
 
@@ -204,19 +204,19 @@ static t_token	*gen_new_token(char	*s, int type)
 	node->value = ft_strdup(s);
 	if (!node->value)
 		return (free(node), NULL);
-	node->type = type;
+	node->type = 0;
 	node->next = NULL;
 	node->prev = NULL;
 	return (node);
 }
 
-static void	token_add_back(t_token *list, t_token *node)
+static void	token_add_back(t_token **list, t_token *node)
 {
 	t_token	*temp;
 
-	temp = list;
-	if (!list)
-		list = node;
+	temp = *list;
+	if (!list || !*list)
+		*list = node;
 	while (temp)
 	{
 		if (!temp->next)
@@ -225,7 +225,7 @@ static void	token_add_back(t_token *list, t_token *node)
 			node->prev = temp;
 			break ;
 		}
-		temp = tmep->next;
+		temp = temp->next;
 	}
 }
 
@@ -241,4 +241,25 @@ static void	free_tokens(t_token *tokens)
 			free(temp->value);
 		free(temp);
 	}
+}
+
+t_token	*tokens_to_list(char **tokens)
+{
+	int		i;
+	t_token	*node;
+	t_token	*list;
+
+	i = 1;
+	list = gen_new_token(tokens[0]);
+	if (!list)
+		return (NULL);
+	while (tokens[i])
+	{
+		node = gen_new_token(tokens[i]);
+		if (!node)
+			return (free_tokens(list), NULL);
+		token_add_back(&list, node);
+		i++;
+	}
+	return (list);
 }

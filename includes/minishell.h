@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/27 20:24:14 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/27 21:02:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,7 @@ typedef struct s_mem
 {
 	int		exit_stat;
 	char	*input;
-	char	**tokens;
-	t_token	*token;
+	t_token	*tokens;
 	t_env	*my_env;
 	t_env	*values;
 	t_cmd	*cmds;
@@ -138,5 +137,7 @@ int		is_logical(*s);
 int		check_meta_next(char *s1, char *s2);
 int		check_metas(char **tokens);
 char	**tokenizer(char *str, t_var *var);
+t_token	*tokens_to_list(char **tokens);
+t_token	*parsing(t_var *var);
 
 #endif
