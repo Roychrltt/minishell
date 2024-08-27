@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 18:30:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/26 21:48:41 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/27 20:29:22 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,61 +242,3 @@ static void	free_tokens(t_token *tokens)
 		free(temp);
 	}
 }
-
-int	is_command_end(char *s)
-{
-	if (!ft_strcmp(s, "&&"))
-		return (1);
-	if (!ft_strcmp(s, "||"))
-		return (1);
-	if (!ft_strcmp(s, "|"))
-		return (1);
-	return (0);
-}
-
-int	is_meta(char *s)
-{
-	if (!ft_strcmp(s, "<"))
-		return (REDIRECT_IN);
-	if (!ft_strcmp(s, ">"))
-		return (REDIRECT_OUT);
-	if (!ft_strcmp(s, "<<"))
-		return (HEREDOC);
-	if (!ft_strcmp(s, ">>"))
-		return (APPEND);
-	if (!ft_strcmp(s, "&&"))
-		return (AND);
-	if (!ft_strcmp(s, "||"))
-		return (OR);
-	if (!ft_strcmp(s, "|"))
-		return (PIPE);
-	else
-		return (ARGUMENT);
-}
-
-t_token	*ft_tokenize(char **src)
-{
-	t_token	*tokens;
-	t_token	*node;
-	char	*s;
-	int		type;
-	int		i;
-
-	i = 0;
-	if (!ft_strcmp(src[i], "<"))
-		type = REDIRECT_IN;
-	else if (!ft_strcmp(src[i], "<<"))
-		type = HEREDOC;
-	else
-		type = COMMAND;
-	node = gen_new_token(src[i], type);
-	if (!node)
-		return (NULL);
-	tokens = node;
-	i++;
-
-}
-
-// echo -n hello there > file end
-// cat file
-// hello there end$

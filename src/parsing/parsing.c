@@ -6,11 +6,42 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 17:21:43 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 19:48:59 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/27 16:39:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+t_token	*parsing(char *input)
+{
+	t_token	*tokens;
+	t_token	*node;
+	char	*s;
+	int		type;
+	int		i;
+	int		new_cmd;
+
+	i = 0;
+	new_cmd = 1;
+	if (!ft_strcmp(src[i], "<"))
+		type = REDIRECT_IN;
+	else if (!ft_strcmp(src[i], "<<"))
+		type = HEREDOC;
+	else
+		type = COMMAND;
+	node = gen_new_token(src[i], type);
+	if (!node)
+		return (NULL);
+	tokens = node;
+	i++;
+	return (tokens);
+}
+
+
+
+
+
+
 
 int	infile_n;
 int double_quote_n;

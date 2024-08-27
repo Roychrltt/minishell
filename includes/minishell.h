@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/26 13:47:55 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/27 20:24:14 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,20 @@ extern pid_t	g_pid;
 
 typedef enum e_token_type
 {
+	ARGUMENT,
 	INFILE,
 	OUTFILE,
-	HEREDOC,
+	HEREDOC,  // meta
 	N_HEREDOC,
-	APPEND,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	PIPE,
-	AND,
-	OR,
-	STRING,
+	APPEND, // meta
+	REDIRECT_IN,  // meta
+	REDIRECT_OUT,  // meta
+	PIPE,  // meta
+	AND, //meta
+	OR,  // meta
 	SINGLEQUOTE,
 	DOUBLEQUOTE,
-	COMMAND,
-	FILENAME,
-	ARGUMENT
+	COMMAND
 }	t_token_type;
 
 typedef struct s_env
@@ -134,6 +132,11 @@ int		index_n(char *s, char *c, int n);
 size_t	next_quote(char *s);
 int		set_quotes_n(char *c, int quotes_n);
 int		check_quotes(char *s);
+int		is_meta_char(*s);
+int		is_redirect(*s);
+int		is_logical(*s);
+int		check_meta_next(char *s1, char *s2);
+int		check_metas(char **tokens);
 char	**tokenizer(char *str, t_var *var);
 
 #endif
