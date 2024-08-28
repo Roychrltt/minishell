@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/27 20:54:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/28 15:20:25 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,10 @@ static int	init_mem(t_mem *mem, char **envp)
 	return (0);
 }
 
-static int	init_var(t_var *var, char **envp)
+static int	init_var(t_var *var, char **argv, char **envp)
 {
 	(void)envp;
+	var->found = 0;
 	var->squote = 0;
 	var->dquote = 0;
 	var->word = 0;
@@ -62,16 +63,12 @@ int	main(int argc, char **argv, char **envp)
 	t_mem	mem;
 
 	(void)argc;
-	if (!getenv("PATH"))
-		return (0);
 	sig_init_signals();
-	var.argv = argv;
-	var.found = 0;
+	init_var(&var, argv, envp); // got char **tokens here
 	init_mem(&mem, envp);
 	while (1)
 	{
 		var.input = readline("minishell$>");
-		init_var(&var, envp);
 		mem.input = var.input;
 		if (!var.input || !ft_strcmp(var.input, "exit"))
 		{
@@ -80,13 +77,12 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (*(var.input))
 			add_history(var.input);
-		mem.tokens = parsing(var);
+		mem.tokens = tokens_to_list(var.tokens);
 		if (mem.tokens)
 			execute(var, mem);
-		if (is_builtins(var.tokens[0]))
-			do_builtins(var.tokens[0], &mem, var.tokens);
 		free(var.input);
 		free_tab(var.tokens);
+		free_tokens(mem.tokens);
 	}
 	rl_clear_history();
 	return (0);

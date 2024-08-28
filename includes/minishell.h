@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/27 21:02:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/28 15:12:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ typedef enum e_token_type
 	ARGUMENT,
 	INFILE,
 	OUTFILE,
-	HEREDOC,  // meta
+	HEREDOC,
 	N_HEREDOC,
-	APPEND, // meta
-	REDIRECT_IN,  // meta
-	REDIRECT_OUT,  // meta
-	PIPE,  // meta
-	AND, //meta
-	OR,  // meta
+	APPEND,
+	REDIRECT_IN,
+	REDIRECT_OUT,
+	PIPE,
+	AND,
+	OR,
 	SINGLEQUOTE,
 	DOUBLEQUOTE,
 	COMMAND
@@ -104,8 +104,8 @@ int		do_builtins(char *s, t_mem *mem, char **tokens);
 int		ft_echo(char **s, t_mem *mem);
 int		ft_cd(t_env *my_env, t_env *values, char **tokens);
 int		ft_pwd(t_env *env);
-t_env*	env_new_node(char *s);
-t_env*	env_dup(char **envp);
+t_env	*env_new_node(char *s);
+t_env	*env_dup(char **envp);
 int		ft_env(t_env *env);
 t_env	*add_env(char *s, t_env **env);
 int		ft_export(t_env *env, char **tokens);
@@ -126,18 +126,26 @@ void	sigint_handler(int signum);
 // utils
 void	free_tab(char **tab);
 
-// parsing
+// ---parsing--- //
+
+// ckeck_quotes
 int		index_n(char *s, char *c, int n);
 size_t	next_quote(char *s);
-int		set_quotes_n(char *c, int quotes_n);
 int		check_quotes(char *s);
-int		is_meta_char(*s);
-int		is_redirect(*s);
-int		is_logical(*s);
-int		check_meta_next(char *s1, char *s2);
+
+// check_metas
+int		is_meta_char(char *s);
+int		is_redirect(char *s);
+int		is_logical(char *s);
 int		check_metas(char **tokens);
+
+// tokenize
 char	**tokenizer(char *str, t_var *var);
 t_token	*tokens_to_list(char **tokens);
-t_token	*parsing(t_var *var);
+
+// token_utils
+t_token	*gen_new_token(char	*s);
+void	token_add_back(t_token **list, t_token *node);
+void	free_tokens(t_token *tokens);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/08/26 13:42:18 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/08/28 14:22:16 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,10 @@ SRC_FILES = main.c \
 			builtins/pwd.c \
 			utils1.c \
 			parsing/parsing.c \
-			parsing/utils.c \
+			parsing/check_quotes.c \
+			parsing/check_metas.c \
 			parsing/tokenize.c \
+			parsing/tokens_to_list.c \
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
