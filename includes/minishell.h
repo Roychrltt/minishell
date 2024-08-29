@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/28 15:12:09 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/29 18:13:57 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,3 +149,18 @@ void	token_add_back(t_token **list, t_token *node);
 void	free_tokens(t_token *tokens);
 
 #endif
+
+find the last redirect_in, the value of the next token is the name of the infile
+find the last redirect_out, the value of the next token is the name of the outfile
+open every file accordingly
+then dup2();
+then execve();
+
+
+int fd_in = open(infile, ...);
+if (fd_in < 0)
+
+int fd_out = open(outfile, ...);
+if (fd_out < 0)
+	error_handler();
+dup2(fd_in, )
