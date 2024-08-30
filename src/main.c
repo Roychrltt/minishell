@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/28 15:20:25 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/31 00:01:36 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,76 +14,57 @@
 
 int	g_pid = 0;
 
-static t_env	*copy_env(char **envp)
+static int	init_mem(t_mem *mem)
 {
-	t_env	*list;
-	t_env	*temp;
-	int		i;
-
-	list = NULL;
-	temp = NULL;
-	i = 0;
-	while (envp[i])
-	{
-		temp = add_env(envp[i], &list);
-		if (!list)
-			list = temp;
-		i++;
-	}
-	return (list);
+	if (!check_quotes(mem->input))
+		return (free(mem->input), 0);
+	mem->found = 0;
+	mem->squote = 0;
+	mem->dquote = 0;
+	mem->word = 0;
+	mem->count = count_token(mem->input, mem);
+	mem->args = tokenizer(mem->input, mem);
+//	mem->paths = get_paths(envp);
+	return (1);
 }
 
-static int	init_mem(t_mem *mem, char **envp)
+static void	free_mem(t_mem *mem)
 {
-	mem->exit_stat = 0;
-	mem->values = copy_env(envp);
-	mem->my_env = env_dup(envp);
-	return (0);
-}
-
-static int	init_var(t_var *var, char **argv, char **envp)
-{
-	(void)envp;
-	var->found = 0;
-	var->squote = 0;
-	var->dquote = 0;
-	var->word = 0;
-	var->tokens = tokenizer(var->input, var);
-	if (!var->tokens)
-		free(var->input);
-//	var->count = count_token(var->input, var);
-//	handle_signals();
-//	recup_env(var, env);
-	return (0);
+	free(mem->input);
+	free_tab(mem->args);
+	free_tokens(mem->tokens);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_var	var;
 	t_mem	mem;
 
 	(void)argc;
 	sig_init_signals();
-	init_var(&var, argv, envp); // got char **tokens here
-	init_mem(&mem, envp);
+	mem.argv = argv;
+	mem.exit_stat = 0;
+	mem.values = sort_env(envp);
+	mem.my_env = env_dup(envp);
 	while (1)
 	{
-		var.input = readline("minishell$>");
-		mem.input = var.input;
-		if (!var.input || !ft_strcmp(var.input, "exit"))
+		mem.input = readline("minishell$>");
+		if (!mem.input || !ft_strcmp(mem.input, "exit"))
 		{
+			free(mem.input);
 			printf("exit\n");
-			break;
+			break ;
 		}
-		if (*(var.input))
-			add_history(var.input);
-		mem.tokens = tokens_to_list(var.tokens);
+		if (!init_mem(&mem))
+			continue ;
+		if (*(mem.input))
+			add_history(mem.input);
+		mem.tokens = tokens_to_list(mem.args);
 		if (mem.tokens)
-			execute(var, mem);
-		free(var.input);
-		free_tab(var.tokens);
-		free_tokens(mem.tokens);
+			execute(&mem);
+		free_mem(&mem);
 	}
+	free_env(mem.values);
+	free_env(mem.my_env);
 	rl_clear_history();
 	return (0);
 }

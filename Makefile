@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/08/28 14:22:16 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/08/30 17:53:18 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,22 +25,24 @@ SRC_FILES = main.c \
 			builtins/echo.c \
 			builtins/env.c \
 			builtins/pwd.c \
-			utils1.c \
-			parsing/parsing.c \
 			parsing/check_quotes.c \
 			parsing/check_metas.c \
+			parsing/check_metas_utils.c \
 			parsing/tokenize.c \
+			parsing/token_utils.c \
 			parsing/tokens_to_list.c \
+			execute/execute.c \
+			execute/pipex_utils1.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-INC = -Iincludes/ -Ilibft 
+#INC = -Iincludes/ -Ilibft 
 
-#INC = -Iincludes/ -Ilibft -I/opt/homebrew/include
+INC = -Iincludes/ -Ilibft -I/opt/homebrew/include
 
-LDFLAGS = -Llibft -lft -lreadline
+#LDFLAGS = -Llibft -lft -lreadline
 
-#LDFLAGS = -Llibft -lft -L/opt/homebrew/lib -lreadline
+LDFLAGS = -Llibft -lft -L/opt/homebrew/lib -lreadline
 
 OBJ = $(SRC:.c=.o)
 

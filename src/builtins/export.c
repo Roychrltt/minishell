@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 15:59:05 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 18:06:49 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/30 23:12:13 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,6 @@ t_env	*add_env(char *s, t_env **env)
 		return (NULL);
 	if (!*env || !(*env)->key)
 		return (*env = node, node);
-	if (ft_strcmp(node->key, (*env)->key) < 0)
-	{
-		node->next = *env;
-		*env = node;
-		return (*env);
-	}
 	temp = *env;
 	while (temp)
 	{
@@ -83,53 +77,53 @@ static int	ft_print_export(t_env *env)
 	return (1);
 }
 
-int	ft_export(t_env *env, char **tokens)
+int	ft_export(t_env *env, t_token *arg)
 {
-	size_t	i;
+	t_token	*temp;
 
-	i = 1;
-	if (!tokens[1])
+	temp = arg->next;
+	if (is_end_command(temp))
 		return (ft_print_export(env));
-	while (tokens[i])
+	while (!is_end_command(temp))
 	{
-		if (is_valid_for_export(tokens[i]))
+		if (is_valid_for_export(temp->value))
 		{
-			add_env(tokens[i], &env);
+			add_env(temp->value, &env);
 		}
 		else
 		{
 			printf("minishell: export: '%s': not a valid identifier\n",
-				tokens[i]);
+				temp->value);
 		}
-		i++;
+		temp = temp->next;
 	}
 	return (1);
 }
 
-int	ft_unset(t_env *my_env, t_env *values, char **tokens)
+int	ft_unset(t_env *my_env, t_env *values, t_token *arg)
 {
 	t_env	*temp_env;
 	t_env	*temp_val;
-	int		i;
+	t_token	*temp;
 
-	i = 0;
-	while (tokens[i])
+	temp = arg->next;
+	while (temp && !is_end_command(temp))
 	{
 		temp_env = my_env;
 		temp_val = values;
-		while (temp_env->next)
+		while (temp_env)
 		{
-			if (!ft_strcmp(temp_env->key, tokens[i]))
+			if (!ft_strcmp(temp_env->key, temp->value))
 				temp_env->is_unset = 1;
 			temp_env = temp_env->next;
 		}
-		while (temp_val->next)
+		while (temp_val)
 		{
-			if (!ft_strcmp(temp_val->key, tokens[i]))
+			if (!ft_strcmp(temp_val->key, temp->value))
 				temp_val->is_unset = 1;
 			temp_val = temp_val->next;
 		}
-		i++;
+		temp = temp->next;
 	}
 	return (0);
 }

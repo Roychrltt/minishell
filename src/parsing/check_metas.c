@@ -6,52 +6,11 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:15:55 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/28 14:17:58 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/30 13:17:50 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_meta_char(char *s)
-{
-	if (!ft_strcmp(s, "<"))
-		return (REDIRECT_IN);
-	if (!ft_strcmp(s, ">"))
-		return (REDIRECT_OUT);
-	if (!ft_strcmp(s, "<<"))
-		return (HEREDOC);
-	if (!ft_strcmp(s, ">>"))
-		return (APPEND);
-	if (!ft_strcmp(s, "&&"))
-		return (AND);
-	if (!ft_strcmp(s, "||"))
-		return (OR);
-	if (!ft_strcmp(s, "|"))
-		return (PIPE);
-	return (0);
-}
-
-int	is_redirect(char *s)
-{
-	if (!ft_strcmp(s, "<"))
-		return (REDIRECT_IN);
-	if (!ft_strcmp(s, ">"))
-		return (REDIRECT_OUT);
-	if (!ft_strcmp(s, "<<"))
-		return (HEREDOC);
-	if (!ft_strcmp(s, ">>"))
-		return (APPEND);
-	return (0);
-}
-
-int	is_logical(char *s)
-{
-	if (!ft_strcmp(s, "&&"))
-		return (AND);
-	if (!ft_strcmp(s, "||"))
-		return (OR);
-	return (0);
-}
 
 static int	check_meta_next(char *s1, char *s2)
 {

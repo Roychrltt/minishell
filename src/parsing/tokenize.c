@@ -6,13 +6,13 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 18:30:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/28 14:22:52 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/30 16:09:22 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	count_token(char *str, t_var *var)
+int	count_token(char *str, t_mem *mem)
 {
 	int		i;
 	int		j;
@@ -28,29 +28,29 @@ static int	count_token(char *str, t_var *var)
 		{
 			if (str[i] == '\'')
 			{
-				var->squote = 1;
+				mem->squote = 1;
 				i++;
 			}
 			else if (str[i] == '"')
 			{
-				var->dquote = 1;
+				mem->dquote = 1;
 				i++;
 			}
-			while ((var->squote == 1 || var->dquote == 1) && str[i])
+			while ((mem->squote == 1 || mem->dquote == 1) && str[i])
 			{
-				if (str[i] == '\'' && var->squote == 1)
-					var->squote = 0;
-				if (str[i] == '"' && var->dquote == 1)
-					var->dquote = 0;
+				if (str[i] == '\'' && mem->squote == 1)
+					mem->squote = 0;
+				if (str[i] == '"' && mem->dquote == 1)
+					mem->dquote = 0;
 				i++;
 			}
 			if (str[i] != ' ' && str[i] != '>' && str[i] != '<' && str[i] != '|' && str[i])
 				i++;
-			var->word = 1;
+			mem->word = 1;
 		}
-		if (var->word == 1)
+		if (mem->word == 1)
 		{
-			var->word = 0;
+			mem->word = 0;
 			count++;
 		}
 		if (str[i] == '|')
@@ -84,7 +84,7 @@ static int	count_token(char *str, t_var *var)
 	return (count);
 }
 
-char	**tokenizer(char *str, t_var *var)
+char	**tokenizer(char *str, t_mem *mem)
 {
 	int		i;
 	int		j;
@@ -94,7 +94,7 @@ char	**tokenizer(char *str, t_var *var)
 
 	i = 0;
 	k = 0;
-	tokens = malloc(sizeof (char *) * (count_token(str, var) + 1));
+	tokens = malloc(sizeof (char *) * (count_token(str, mem) + 1));
 	while (str[i])
 	{
 		j = 0;
@@ -105,22 +105,22 @@ char	**tokenizer(char *str, t_var *var)
 		{
 			if (str[i] == '\'')
 			{
-				var->squote = 1;
+				mem->squote = 1;
 				i++;
 				j++;
 			}
 			if (str[i] == '"')
 			{
-				var->dquote = 1;
+				mem->dquote = 1;
 				i++;
 				j++;
 			}
-			while ((var->squote == 1 || var->dquote == 1) && str[i])
+			while ((mem->squote == 1 || mem->dquote == 1) && str[i])
 			{
-				if (str[i] == '\'' && var->squote == 1)
-					var->squote = 0;
-				if (str[i] == '"' && var->dquote == 1)
-					var->dquote = 0;
+				if (str[i] == '\'' && mem->squote == 1)
+					mem->squote = 0;
+				if (str[i] == '"' && mem->dquote == 1)
+					mem->dquote = 0;
 				i++;
 				j++;
 			}

@@ -6,31 +6,34 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:23:17 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/25 18:06:34 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/30 18:13:31 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_echo(char **s, t_mem *mem)
+int	ft_echo(t_token *arg, t_mem *mem)
 {
-	int	i;
-	int	n;
+	t_token	*temp;
+	int		n;
 
-	i = 1;
+	temp = arg->next;
 	n = 0;
-	if (s[1] && !ft_strcmp(s[1], "-n"))
+	if (temp && !ft_strcmp(temp->value, "-n"))
 		n = 1;
-	if (n)
-		i++;
-	while (s[i])
+	if (n == 1)
+		temp = temp->next;
+	while (!is_end_command(temp))
 	{
-		if ((n && i > 2) || (!n && i > 1))
-			printf(" ");
-		printf("%s", s[i]);
-		i++;
+		if (temp->type == ARGUMENT)
+		{
+			if ((n && temp != arg->next->next) || (!n && temp != arg->next))
+				printf(" ");
+			printf("%s", temp->value);
+		}
+		temp = temp->next;
 	}
-	if (!n || i == 1)
+	if (n == 0 || temp == arg->next)
 		printf("\n");
 	mem->exit_stat = 0;
 	return (1);

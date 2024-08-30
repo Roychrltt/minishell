@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/29 18:13:57 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/31 00:01:13 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_var
-{
-	char	*input;
-	int		squote;
-	int		dquote;
-	int		word;
-	int		count;
-	char	**tokens;
-	char	*temp_path;
-	char	**path;
-	char	**argv;
-	int		found;
-	t_list	*env;
-}	t_var;
-
 typedef struct s_token
 {
 	char			*value;
@@ -89,29 +74,40 @@ typedef struct s_cmd
 
 typedef struct s_mem
 {
-	int		exit_stat;
 	char	*input;
-	t_token	*tokens;
+	int		found;
+	int		squote;
+	int		dquote;
+	int		word;
+	int		count;
+	char	**args;
+	char	**argv;
+	int		exit_stat;
 	t_env	*my_env;
 	t_env	*values;
+	char	**paths;
+	t_token	*tokens;
 	t_cmd	*cmds;
 }	t_mem;
 
 // builtins
 int		is_builtins(char *s);
-int		do_builtins(char *s, t_mem *mem, char **tokens);
+int		do_builtins(t_token *arg, t_mem *mem);
 
-int		ft_echo(char **s, t_mem *mem);
-int		ft_cd(t_env *my_env, t_env *values, char **tokens);
+int		ft_echo(t_token *arg, t_mem *mem);
+int		ft_cd(t_env *my_env, t_env *values, t_token *arg);
 int		ft_pwd(t_env *env);
 t_env	*env_new_node(char *s);
 t_env	*env_dup(char **envp);
+t_env	*sort_env(char **envp);
 int		ft_env(t_env *env);
 t_env	*add_env(char *s, t_env **env);
-int		ft_export(t_env *env, char **tokens);
-int		ft_unset(t_env *my_env, t_env *values, char **tokens);
+void	free_env(t_env *env);
+int		ft_export(t_env *env, t_token *arg);
+int		ft_unset(t_env *my_env, t_env *values, t_token *arg);
 
 // pipex
+int		execute(t_mem *mem);
 char	*ft_getenv(char *path, char **envp);
 char	*get_command(char *path, char *cmd);
 void	free_tab(char **tab);
@@ -123,12 +119,9 @@ void	result_handler(int argc);
 void	sig_init_signals(void);
 void	sigint_handler(int signum);
 
-// utils
-void	free_tab(char **tab);
-
 // ---parsing--- //
 
-// ckeck_quotes
+// check_quotes
 int		index_n(char *s, char *c, int n);
 size_t	next_quote(char *s);
 int		check_quotes(char *s);
@@ -137,10 +130,12 @@ int		check_quotes(char *s);
 int		is_meta_char(char *s);
 int		is_redirect(char *s);
 int		is_logical(char *s);
+int		is_end_command(t_token *arg);
 int		check_metas(char **tokens);
 
 // tokenize
-char	**tokenizer(char *str, t_var *var);
+int		count_token(char *str, t_mem *mem);
+char	**tokenizer(char *str, t_mem *mem);
 t_token	*tokens_to_list(char **tokens);
 
 // token_utils
@@ -149,7 +144,7 @@ void	token_add_back(t_token **list, t_token *node);
 void	free_tokens(t_token *tokens);
 
 #endif
-
+/*
 find the last redirect_in, the value of the next token is the name of the infile
 find the last redirect_out, the value of the next token is the name of the outfile
 open every file accordingly
@@ -163,4 +158,4 @@ if (fd_in < 0)
 int fd_out = open(outfile, ...);
 if (fd_out < 0)
 	error_handler();
-dup2(fd_in, )
+dup2(fd_in, )*/

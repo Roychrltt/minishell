@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:21:24 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/28 15:01:27 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/30 17:50:45 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ static void	list_get_type(t_token **list)
 	t_token	*temp;
 
 	new_cmd = 0;
-	if (is_meta_char(*list->value))
-		*list->type = is_meta_char(*list->value);
+	if (is_meta_char((*list)->value))
+		(*list)->type = is_meta_char((*list)->value);
 	else
 	{
-		*list->type = COMMAND;
+		(*list)->type = COMMAND;
 		new_cmd = 1;
 	}
-	temp = *list->next;
+	temp = (*list)->next;
 	while (temp)
 	{
 		temp->type = get_token_type(temp->value, temp->prev->value, &new_cmd);
@@ -71,6 +71,8 @@ t_token	*tokens_to_list(char **tokens)
 	t_token	*node;
 	t_token	*list;
 
+	if (!tokens || !*(tokens))
+		return (NULL);
 	i = 1;
 	list = gen_new_token(tokens[0]);
 	if (!list)
