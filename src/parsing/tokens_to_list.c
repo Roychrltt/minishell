@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:21:24 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/30 17:50:45 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/31 00:44:39 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,18 @@ static void	list_get_type(t_token **list)
 		temp = temp->next;
 	}
 }
+/*
+static int	deal_quotes(t_token **list)
+{
+	t_token	*temp;
 
+	temp = *list;
+	while (temp)
+	{
+		if ()
+	}
+}
+*/
 t_token	*tokens_to_list(char **tokens)
 {
 	int		i;
@@ -86,5 +97,6 @@ t_token	*tokens_to_list(char **tokens)
 		i++;
 	}
 	list_get_type(&list);
+//	deal_quotes(&list);
 	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:00:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/30 17:49:16 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/31 00:45:39 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	ft_cd(t_env *my_env, t_env *values, t_token *arg)
 		printf("minishell: cd : %s: No such file or directory\n", temp->value);
 		return (1);
 	}
-	if (ft_strlen(arg->next->next->value))
+	if (temp->next && ft_strlen(temp->next->value))
 	{
 		printf("minishell: cd: too many arguments\n");
 		return (1);
