@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/31 00:01:13 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/31 17:26:40 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,35 +90,6 @@ typedef struct s_mem
 	t_cmd	*cmds;
 }	t_mem;
 
-// builtins
-int		is_builtins(char *s);
-int		do_builtins(t_token *arg, t_mem *mem);
-
-int		ft_echo(t_token *arg, t_mem *mem);
-int		ft_cd(t_env *my_env, t_env *values, t_token *arg);
-int		ft_pwd(t_env *env);
-t_env	*env_new_node(char *s);
-t_env	*env_dup(char **envp);
-t_env	*sort_env(char **envp);
-int		ft_env(t_env *env);
-t_env	*add_env(char *s, t_env **env);
-void	free_env(t_env *env);
-int		ft_export(t_env *env, t_token *arg);
-int		ft_unset(t_env *my_env, t_env *values, t_token *arg);
-
-// pipex
-int		execute(t_mem *mem);
-char	*ft_getenv(char *path, char **envp);
-char	*get_command(char *path, char *cmd);
-void	free_tab(char **tab);
-int		open_file(char *file, int n);
-int		open_here_doc(void);
-void	result_handler(int argc);
-
-// signals
-void	sig_init_signals(void);
-void	sigint_handler(int signum);
-
 // ---parsing--- //
 
 // check_quotes
@@ -142,6 +113,40 @@ t_token	*tokens_to_list(char **tokens);
 t_token	*gen_new_token(char	*s);
 void	token_add_back(t_token **list, t_token *node);
 void	free_tokens(t_token *tokens);
+
+// ---builtins--- //
+
+int		is_builtins(char *s);
+int		do_builtins(t_token *arg, t_mem *mem);
+int		ft_echo(t_token *arg, t_mem *mem);
+int		ft_cd(t_env *my_env, t_env *values, t_token *arg);
+int		ft_pwd(t_env *env);
+int		ft_env(t_env *env);
+int		ft_export(t_env *env, t_token *arg);
+int		ft_unset(t_env *my_env, t_env *values, t_token *arg);
+t_env	*env_new_node(char *s);
+t_env	*env_dup(char **envp);
+t_env	*sort_env(char **envp);
+t_env	*add_env(char *s, t_env **env);
+char	*my_getenv(char *key, t_env *env);
+void	free_env(t_env *env);
+
+// ---execute--- //
+
+int		deal_quotes(t_token **list, t_env *env);
+
+// pipex
+int		execute(t_mem *mem);
+char	*ft_getenv(char *path, char **envp);
+char	*get_command(char *path, char *cmd);
+void	free_tab(char **tab);
+int		open_file(char *file, int n);
+int		open_here_doc(void);
+void	result_handler(int argc);
+
+// ---signals--- //
+void	sig_init_signals(void);
+void	sigint_handler(int signum);
 
 #endif
 /*

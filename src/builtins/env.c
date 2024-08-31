@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 11:26:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/31 00:00:47 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/08/31 16:07:22 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ t_env	*env_new_node(char *s)
 		return (NULL);
 	i = ft_strchr(s, '=');
 	node->key = ft_substr(s, 0, i);
+	if (!node->key)
+		return (NULL);
 	node->value = ft_substr(s, i + 1, ft_strlen(s));
+	if (!node->value)
+		return (free(node->key), NULL);
 	node->is_unset = 0;
 	node->next = NULL;
 	return (node);
