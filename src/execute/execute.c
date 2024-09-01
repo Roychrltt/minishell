@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/30 23:12:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 13:37:33 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	execute(t_mem *mem)
 	t_token	*temp;
 
 	temp = mem->tokens;
+	if (!deal_quotes(&temp, mem->values))
+		return (0);
 	while (!is_end_command(temp))
 	{
 		if (temp->type == COMMAND)

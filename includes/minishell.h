@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/31 17:26:40 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 11:47:40 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,16 @@ typedef struct s_env
 	int				is_unset;
 	struct s_env	*next;
 }	t_env;
+
+typedef struct s_expand
+{
+	char	*s;
+	char	*sub;
+	char	*key;
+	size_t	i;
+	size_t	n;
+	size_t	len;
+}	t_expand;
 
 typedef struct s_token
 {
