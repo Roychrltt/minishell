@@ -1,6 +1,6 @@
 # minishell
 
-"echo" is not dealed with
+"echo" is not dealt with
 
 "" echo
 
