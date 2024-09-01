@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 17:23:36 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 19:38:08 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ typedef struct s_cmd
 {
 	char	*cmd;
 	char	**args;
-	int		*fd_in;
-	int		*fd_out;
+	int		fd_in;
+	int		fd_out;
 }	t_cmd;
 
 typedef struct s_mem
@@ -144,10 +144,10 @@ void	free_env(t_env *env);
 // ---execute--- //
 
 int		expand(t_token **list, t_env *env);
+int		redirect(t_token *list, t_cmd *cmd);
+int		execute(t_mem *mem);
 
 // pipex
-int		execute(t_mem *mem);
-char	*ft_getenv(char *path, char **envp);
 char	**get_paths(t_env *env);
 char	*get_command(char *path, char *cmd);
 char	*my_strjoin(char *s1, char *s2);

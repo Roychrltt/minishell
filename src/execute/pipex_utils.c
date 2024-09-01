@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:35:18 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/18 16:35:22 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 19:40:41 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	open_here_doc(void)
+void	free_tab(char **tab)
 {
-	int	fd;
+	int	i;
 
-	fd = open(".here_doc.tmp", O_RDONLY);
-	if (fd == -1)
+	i = 0;
+	if (tab && *tab)
 	{
-		unlink(".here_doc.tmp");
-		perror_message(".here_doc.tmp file open failure");
+		while (tab[i])
+		{
+			free(tab[i]);
+			i++;
+		}
 	}
-	return (fd);
+	if (tab)
+		free(tab);
 }
 
 void	result_handler(int argc)
