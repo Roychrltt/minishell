@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:27:23 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 12:12:33 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 15:58:18 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*my_getenv(char *key, t_env *env)
 {
-	t_env *temp;
+	t_env	*temp;
 
 	temp = env;
 	while (temp)
