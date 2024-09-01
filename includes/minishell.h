@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 16:22:51 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 17:23:36 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	free_env(t_env *env);
 
 // ---execute--- //
 
-int		deal_quotes(t_token **list, t_env *env);
+int		expand(t_token **list, t_env *env);
 
 // pipex
 int		execute(t_mem *mem);
@@ -161,18 +161,3 @@ void	sig_init_signals(void);
 void	sigint_handler(int signum);
 
 #endif
-/*
-find the last redirect_in, the value of the next token is the name of the infile
-find the last redirect_out, the value of the next token is the name of the outfile
-open every file accordingly
-then dup2();
-then execve();
-
-
-int fd_in = open(infile, ...);
-if (fd_in < 0)
-
-int fd_out = open(outfile, ...);
-if (fd_out < 0)
-	error_handler();
-dup2(fd_in, )*/

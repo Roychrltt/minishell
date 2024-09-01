@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 16:08:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 15:55:26 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 18:19:23 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static char	*expansion(char *str, t_env *env)
 
 	t.i = 0;
 	t.s = ft_strdup("");
+	t.sub = NULL;
+	t.key = NULL;
 	t.len = ft_strlen(str);
 	while (t.i < t.len)
 	{
@@ -54,7 +56,7 @@ static char	*expansion(char *str, t_env *env)
 	return (t.s);
 }
 
-int	deal_quotes(t_token	**list, t_env *env)
+int	expand(t_token	**list, t_env *env)
 {
 	t_token	*temp;
 	char	*s;
@@ -68,7 +70,8 @@ int	deal_quotes(t_token	**list, t_env *env)
 			s = ft_strdup(temp->value);
 		if (!s)
 			return (0);
-		if (temp->type == DOUBLEQUOTE || temp->type == ARGUMENT)
+		if ((temp->type == DOUBLEQUOTE || temp->type == ARGUMENT)
+			&& ft_strlen(temp->value) > 1)
 			s = expansion(s, env);
 		if (!s)
 			return (0);
