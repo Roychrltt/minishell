@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:36:30 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 20:18:40 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 21:00:13 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	**get_paths(t_env *env)
 		return (NULL);
 	return (paths);
 }
-
+/*
 char	*get_command(char **path, char *cmd)
 {
 	int		i;
@@ -109,4 +109,4 @@ char	*get_command(char **path, char *cmd)
 		i++;
 	}
 	return (NULL);
-}
+}*/

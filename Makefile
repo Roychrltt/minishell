@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/01 15:44:12 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/01 21:01:17 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ SRC_FILES = main.c \
 			parsing/tokens_to_list.c \
 			execute/execute.c \
 			execute/expand.c \
-			execute/utils.c
+			execute/utils.c \
+			execute/utils1.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 

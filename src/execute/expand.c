@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 16:08:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 18:19:23 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 21:13:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,17 @@ static void	ft_replace(t_expand *t, char *str, t_env *env)
 {
 	t->n = 0;
 	(t->i)++;
-	while (str[t->i + t->n] && is_name_char((int)str[t->i + t->n]))
-		(t->n)++;
-	t->key = ft_substr(str, t->i, t->n);
-	t->sub = ft_strdup(my_getenv(t->key, env));
-	if (t->key)
-		free(t->key);
+	if (!str[t->i])
+		t->sub = ft_strdup("$");
+	else
+	{
+		while (is_name_char((int)str[t->i + t->n]))
+			(t->n)++;
+		t->key = ft_substr(str, t->i, t->n);
+		t->sub = ft_strdup(my_getenv(t->key, env));
+		if (t->key)
+			free(t->key);
+	}
 }
 
 static char	*expansion(char *str, t_env *env)
@@ -40,7 +45,7 @@ static char	*expansion(char *str, t_env *env)
 	t.len = ft_strlen(str);
 	while (t.i < t.len)
 	{
-		if (str[t.i] == '$' && is_name_char((int)str[t.i + 1]))
+		if (str[t.i] == '$')
 			ft_replace(&t, str, env);
 		else
 		{

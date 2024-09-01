@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 19:30:24 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 21:13:26 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	count_pipes(t_token *list)
 {
-	int	num;
+	int		num;
 	t_token	*temp;
 
 	num = 0;
@@ -35,6 +35,7 @@ int	execute(t_mem *mem)
 
 	temp = mem->tokens;
 	pipe_num = count_pipes(temp);
+	(void)pipe_num;
 	if (!expand(&temp, mem->values))
 		return (0);
 	while (!is_end_command(temp))
@@ -47,7 +48,7 @@ int	execute(t_mem *mem)
 		do_builtins(temp, mem);
 	return (1);
 }
-
+/*
 int	redirect(t_token *list, t_cmd *cmd)
 {
 	t_token	*temp;
@@ -75,4 +76,4 @@ int	redirect(t_token *list, t_cmd *cmd)
 		temp = temp->next;
 	}
 	return (1);
-}
+}*/
