@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 15:44:48 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 16:22:51 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ int		deal_quotes(t_token **list, t_env *env);
 // pipex
 int		execute(t_mem *mem);
 char	*ft_getenv(char *path, char **envp);
+char	**get_paths(t_env *env);
 char	*get_command(char *path, char *cmd);
 char	*my_strjoin(char *s1, char *s2);
 void	free_tab(char **tab);

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:36:30 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 15:56:25 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 16:21:52 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,30 @@ int	open_file(char *file, int n)
 	}
 	return (fd);
 }
+*/
 
-char	*get_command(char *path, char *cmd)
+char	**get_paths(t_env *env)
 {
+	char	*s;
 	char	**paths;
+
+	s = ft_strdup(my_getenv("PATH", env));
+	if (!s)
+		return (NULL);
+	paths = ft_split(s, ':');
+	free(s);
+	if (!paths)
+		return (NULL);
+	return (paths);
+}
+
+/*
+char	*get_command(char **path, char *cmd)
+{
 	int		i;
 	char	*try;
 	char	*command;
 
-	paths = ft_split(path, ':');
-	if (!paths)
-		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
