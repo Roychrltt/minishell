@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   deal_quotes.c                                      :+:      :+:    :+:   */
+/*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 16:08:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 13:36:46 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/01 15:35:42 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,16 @@ static int	is_name_char(int c)
 	return (ft_isalnum(c) || c == '_');
 }
 
+static void	free_t(t_expand *t)
+{
+	if (t->s)
+		free(t->s);
+	if (t->sub)
+		free(t->sub);
+	if (t->key)
+		free(t->key);
+}
+
 static char	*expansion(char *str, t_env *env)
 {
 	t_expand	t;
@@ -44,7 +54,7 @@ static char	*expansion(char *str, t_env *env)
 	t.i = 0;
 	t.s = ft_strdup("");
 	if (!t.s)
-		return (NULL);
+		return (free(str), NULL);
 	t.len = ft_strlen(str);
 	while (t.i < t.len)
 	{
@@ -56,17 +66,21 @@ static char	*expansion(char *str, t_env *env)
 				t.n++;
 			t.key = ft_substr(str, t.i, t.n);
 			if (!t.key)
-				return (free(str), free(t.s), free(t.sub), NULL);
+				return (free(str), free(t.s), NULL);
 			t.sub = ft_strdup(my_getenv(t.key, env));
-			t.s = my_strjoin(t.s, t.sub);
-			free(t.sub), free(t.key);
+			free(t.key);
 		}
 		else
 		{
 			t.n = ft_strchr(str + t.i, '$');
 			t.sub = ft_substr(str + t.i, 0, t.n);
-			t.s = my_strjoin(t.s, t.sub);
 		}
+		if (!t.sub)
+			return (free(str), free(t.s), NULL);
+		t.s = my_strjoin(t.s, t.sub);
+		if (!t.s)
+			return (free(str), free(t.sub), NULL);
+		free(t.sub);
 		t.i += t.n;
 	}
 	free(str);

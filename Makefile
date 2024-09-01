@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/01 12:17:52 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/01 15:30:43 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC_FILES = main.c \
 			parsing/token_utils.c \
 			parsing/tokens_to_list.c \
 			execute/execute.c \
-			execute/deal_quotes.c \
+			execute/expand.c \
 			execute/pipex_utils1.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
