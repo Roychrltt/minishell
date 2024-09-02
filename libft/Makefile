@@ -56,7 +56,7 @@ all: ${NAME}
 
 $(NAME): ${OBJ} libft.h
 	ar rc ${NAME} ${OBJ}
-	printf "$(ERASE)$(CYAN)$(BOLD)$@$(RESET) $(GREEN)created!\n$(RESET)"
+	printf "$(ERASE)👷 $(CYAN)$(BOLD)$@$(RESET) $(GREEN)created! 👷\n$(RESET)"
 
 %.o: %.c libft.h
 	${CC} -I. -c $< -o $@
@@ -65,7 +65,7 @@ $(NAME): ${OBJ} libft.h
 clean:
 	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
 	rm -rf ${OBJ} ${OBJ_BONUS}
-	printf "$(ERASE)$(GREEN)Clean finished!\n$(RESET)"
+	printf "$(ERASE)$(GREEN)Clean finished!$(RESET)"
 
 fclean: clean
 	printf "$(GREEN)Fcleaning up...$(RESET)"

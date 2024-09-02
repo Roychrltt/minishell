@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 19:38:08 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/02 22:51:29 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ typedef struct s_token
 
 typedef struct s_cmd
 {
-	char	*cmd;
+	char	*command;
 	char	**args;
-	int		fd_in;
-	int		fd_out;
+	int		fd[2];
+	int		count;
 }	t_cmd;
 
 typedef struct s_mem
@@ -92,6 +92,7 @@ typedef struct s_mem
 	int		count;
 	char	**args;
 	char	**argv;
+	char	**envp;
 	int		exit_stat;
 	t_env	*my_env;
 	t_env	*values;
@@ -147,13 +148,21 @@ int		expand(t_token **list, t_env *env);
 int		redirect(t_token *list, t_cmd *cmd);
 int		execute(t_mem *mem);
 
-// pipex
-char	**get_paths(t_env *env);
-char	*get_command(char *path, char *cmd);
+int		exec_command(t_cmd *cmd, t_token **list, t_mem *mem);
+void	ft_child(t_token **list, t_mem *mem);
+void	last_child(t_token **list, t_mem *mem);
+// utils
+
 char	*my_strjoin(char *s1, char *s2);
-void	free_tab(char **tab);
-int		open_file(char *file, int n);
 int		open_here_doc(void);
+int		open_file(char *file, int n);
+char	**get_paths(t_env *env);
+char	*get_command(char **paths, char *cmd);
+
+
+// more_utils
+void	free_tab(char **tab);
+int		get_here_doc_input(char *eof);
 void	result_handler(int argc);
 
 // ---signals--- //

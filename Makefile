@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/01 21:01:17 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/02 22:52:34 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,8 @@ SRC_FILES = main.c \
 			execute/execute.c \
 			execute/expand.c \
 			execute/utils.c \
-			execute/utils1.c
+			execute/pipex.c \
+			execute/more_utils.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
@@ -60,7 +61,7 @@ all: $(NAME)
 $(NAME): $(LIBFT_LIB) $(OBJ)
 	if [ ! -f $(NAME) ] || [ `find $(OBJ) -newer $(NAME) | wc -l` -ne 0 ]; then \
 	$(CC) $(CFLAGS) $(INC) $(OBJ) -o $(NAME) $(LDFLAGS); \
-		printf "$(ERASE)$(GREEN)Program$(RESET) $(CYAN)$(BOLD)$(NAME)$(RESET) $(GREEN)created!\n$(RESET)"; \
+		printf "$(ERASE)$(GREEN)👷 Program$(RESET) $(CYAN)$(BOLD)$(NAME)$(RESET) $(GREEN)created! 👷\n$(RESET)"; \
 	else \
 		printf "$(ERASE)$(YELLOW)No relink needed for$(RESET) $(CYAN)$(BOLD)$(NAME)\n$(RESET)"; \
 	fi \
@@ -76,13 +77,13 @@ clean:
 	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
 	$(MAKE) -sC libft clean
 	$(RM) ${OBJ}
-	printf "$(ERASE)$(GREEN)Clean finished!$(RESET)"
+	printf "$(ERASE)$(GREEN)🧼 Clean finished! 🧼$(RESET)"
 
 fclean: clean
 	printf "$(ERASE)$(GREEN)Fcleaning up...$(RESET)"
 	$(RM) ${NAME}
 	$(RM) ${LIBFT_LIB}
-	printf "$(ERASE)$(GREEN)Fclean finished!\n$(RESET)"
+	printf "$(ERASE)🧼 $(GREEN)Fclean finished! 🧼\n$(RESET)"
 
 re: fclean all
 

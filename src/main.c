@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 16:32:56 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/02 21:12:23 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	begin_of_all(t_mem *mem, char **argv, char **envp)
 	sig_init_signals();
 	mem->argv = argv;
 	mem->exit_stat = 0;
+	mem->envp = envp;
 	mem->values = sort_env(envp);
 	mem->my_env = env_dup(envp);
 }

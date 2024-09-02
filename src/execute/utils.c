@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:36:30 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 21:00:13 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/02 22:51:47 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	*my_strjoin(char *s1, char *s2)
 	res = malloc(len1 + len2 + 1);
 	if (!res)
 		return (NULL);
-	if (len1)
+	if (s1)
 		ft_strlcpy(res, s1, len1 + 1);
-	if (len2)
+	if (s2)
 		ft_strlcpy((res + len1), s2, len2 + 1);
 	if (s1)
 		free(s1);
@@ -86,8 +86,8 @@ char	**get_paths(t_env *env)
 		return (NULL);
 	return (paths);
 }
-/*
-char	*get_command(char **path, char *cmd)
+
+char	*get_command(char **paths, char *cmd)
 {
 	int		i;
 	char	*try;
@@ -109,4 +109,4 @@ char	*get_command(char **path, char *cmd)
 		i++;
 	}
 	return (NULL);
-}*/
+}

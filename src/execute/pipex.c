@@ -6,103 +6,104 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/19 12:42:32 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/02 22:54:18 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	exec_command(char *param, char **envp)
+static int	count_args(t_token *list)
 {
-	char	*path;
-	char	**command_args;
-	char	*command;
+	t_token	*temp;
+	int		i;
 
-	command_args = ft_split(param, ' ');
-	if (!command_args)
-		exit(EXIT_FAILURE);
-	path = ft_getenv("PATH", envp);
-	command = get_command(path, command_args[0]);
-	if (!command)
+	temp = list;
+	i = 0;
+	while (!is_end_command(temp))
 	{
-		free_tab(command_args);
-		free(command);
-		perror_message("Invalid command.\n");
+		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
+			|| temp->type == DOUBLEQUOTE)
+			i++;
+		temp = temp->next;
 	}
-	execve(command, command_args, envp);
-	perror_message("Pipex");
+	return (i);
 }
 
-static int	get_here_doc_input(char **tokens)
+int	exec_command(t_cmd *cmd, t_token **list, t_mem *mem)
 {
-	char	*input;
-	int		file;
+	int	i;
 
-	file = open(".here_doc.tmp", O_WRONLY | O_CREAT | O_TRUNC,
-			S_IRUSR | S_IWUSR);
-	if (file == -1)
-		printf(".here_doc.tmp open failure\n");
-	write (1, ">", 1);
-	while (1)
+	i = 0;
+	cmd->count = count_args(*list);
+	cmd->args = malloc(sizeof(char *) * (cmd->count + 1));
+	while (!is_end_command(*list))
 	{
-		input = get_next_line(STDIN_FILENO);
-		if (!input)
-			printf("Invalid input\n");
-		if (ft_strncmp(input, argv[2], ft_strlen(argv[2])) == 0)
+		if ((*list)->type == ARGUMENT || (*list)->type == SINGLEQUOTE
+			|| (*list)->type == DOUBLEQUOTE)
 		{
-			free(input);
-			break ;
+			cmd->args[i] = ft_strdup((*list)->value);
+			if (!cmd->args[i])
+				return (free_tab(cmd->args), 0);
+			i++;
 		}
-		write(file, input, ft_strlen(input));
-		free(input);
+		*list = (*list)->next;
 	}
-	close(file);
-	file = open_here_doc();
-	return (file);
+	cmd->args[i] = NULL;
+	execve(cmd->command, cmd->args, mem->envp);
+	perror("execve failure");
+	return (0);
 }
 
-static void	ft_pipe(char *param, char **envp)
+void	ft_child(t_token **list, t_mem *mem)
 {
-	int		fd[2];
+	t_cmd	cmd;
 	pid_t	pid;
 
-	if (pipe(fd) == -1)
-		perror_message("Pipe");
+	redirect((*list), &cmd);
+	while ((*list)->type != COMMAND)
+		(*list) = (*list)->next;
+	cmd.command = get_command(mem->paths, (*list)->value);
+	if (pipe(cmd.fd) == -1)
+		perror("Pipe error");
 	pid = fork();
-	if (pid == -1)
-		perror_message("Fork");
+	if (pid < 0)
+		perror("Fork error");
 	if (pid == 0)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
-		exec_command(param, envp);
-		perror_message("Pipex");
+		close(cmd.fd[0]);
+		dup2(cmd.fd[1], STDOUT_FILENO);
+		close(cmd.fd[1]);
+		exec_command(&cmd, list, mem);
 	}
 	else
 	{
-		close(fd[1]);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
+		close(cmd.fd[1]);
+		dup2(cmd.fd[0], STDIN_FILENO);
+		close(cmd.fd[0]);
 	}
 }
 
-static void	last_child(int outfile, int argc, char **argv, char **envp)
+void	last_child(t_token **list, t_mem *mem)
 {
-	int	pid;
+	t_cmd	cmd;
+	pid_t	pid;
 
+	redirect((*list), &cmd);
+	while ((*list)->type != COMMAND)
+		(*list) = (*list)->next;
+	cmd.command = get_command(mem->paths, (*list)->value);
 	pid = fork();
 	if (pid < 0)
-		perror_message("Fork");
+		perror("Fork error");
 	if (pid == 0)
 	{
-		dup2(outfile, STDOUT_FILENO);
-		close(outfile);
-		exec_command(argv[argc - 2], envp);
+		dup2(cmd.fd[1], STDOUT_FILENO);
+		close(cmd.fd[1]);
+		exec_command(&cmd, list, mem);
 	}
-	close(outfile);
+	close(cmd.fd[1]);
 }
-
+/*
 int	pipex(int count, char **tokens, char **envp)
 {
 	int		i;
@@ -128,4 +129,4 @@ int	pipex(int count, char **tokens, char **envp)
 		ft_pipe(argv[i++], envp);
 	last_child(outfile, argc, argv, envp);
 	result_handler(argc);
-}
+}*/

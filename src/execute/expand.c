@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 16:08:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 21:13:09 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/02 15:56:06 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,10 @@ static void	ft_replace(t_expand *t, char *str, t_env *env)
 		while (is_name_char((int)str[t->i + t->n]))
 			(t->n)++;
 		t->key = ft_substr(str, t->i, t->n);
-		t->sub = ft_strdup(my_getenv(t->key, env));
+		if (my_getenv(t->key, env))
+			t->sub = ft_strdup(my_getenv(t->key, env));
+		else
+			t->sub = ft_strdup("");
 		if (t->key)
 			free(t->key);
 	}
@@ -55,6 +58,7 @@ static char	*expansion(char *str, t_env *env)
 		t.s = my_strjoin(t.s, t.sub);
 		if (t.sub)
 			free(t.sub);
+		t.sub = NULL;
 		t.i += t.n;
 	}
 	free(str);
