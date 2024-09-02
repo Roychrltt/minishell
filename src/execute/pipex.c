@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/02 22:54:18 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/03 00:44:53 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,42 +29,44 @@ static int	count_args(t_token *list)
 	return (i);
 }
 
-int	exec_command(t_cmd *cmd, t_token **list, t_mem *mem)
+int	exec_command(t_cmd *cmd, t_token *list, t_mem *mem)
 {
-	int	i;
+	int		i;
+	t_token	*temp;
 
 	i = 0;
-	cmd->count = count_args(*list);
-	cmd->args = malloc(sizeof(char *) * (cmd->count + 1));
-	while (!is_end_command(*list))
+	temp = list;
+	cmd->count = count_args(list);
+	cmd->args = malloc(sizeof(char *) * (cmd->count + 2));
+	while (!is_end_command(temp))
 	{
-		if ((*list)->type == ARGUMENT || (*list)->type == SINGLEQUOTE
-			|| (*list)->type == DOUBLEQUOTE)
+		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
+			|| temp->type == DOUBLEQUOTE || temp->type == COMMAND)
 		{
-			cmd->args[i] = ft_strdup((*list)->value);
+			cmd->args[i] = ft_strdup(temp->value);
 			if (!cmd->args[i])
 				return (free_tab(cmd->args), 0);
 			i++;
 		}
-		*list = (*list)->next;
+		temp = temp->next;
 	}
 	cmd->args[i] = NULL;
+	cmd->command = get_command(mem->paths, list->value);
 	execve(cmd->command, cmd->args, mem->envp);
 	perror("execve failure");
 	return (0);
 }
 
-void	ft_child(t_token **list, t_mem *mem)
+void	ft_child(t_token *list, t_mem *mem)
 {
 	t_cmd	cmd;
 	pid_t	pid;
 
-	redirect((*list), &cmd);
-	while ((*list)->type != COMMAND)
-		(*list) = (*list)->next;
-	cmd.command = get_command(mem->paths, (*list)->value);
 	if (pipe(cmd.fd) == -1)
 		perror("Pipe error");
+	redirect(list, &cmd);
+	while (list->type != COMMAND)
+		list = list->next;
 	pid = fork();
 	if (pid < 0)
 		perror("Fork error");
@@ -83,15 +85,14 @@ void	ft_child(t_token **list, t_mem *mem)
 	}
 }
 
-void	last_child(t_token **list, t_mem *mem)
+void	last_child(t_token *list, t_mem *mem)
 {
 	t_cmd	cmd;
 	pid_t	pid;
 
-	redirect((*list), &cmd);
-	while ((*list)->type != COMMAND)
-		(*list) = (*list)->next;
-	cmd.command = get_command(mem->paths, (*list)->value);
+	redirect(list, &cmd);
+	while (list->type != COMMAND)
+		list = list->next;
 	pid = fork();
 	if (pid < 0)
 		perror("Fork error");
