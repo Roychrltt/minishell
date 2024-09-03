@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:23:17 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 18:13:51 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/03 17:54:05 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_echo(t_token *arg, t_mem *mem)
 		{
 			if ((n && temp != arg->next->next) || (!n && temp != arg->next))
 				printf(" ");
-			printf("%s", temp->value);
+		printf("%s", temp->value);
 		}
 		temp = temp->next;
 	}

@@ -147,6 +147,7 @@ char	**tokenizer(char *str, t_mem *mem)
 			tokens[k] = malloc(sizeof(char) * 3);
 			tokens[k][0] = '|';
 			i++;
+			tokens[k][1] = 0;
 			if (str[i] == '|')
 			{
 				tokens[k][1] = '|';
