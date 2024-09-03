@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/02 22:52:34 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/03 09:13:18 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ SRC_FILES = main.c \
 			execute/execute.c \
 			execute/expand.c \
 			execute/utils.c \
-			execute/pipex.c \
+			execute/child.c \
 			execute/more_utils.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))

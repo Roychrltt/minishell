@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/03 00:08:03 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/03 12:03:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,8 @@ int		redirect(t_token *list, t_cmd *cmd);
 int		execute(t_mem *mem);
 
 int		exec_command(t_cmd *cmd, t_token *list, t_mem *mem);
-void	ft_child(t_token *list, t_mem *mem);
-void	last_child(t_token *list, t_mem *mem);
+int		ft_command(t_token *list, t_mem *mem);
+int		last_child(t_token *list, t_mem *mem);
 // utils
 
 char	*my_strjoin(char *s1, char *s2);
