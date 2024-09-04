@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/03 17:50:26 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/04 17:36:56 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	redirect(t_token *list, t_cmd *cmd)
 	t_token	*temp;
 
 	temp = list;
-	cmd->fd[0] = 0;
-	cmd->fd[1] = 1;
 	while (!is_end_command(temp))
 	{
 		if (temp->type == REDIRECT_IN || temp->type == HEREDOC)

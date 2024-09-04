@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/03 18:14:05 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/04 17:37:41 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,54 +52,9 @@ static int	get_args(char ***args, t_token *list)
 	return (1);
 }
 
-static int	redirect_pipe(t_token *list, t_cmd *cmd)
-{
-	t_token	*temp;
-
-	temp = list;
-	while (!is_end_command(temp))
-	{
-		if (temp->type == REDIRECT_IN || temp->type == HEREDOC)
-		{
-			if (cmd->fd[0] > 0)
-				close(cmd->fd[0]);
-			cmd->fd[0] = open_file(temp->next->value, temp->type);
-		}
-		if (temp->type == REDIRECT_OUT || temp->type == APPEND)
-		{
-			if (cmd->fd[1] > 1)
-				close(cmd->fd[1]);
-			cmd->fd[1] = open_file(temp->next->value, temp->type);
-		}
-		if (cmd->fd[0] == -1 || cmd->fd[1] == -1)
-			return (0);
-		temp = temp->next;
-	}
-	return (1);
-}
 static int	init_cmd(t_cmd *cmd, t_token *list, t_mem *mem)
 {
 	if (!redirect(list, cmd))
-		return (0);
-	cmd->count = count_args(list);
-	cmd->args = malloc(sizeof(char *) * (cmd->count + 2));
-	if (!cmd->args)
-		return (0);
-	if (!get_args(&(cmd->args), list))
-		return (0);
-	while (!is_end_command(list) && list->type != COMMAND)
-		list = list->next;
-	if (is_end_command(list))
-		return (0);
-	cmd->command = get_command(mem->paths, list->value);
-	if (!cmd->command)
-		return (0);
-	return (1);
-}
-
-static int	init_cmd_pipe(t_cmd *cmd, t_token *list, t_mem *mem)
-{
-	if (!redirect_pipe(list, cmd))
 		return (0);
 	cmd->count = count_args(list);
 	cmd->args = malloc(sizeof(char *) * (cmd->count + 2));
@@ -124,11 +79,9 @@ int	ft_command(t_token *list, t_mem *mem)
 
 	if (pipe(cmd.fd) == -1)
 		perror("Pipe error");
-	if (!init_cmd_pipe(&cmd, list, mem))
+	if (!init_cmd(&cmd, list, mem))
 		return (0);
-	//printf("fd_in: %d, fd_out: %d\n", cmd.fd[0], cmd.fd[1]);
-	if (is_builtins(cmd.command))
-		return (do_builtins(list, mem));
+	printf("fd_in: %d, fd_out: %d\n", cmd.fd[0], cmd.fd[1]);
 	pid = fork();
 	if (pid < 0)
 		perror("Fork error");
@@ -137,7 +90,11 @@ int	ft_command(t_token *list, t_mem *mem)
 		close(cmd.fd[0]);
 		dup2(cmd.fd[1], STDOUT_FILENO);
 		close(cmd.fd[1]);
-		execve(cmd.command, cmd.args, mem->envp);
+		if (!is_builtins(cmd.command))
+			execve(cmd.command, cmd.args, mem->envp);
+		else
+			do_builtins(list, mem);
+		exit(0);
 	}
 	else
 	{
@@ -153,32 +110,23 @@ int	last_child(t_token *list, t_mem *mem)
 	t_cmd	cmd;
 	pid_t	pid;
 
+	cmd.fd[0] = 0;
+	cmd.fd[1] = 1;
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
-	//printf("fd_in: %d, fd_out: %d\n", cmd.fd[0], cmd.fd[1]);
-//	if (is_builtins(cmd.command))
-//		return (do_builtins(list, mem));
-	if (is_builtins(cmd.command))
-	{
-		if (cmd.fd[1] != STDOUT_FILENO)
-		{
-			dup2(cmd.fd[1], STDOUT_FILENO);
-			close(cmd.fd[1]);
-		}
-		return (do_builtins(list, mem));
-
-	}
 	pid = fork();
 	if (pid < 0)
 		perror("Fork error");
 	if (pid == 0)
 	{
+		dup2(cmd.fd[1], STDOUT_FILENO);
 		if (cmd.fd[1] != STDOUT_FILENO)
-		{
-			dup2(cmd.fd[1], STDOUT_FILENO);
 			close(cmd.fd[1]);
-		}
-		execve(cmd.command, cmd.args, mem->envp);
+		if (!is_builtins(cmd.command))
+			execve(cmd.command, cmd.args, mem->envp);
+		else
+			do_builtins(list, mem);
+		exit(0);
 	}
 	else
 	{
