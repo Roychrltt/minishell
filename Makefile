@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/03 09:13:18 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/06 00:28:35 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 
 CC = cc 
 
-CFLAGS = -Wall -Wextra -Werror -O2
+CFLAGS = -Wall -Wextra -Werror 
 
 SRC_DIR = ./src/
 	  
