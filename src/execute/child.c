@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/05 22:23:20 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/05 23:19:58 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,8 +140,8 @@ int	last_child(t_token *list, t_mem *mem)
 	fprintf(stderr, "cmd.fd[0]: %d, cmd.fd[1]: %d\n", cmd.fd[0], cmd.fd[1]);
 	dup2(mem->saved_stdin, STDIN_FILENO);
 	dup2(mem->saved_stdout, STDOUT_FILENO);
-	close(mem->saved_stdin);
-	close(mem->saved_stdout);
+	//close(mem->saved_stdin);
+	//close(mem->saved_stdout);
 	return (1);
 }
 /*
