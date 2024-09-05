@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/03 12:03:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/05 22:12:39 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct s_mem
 	int		dquote;
 	int		word;
 	int		count;
+	int		saved_stdin;
+	int		saved_stdout;
 	char	**args;
 	char	**argv;
 	char	**envp;

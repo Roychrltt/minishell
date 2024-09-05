@@ -1,0 +1,17 @@
+tokenize.c:				mem->squote = 1;
+tokenize.c:				mem->dquote = 1;
+tokenize.c:			while ((mem->squote == 1 || mem->dquote == 1) && str[i])
+tokenize.c:				if (str[i] == '\'' && mem->squote == 1)
+tokenize.c:					mem->squote = 0;
+tokenize.c:				if (str[i] == '"' && mem->dquote == 1)
+tokenize.c:					mem->dquote = 0;
+tokenize.c:			mem->word = 1;
+tokenize.c:		if (mem->word == 1)
+tokenize.c:			mem->word = 0;
+tokenize.c:				mem->squote = 1;
+tokenize.c:				mem->dquote = 1;
+tokenize.c:			while ((mem->squote == 1 || mem->dquote == 1) && str[i])
+tokenize.c:				if (str[i] == '\'' && mem->squote == 1)
+tokenize.c:					mem->squote = 0;
+tokenize.c:				if (str[i] == '"' && mem->dquote == 1)
+tokenize.c:					mem->dquote = 0;

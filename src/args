@@ -1,0 +1,25 @@
+main.c:	mem->saved_stdin = dup(STDIN_FILENO);
+main.c:	mem->saved_stdout = dup(STDOUT_FILENO);
+main.c:	mem->argv = argv;
+main.c:	mem->exit_stat = 0;
+main.c:	mem->envp = envp;
+main.c:	mem->values = sort_env(envp);
+main.c:	mem->my_env = env_dup(envp);
+main.c:	if (!check_quotes(mem->input))
+main.c:		return (free(mem->input), 0);
+main.c:	mem->found = 0;
+main.c:	mem->squote = 0;
+main.c:	mem->dquote = 0;
+main.c:	mem->word = 0;
+main.c:	mem->count = count_token(mem->input, mem);
+main.c:	mem->args = tokenizer(mem->input, mem);
+main.c:	if (!mem->args)
+main.c:	mem->paths = get_paths(mem->my_env);
+main.c:	if (!mem->paths)
+main.c:		return (free_tab(mem->args), 0);
+main.c:	free(mem->input);
+main.c:	free_tab(mem->args);
+main.c:	free_tab(mem->paths);
+main.c:	free_tokens(mem->tokens);
+main.c:	free_env(mem->values);
+main.c:	free_env(mem->my_env);
