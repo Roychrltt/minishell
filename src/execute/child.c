@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/04 17:37:41 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/04 18:06:49 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	ft_command(t_token *list, t_mem *mem)
 		perror("Pipe error");
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
-	printf("fd_in: %d, fd_out: %d\n", cmd.fd[0], cmd.fd[1]);
 	pid = fork();
 	if (pid < 0)
 		perror("Fork error");
