@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/04 18:06:49 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/05 15:37:13 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,11 @@ int	ft_command(t_token *list, t_mem *mem)
 		if (!is_builtins(cmd.command))
 			execve(cmd.command, cmd.args, mem->envp);
 		else
+		{
 			do_builtins(list, mem);
+			free_tab(cmd.args);
+			free(cmd.command);
+		}
 		exit(0);
 	}
 	else
@@ -109,8 +113,8 @@ int	last_child(t_token *list, t_mem *mem)
 	t_cmd	cmd;
 	pid_t	pid;
 
-	cmd.fd[0] = 0;
-	cmd.fd[1] = 1;
+	cmd.fd[0] = STDIN_FILENO;
+	cmd.fd[1] = STDOUT_FILENO;
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
 	pid = fork();
@@ -124,14 +128,17 @@ int	last_child(t_token *list, t_mem *mem)
 		if (!is_builtins(cmd.command))
 			execve(cmd.command, cmd.args, mem->envp);
 		else
+		{
 			do_builtins(list, mem);
+			free_tab(cmd.args);
+			free(cmd.command);
+		}
 		exit(0);
 	}
-	else
-	{
-		if (cmd.fd[1] != STDOUT_FILENO)
-			close(cmd.fd[1]);
-	}
+	if (cmd.fd[1] != STDOUT_FILENO)
+		close(cmd.fd[1]);
+	//	close(cmd.fd[0]);
+	dup2(0, STDIN_FILENO);
 	return (1);
 }
 /*

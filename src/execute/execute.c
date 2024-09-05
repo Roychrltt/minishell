@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/04 17:36:56 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/05 15:26:17 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	redirect(t_token *list, t_cmd *cmd)
 				close(cmd->fd[0]);
 			cmd->fd[0] = open_file(temp->next->value, temp->type);
 		}
-		if (temp->type == REDIRECT_OUT || temp->type == APPEND)
+		else if (temp->type == REDIRECT_OUT || temp->type == APPEND)
 		{
 			if (cmd->fd[1] > 1)
 				close(cmd->fd[1]);

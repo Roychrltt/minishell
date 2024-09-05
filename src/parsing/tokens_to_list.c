@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:21:24 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/31 16:20:52 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/05 15:26:00 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	get_token_type(char *s, char *prev, int *new_cmd)
 	else if (!ft_strcmp(prev, ">"))
 		return (OUTFILE);
 	else if (!ft_strcmp(prev, ">>"))
-		return (APPEND);
+		return (OUTFILE);
 	else if (*new_cmd == 0)
 	{
 		*new_cmd = 1;
