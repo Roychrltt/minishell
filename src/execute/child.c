@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 00:44:26 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 01:16:31 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static int	get_args(char ***args, t_token *list)
 
 static int	init_cmd(t_cmd *cmd, t_token *list, t_mem *mem)
 {
+	cmd->infile = -2;
+	cmd->outfile = -2;
 	if (!redirect(list, cmd))
 		return (0);
 	cmd->count = count_args(list);
@@ -86,9 +88,22 @@ int	ft_command(t_token *list, t_mem *mem)
 		perror("Fork error");
 	if (pid == 0)
 	{
+		if (cmd.infile != STDIN_FILENO)
+		{
+			dup2(cmd.infile, STDIN_FILENO);
+			close(cmd.infile);
+		}
 		close(cmd.fd[0]);
-		dup2(cmd.fd[1], STDOUT_FILENO);
-		close(cmd.fd[1]);
+		if (cmd.outfile != STDOUT_FILENO)
+		{
+			dup2(cmd.outfile, STDOUT_FILENO);
+			close(cmd.outfile);
+		}
+		else
+		{
+			dup2(cmd.fd[1], STDOUT_FILENO);
+			close(cmd.fd[1]);
+		}
 		if (!is_builtins(cmd.command))
 			execve(cmd.command, cmd.args, mem->envp);
 		else
@@ -115,18 +130,24 @@ int	last_child(t_token *list, t_mem *mem)
 	t_cmd	cmd;
 	pid_t	pid;
 
-	cmd.fd[0] = STDIN_FILENO;
-	cmd.fd[1] = STDOUT_FILENO;
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
+	//fprintf(stderr, "fd_in: %d, fd_out: %d\n", cmd.fd[0], cmd.fd[1]);
 	pid = fork();
 	if (pid < 0)
 		perror("Fork error");
 	if (pid == 0)
 	{
-		dup2(cmd.fd[1], STDOUT_FILENO);
-		if (cmd.fd[1] != STDOUT_FILENO)
-			close(cmd.fd[1]);
+		if (cmd.infile != STDIN_FILENO)
+		{
+			dup2(cmd.infile, STDIN_FILENO);
+			close(cmd.infile);
+		}
+		if (cmd.outfile != STDOUT_FILENO)
+		{
+			dup2(cmd.outfile, STDOUT_FILENO);
+			close(cmd.outfile);
+		}
 		if (!is_builtins(cmd.command))
 			execve(cmd.command, cmd.args, mem->envp);
 		else
@@ -137,13 +158,13 @@ int	last_child(t_token *list, t_mem *mem)
 			exit(0);
 		}
 	}
-	if (cmd.fd[1] != STDOUT_FILENO)
-		close(cmd.fd[1]);
+	if (cmd.outfile != STDOUT_FILENO)
+		close(cmd.outfile);
 	dup2(mem->saved_stdin, STDIN_FILENO);
 	dup2(mem->saved_stdout, STDOUT_FILENO);
 	free_tab(cmd.args);
 	free(cmd.command);
-	//close(mem->saved_stdin);
+	//close(mem->saved_stdin); // if we don't dup fd_in, with this line the program will exit by the end
 	close(mem->saved_stdout);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/05 22:12:39 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 01:02:31 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ typedef struct s_cmd
 	char	*command;
 	char	**args;
 	int		fd[2];
+	int		infile;
+	int		outfile;
 	int		count;
 }	t_cmd;
 
