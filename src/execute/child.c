@@ -6,49 +6,38 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 01:16:31 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 15:25:26 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	count_args(t_token *list)
+int	redirect(t_token *list, t_cmd *cmd)
 {
 	t_token	*temp;
-	int		i;
 
-	temp = list;
-	i = 0;
-	while (!is_end_command(temp))
-	{
-		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
-			|| temp->type == DOUBLEQUOTE)
-			i++;
-		temp = temp->next;
-	}
-	return (i);
-}
-
-static int	get_args(char ***args, t_token *list)
-{
-	int		i;
-	t_token	*temp;
-
-	i = 0;
 	temp = list;
 	while (!is_end_command(temp))
 	{
-		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
-			|| temp->type == DOUBLEQUOTE || temp->type == COMMAND)
+		if (temp->type == REDIRECT_IN || temp->type == HEREDOC)
 		{
-			(*args)[i] = ft_strdup(temp->value);
-			if (!(*args)[i])
-				return (free_tab(*args), 0);
-			i++;
+			if (cmd->infile > 0)
+				close(cmd->infile);
+			cmd->infile = open_file(temp->next->value, temp->type);
+		}
+		else if (temp->type == REDIRECT_OUT || temp->type == APPEND)
+		{
+			if (cmd->outfile > 1)
+				close(cmd->outfile);
+			cmd->outfile = open_file(temp->next->value, temp->type);
+		}
+		if (cmd->infile == -1 || cmd->outfile == -1)
+		{
+			perror("file open failure");
+			return (0);
 		}
 		temp = temp->next;
 	}
-	(*args)[i] = NULL;
 	return (1);
 }
 
@@ -88,13 +77,13 @@ int	ft_command(t_token *list, t_mem *mem)
 		perror("Fork error");
 	if (pid == 0)
 	{
-		if (cmd.infile != STDIN_FILENO)
+		if (cmd.infile != -2 && cmd.infile != STDIN_FILENO)
 		{
 			dup2(cmd.infile, STDIN_FILENO);
 			close(cmd.infile);
 		}
 		close(cmd.fd[0]);
-		if (cmd.outfile != STDOUT_FILENO)
+		if (cmd.outfile != -2 && cmd.outfile != STDOUT_FILENO)
 		{
 			dup2(cmd.outfile, STDOUT_FILENO);
 			close(cmd.outfile);
@@ -132,18 +121,17 @@ int	last_child(t_token *list, t_mem *mem)
 
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
-	//fprintf(stderr, "fd_in: %d, fd_out: %d\n", cmd.fd[0], cmd.fd[1]);
 	pid = fork();
 	if (pid < 0)
 		perror("Fork error");
 	if (pid == 0)
 	{
-		if (cmd.infile != STDIN_FILENO)
+		if (cmd.infile != -2 && cmd.infile != STDIN_FILENO)
 		{
 			dup2(cmd.infile, STDIN_FILENO);
 			close(cmd.infile);
 		}
-		if (cmd.outfile != STDOUT_FILENO)
+		if (cmd.outfile != -2 && cmd.outfile != STDOUT_FILENO)
 		{
 			dup2(cmd.outfile, STDOUT_FILENO);
 			close(cmd.outfile);
@@ -158,14 +146,16 @@ int	last_child(t_token *list, t_mem *mem)
 			exit(0);
 		}
 	}
-	if (cmd.outfile != STDOUT_FILENO)
+	if (cmd.infile != -2 && cmd.infile != STDIN_FILENO)
+		close(cmd.infile);
+	if (cmd.outfile != -2 && cmd.outfile != STDOUT_FILENO)
 		close(cmd.outfile);
 	dup2(mem->saved_stdin, STDIN_FILENO);
 	dup2(mem->saved_stdout, STDOUT_FILENO);
 	free_tab(cmd.args);
 	free(cmd.command);
-	//close(mem->saved_stdin); // if we don't dup fd_in, with this line the program will exit by the end
-	close(mem->saved_stdout);
+	//close(mem->saved_stdin);
+	//close(mem->saved_stdout);
 	return (1);
 }
 /*

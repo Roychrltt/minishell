@@ -6,11 +6,51 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:35:18 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/02 21:09:26 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 15:14:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	count_args(t_token *list)
+{
+	t_token	*temp;
+	int		i;
+
+	temp = list;
+	i = 0;
+	while (!is_end_command(temp))
+	{
+		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
+				|| temp->type == DOUBLEQUOTE)
+			i++;
+		temp = temp->next;
+	}
+	return (i);
+}
+
+int	get_args(char ***args, t_token *list)
+{
+	int		i;
+	t_token	*temp;
+
+	i = 0;
+	temp = list;
+	while (!is_end_command(temp))
+	{
+		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
+				|| temp->type == DOUBLEQUOTE || temp->type == COMMAND)
+		{
+			(*args)[i] = ft_strdup(temp->value);
+			if (!(*args)[i])
+				return (free_tab(*args), 0);
+			i++;
+		}
+		temp = temp->next;
+	}
+	(*args)[i] = NULL;
+	return (1);
+}
 
 int	get_here_doc_input(char *eof)
 {

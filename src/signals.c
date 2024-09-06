@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 11:42:39 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/24 15:38:23 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 12:54:17 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	sig_init_signals(void)
 {
+	if (g_pid)
+		return ;
 	signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);

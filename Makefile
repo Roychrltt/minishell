@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/06 00:28:35 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/06 13:25:15 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ SRC_FILES = main.c \
 			parsing/check_quotes.c \
 			parsing/check_metas.c \
 			parsing/check_metas_utils.c \
-			parsing/tokenize.c \
+			parsing/tokenizer.c \
+			parsing/tokenizer_helper.c \
 			parsing/token_utils.c \
 			parsing/tokens_to_list.c \
 			execute/execute.c \

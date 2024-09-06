@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 01:02:31 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 15:15:28 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,11 @@ int		is_logical(char *s);
 int		is_end_command(t_token *arg);
 int		check_metas(char **tokens);
 
-// tokenize
+// tokenizer
+void	quote_skip2_helper(char *str, int *i, t_mem *mem);
+void	quote_skip2(char *str, int *i, int *j, t_mem *mem);
+void	quote_skip(char *str, int *i, t_mem *mem);
+void	skip_redir(char *str, int *count, int *i);
 int		count_token(char *str, t_mem *mem);
 char	**tokenizer(char *str, t_mem *mem);
 t_token	*tokens_to_list(char **tokens);
@@ -165,6 +169,8 @@ char	*get_command(char **paths, char *cmd);
 
 
 // more_utils
+int		count_args(t_token *list);
+int		get_args(char ***args, t_token *list);
 void	free_tab(char **tab);
 int		get_here_doc_input(char *eof);
 void	result_handler(int argc);

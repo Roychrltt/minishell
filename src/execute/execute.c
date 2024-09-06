@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 01:05:21 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 15:22:12 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,6 @@ static int	count_pipes(t_token *list)
 		temp = temp->next;
 	}
 	return (num);
-}
-
-int	redirect(t_token *list, t_cmd *cmd)
-{
-	t_token	*temp;
-
-	temp = list;
-	while (!is_end_command(temp))
-	{
-		if (temp->type == REDIRECT_IN || temp->type == HEREDOC)
-		{
-			if (cmd->infile > 0)
-				close(cmd->infile);
-			cmd->infile = open_file(temp->next->value, temp->type);
-		}
-		else if (temp->type == REDIRECT_OUT || temp->type == APPEND)
-		{
-			if (cmd->outfile > 1)
-				close(cmd->outfile);
-			cmd->outfile = open_file(temp->next->value, temp->type);
-		}
-		if (cmd->infile == -1 || cmd->outfile == -1)
-		{
-			perror("file open failure");
-			return (0);
-		}
-		temp = temp->next;
-	}
-	return (1);
 }
 
 int	execute(t_mem *mem)
