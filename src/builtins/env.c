@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 11:26:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/31 16:07:22 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 17:47:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int	ft_env(t_env *env)
 	temp = env;
 	if (!env || !env->key)
 		return (1);
-	printf("entered env\n");
 	while (temp)
 	{
 		if (!temp->is_unset)

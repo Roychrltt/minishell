@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 15:59:05 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/31 17:28:16 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:08:26 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int	ft_export(t_env *env, t_token *arg)
 		if (is_valid_for_export(temp->value))
 		{
 			add_env(temp->value, &env);
+			printf("my_getenv: %s\n", my_getenv(temp->value, env));
 		}
 		else
 		{

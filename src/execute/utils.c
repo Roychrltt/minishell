@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:36:30 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/05 23:19:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 19:19:57 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,6 @@ char	*get_command(char **paths, char *cmd)
 	char	*try;
 	char	*command;
 
-	if (access(cmd, 1) == 0 || is_builtins(cmd))
-	{
-		command = ft_strdup(cmd);
-		return (command);
-	}
 	i = 0;
 	while (paths[i])
 	{
@@ -111,6 +106,11 @@ char	*get_command(char **paths, char *cmd)
 		free(command);
 		i++;
 	}
-	perror("Invalid command");
+	if (access(cmd, 1) == 0 || is_builtins(cmd))
+	{
+		command = ft_strdup(cmd);
+		return (command);
+	}
+	perror("Command not found");
 	return (NULL);
 }

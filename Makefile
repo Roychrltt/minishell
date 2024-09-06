@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/06 13:25:15 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/06 19:00:04 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC_FILES = main.c \
 			execute/expand.c \
 			execute/utils.c \
 			execute/child.c \
+			execute/baby_sitter.c \
 			execute/more_utils.c
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
@@ -49,7 +50,9 @@ INC = -Iincludes/ -Ilibft -I/opt/homebrew/include
 
 LDFLAGS = -Llibft -lft -L/opt/homebrew/lib -lreadline
 
-OBJ = $(SRC:.c=.o)
+OBJ_DIR = .obj/
+
+OBJ = $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 LIBFT_LIB = ./libft/libft.a
 
@@ -70,7 +73,8 @@ $(NAME): $(LIBFT_LIB) $(OBJ)
 $(LIBFT_LIB):
 	$(MAKE) -sC libft
 
-%.o: %.c 
+$(OBJ_DIR)%.o: $(SRC_DIR)%.c 
+	mkdir -p $(@D)
 	${CC} $(CFLAGS) $(INC) -c $< -o $@
 	printf "$(ERASE)$(BLUE) > Compilation: $(RESET) $<"
 

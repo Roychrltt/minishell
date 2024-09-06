@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 15:15:28 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:57:27 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,12 +153,17 @@ void	free_env(t_env *env);
 // ---execute--- //
 
 int		expand(t_token **list, t_env *env);
-int		redirect(t_token *list, t_cmd *cmd);
+int		get_fds(t_token *list, t_cmd *cmd);
 int		execute(t_mem *mem);
 
 int		exec_command(t_cmd *cmd, t_token *list, t_mem *mem);
 int		ft_command(t_token *list, t_mem *mem);
 int		last_child(t_token *list, t_mem *mem);
+
+// baby_sitter
+void	redirect(t_cmd *cmd);
+void	do_command(t_cmd *cmd, t_mem *mem, int status);
+
 // utils
 
 char	*my_strjoin(char *s1, char *s2);

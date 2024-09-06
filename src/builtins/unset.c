@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 17:27:23 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/01 15:58:18 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 18:04:07 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	*my_getenv(char *key, t_env *env)
 	temp = env;
 	while (temp)
 	{
-		if (!ft_strcmp(temp->key, key))
+		if (!ft_strcmp(temp->key, key) && temp->is_unset != 1)
 			return (temp->value);
 		temp = temp->next;
 	}
