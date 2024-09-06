@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:21:31 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 17:42:42 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 23:46:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	do_builtins(t_token *arg, t_mem *mem)
 	if (!ft_strcmp(arg->value, "echo"))
 		return (ft_echo(arg, mem));
 	else if (!ft_strcmp(arg->value, "cd"))
-		return (ft_cd(mem->my_env, mem->values, arg));
+		return (ft_cd(arg, mem));
 	else if (!ft_strcmp(arg->value, "pwd"))
 		return (ft_pwd(mem->values));
 	else if (!ft_strcmp(arg->value, "export"))

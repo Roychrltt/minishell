@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:00:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/31 00:45:39 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 23:48:24 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,29 +83,37 @@ static void	update_pwd(t_env *env)
 	}
 }
 
-int	ft_cd(t_env *my_env, t_env *values, t_token *arg)
+static int	check_cd(t_token *token)
 {
-	t_token	*temp;
-
-	temp = arg->next;
-	if (is_end_command(arg->next))
+	if (is_end_command(token))
 	{
 		printf("minishell: cd: too few arguments\n");
-		return (1);
+		return (0);
 	}
-	if (chdir(temp->value) == -1 && (is_end_command(temp->next)))
+	if (chdir(token->value) == -1 && (is_end_command(token->next)))
 	{
-		printf("minishell: cd : %s: No such file or directory\n", temp->value);
-		return (1);
+		printf("minishell: cd : %s: No such file or directory\n", token->value);
+		return (0);
 	}
-	if (temp->next && ft_strlen(temp->next->value))
+	if (token->next && ft_strlen(token->next->value))
 	{
 		printf("minishell: cd: too many arguments\n");
-		return (1);
+		return (0);
 	}
-	update_oldpwd(my_env);
-	update_oldpwd(values);
-	update_pwd(my_env);
-	update_pwd(values);
-	return (0);
+	return (1);
+}
+
+int	ft_cd(t_token *arg, t_mem *mem)
+{
+	if (!check_cd(arg->next))
+	{
+		mem->exit_stat = 1;
+		return (0);
+	}
+	update_oldpwd(mem->my_env);
+	update_oldpwd(mem->values);
+	update_pwd(mem->my_env);
+	update_pwd(mem->values);
+	mem->exit_stat = 0;
+	return (1);
 }

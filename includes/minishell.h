@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 21:58:44 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 23:28:34 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	free_tokens(t_token *tokens);
 int		is_builtins(char *s);
 int		do_builtins(t_token *arg, t_mem *mem);
 int		ft_echo(t_token *arg, t_mem *mem);
-int		ft_cd(t_env *my_env, t_env *values, t_token *arg);
+int		ft_cd(t_token *arg, t_mem *mem);
 int		ft_pwd(t_env *env);
 int		ft_env(t_env *env);
 int		ft_export(t_env *env, t_token *arg);
