@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 18:57:27 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 21:58:44 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_cmd
 	int		fd[2];
 	int		infile;
 	int		outfile;
+	int		heredoc;
 	int		count;
 }	t_cmd;
 

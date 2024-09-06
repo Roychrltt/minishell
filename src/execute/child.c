@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 18:59:41 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 22:28:27 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	get_fds(t_token *list, t_cmd *cmd)
 			if (cmd->infile > 0)
 				close(cmd->infile);
 			cmd->infile = open_file(temp->next->value, temp->type);
+			if (temp->type == HEREDOC)
+				cmd->heredoc = 1;
 		}
 		else if (temp->type == REDIRECT_OUT || temp->type == APPEND)
 		{
@@ -42,6 +44,7 @@ static int	init_cmd(t_cmd *cmd, t_token *list, t_mem *mem)
 {
 	cmd->infile = -2;
 	cmd->outfile = -2;
+	cmd->heredoc = 0;
 	if (!get_fds(list, cmd))
 		return (0);
 	cmd->count = count_args(list);
@@ -82,6 +85,8 @@ int	ft_command(t_token *list, t_mem *mem)
 	close(cmd.fd[0]);
 	free_tab(cmd.args);
 	free(cmd.command);
+	if (cmd.heredoc)
+		unlink(".here_doc.tmp");
 	return (1);
 }
 
@@ -104,6 +109,8 @@ int	last_child(t_token *list, t_mem *mem)
 	dup2(mem->saved_stdout, STDOUT_FILENO);
 	free_tab(cmd.args);
 	free(cmd.command);
+	if (cmd.heredoc)
+		unlink(".here_doc.tmp");
 	return (1);
 }
 /*

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:36:30 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 19:19:57 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/06 22:22:52 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	open_file(char *file, int n)
 			perror("Outfile open failure");
 	}
 	else
-		fd = open_here_doc();
+		fd = get_here_doc_input(file);
 	return (fd);
 }
 
