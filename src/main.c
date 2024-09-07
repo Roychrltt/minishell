@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 18:25:14 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 19:32:40 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	begin_of_all(t_mem *mem, char **argv, char **envp)
 {
 	if (!getenv("PATH"))
 	{
-		printf("minishell shut down due to lack of environment variables\n");
+		printf("Error: Shut down due to lack of environment variables\n");
 		exit(0);
 	}
 	sig_init_signals();
@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	t_mem	mem;
 
 	if (argc > 1)
-		return (printf("minishell does not support arguments for now\n"), 1);
+		return (printf("Error: Too many arguments\n"), 1);
 	begin_of_all(&mem, argv, envp);
 	while (1)
 	{
