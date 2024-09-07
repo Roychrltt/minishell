@@ -6,45 +6,43 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:37:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 13:29:49 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 16:55:19 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	quote_skip2_helper(char *str, int *i, t_mem *mem)
+void	quote_skip2_helper(char *str, t_mem *mem)
 {
-	if (str[*i] == '\'')
+	if (str[mem->i] == '\'')
 		mem->squote = 1;
-	if (str[*i] == '"')
+	if (str[mem->i] == '"')
 		mem->dquote = 1;
 }
 
-void	quote_skip2(char *str, int *i, int *j, t_mem *mem)
+void	quote_skip2(char *str, t_mem *mem)
 {
-	while (str[*i] != ' ' && str[*i] != '>' && str[*i] != '<'
-		&& (str[*i] != '&' || str[*i + 1] != '&') && str[*i] != '|' && str[*i])
+	while (str[mem->i] != ' ' && str[mem->i] != '>' && str[mem->i] != '<'
+		&& (str[mem->i] != '&' || str[mem->i + 1] != '&')
+		&& str[mem->i] != '|' && str[mem->i])
 	{
-		quote_skip2_helper(str, i, mem);
+		quote_skip2_helper(str, mem);
 		if (mem->squote || mem->dquote)
+			increase_i_j(&(mem->i), &(mem->j));
+		while ((mem->squote == 1 || mem->dquote == 1) && str[mem->i])
 		{
-			*i += 1;
-			*j += 1;
-		}
-		while ((mem->squote == 1 || mem->dquote == 1) && str[*i])
-		{
-			if (str[*i] == '\'' && mem->squote == 1)
+			if (str[mem->i] == '\'' && mem->squote == 1)
 				mem->squote = 0;
-			else if (str[*i] == '"' && mem->dquote == 1)
+			else if (str[mem->i] == '"' && mem->dquote == 1)
 				mem->dquote = 0;
-			*i += 1;
-			*j += 1;
+			increase_i_j(&(mem->i), &(mem->j));
 		}
-		if (str[*i] != ' ' && str[*i] != '>' && str[*i] != '<'
-			&& str[*i] != '|' && str[*i] && str[*i] != '\'' && str[*i] != '"')
+		if (str[mem->i] != ' ' && str[mem->i] != '>' && str[mem->i] != '<'
+			&& str[mem->i] != '|' && str[mem->i]
+			&& str[mem->i] != '\'' && str[mem->i] != '"')
 		{
-			*i += 1;
-			*j += 1;
+			mem->i += 1;
+			mem->j += 1;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 10:41:29 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 18:25:14 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,10 @@ static void	free_mem(t_mem *mem)
 
 static void	end_of_all(t_mem *mem)
 {
-	free_env(mem->values);
-	free_env(mem->my_env);
 	close(mem->saved_stdin);
 	close(mem->saved_stdout);
+	free_env(mem->values);
+	free_env(mem->my_env);
 	rl_clear_history();
 }
 

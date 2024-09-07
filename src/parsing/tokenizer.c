@@ -12,111 +12,108 @@
 
 #include "minishell.h"
 
-static void	skip_pipe(char *str, char **tokens, int *i, int *k)
+static void	skip_pipe(char *str, char **tokens, t_mem *mem)
 {
-	if (str[*i] == '|')
+	if (str[mem->i] == '|')
 	{
-		tokens[*k] = malloc(sizeof(char) * 3);
-		tokens[*k][0] = '|';
-		*i += 1;
-		tokens[*k][1] = 0;
-		if (str[*i] == '|')
+		tokens[mem->k] = malloc(sizeof(char) * 3);
+		tokens[mem->k][0] = '|';
+		mem->i += 1;
+		tokens[mem->k][1] = 0;
+		if (str[mem->i] == '|')
 		{
-			tokens[*k][1] = '|';
-			*i += 1;
-			tokens[*k][2] = 0;
+			tokens[mem->k][1] = '|';
+			mem->i += 1;
+			tokens[mem->k][2] = 0;
 		}
-		*k += 1;
+		mem->k += 1;
 	}
 }
 
-static void	skip_redir2(char *str, char **tokens, int *i, int *k)
+static void	skip_redir2(char *str, char **tokens, t_mem *mem)
 {
 	int	l;
 
-	if (str[*i] == '<')
+	if (str[mem->i] == '<')
 	{
 		l = 0;
-		tokens[*k] = malloc(sizeof(char) * 3);
-		tokens[*k][l++] = str[*i];
-		*i += 1;
-		if (str[*i] == '<')
-			tokens[*k][l++] = str[(*i)++];
-		tokens[*k][l] = 0;
-		*k += 1;
+		tokens[mem->k] = malloc(sizeof(char) * 3);
+		tokens[mem->k][l++] = str[mem->i];
+		mem->i += 1;
+		if (str[mem->i] == '<')
+			tokens[mem->k][l++] = str[(mem->i)++];
+		tokens[mem->k][l] = 0;
+		mem->k += 1;
 	}
-	else if (str[*i] == '>')
+	else if (str[mem->i] == '>')
 	{
 		l = 0;
-		tokens[*k] = malloc(sizeof(char) * 3);
-		tokens[*k][l++] = str[*i];
-		*i += 1;
-		if (str[*i] == '>')
-			tokens[*k][l++] = str[(*i)++];
-		tokens[*k][l] = 0;
-		*k += 1;
+		tokens[mem->k] = malloc(sizeof(char) * 3);
+		tokens[mem->k][l++] = str[mem->i];
+		mem->i += 1;
+		if (str[mem->i] == '>')
+			tokens[mem->k][l++] = str[(mem->i)++];
+		tokens[mem->k][l] = 0;
+		mem->k += 1;
 	}
 }
 
-static void	skip_ampersand(char *str, char **tokens, int *i, int *k)
+static void	skip_ampersand(char *str, char **tokens, t_mem *mem)
 {
-	if (str[*i] == '&' && str[*i + 1] == '&')
+	if (str[mem->i] == '&' && str[mem->i + 1] == '&')
 	{
-		tokens[*k] = malloc(sizeof(char) * 3);
-		tokens[*k][0] = '&';
-		*i += 2;
-		tokens[*k][1] = '&';
-		tokens[*k][2] = 0;
-		*k += 1;
+		tokens[mem->k] = malloc(sizeof(char) * 3);
+		tokens[mem->k][0] = '&';
+		mem->i += 2;
+		tokens[mem->k][1] = '&';
+		tokens[mem->k][2] = 0;
+		mem->k += 1;
 	}
-	else if (str[*i] == ' ')
-		while (str[*i] == ' ')
-			*i += 1;
+	else if (str[mem->i] == ' ')
+		while (str[mem->i] == ' ')
+			mem->i += 1;
 }
 
-static void	tokenizer_help(char *str, char **tokens, int *i, int *j, int *k)
+static void	tokenizer_help(char *str, char **tokens, t_mem *mem)
 {
 	int	l;
 
 	l = 0;
-	if (*j > 0)
-		tokens[*k] = malloc(sizeof(char) * (*j + 1));
-	while (l < *j)
+	if (mem->j > 0)
+		tokens[mem->k] = malloc(sizeof(char) * (mem->j + 1));
+	while (l < mem->j)
 	{
-		tokens[*k][l] = str[*i - *j + l];
+		tokens[mem->k][l] = str[mem->i - mem->j + l];
 		l++;
 	}
-	if (*j > 0)
+	if (mem->j > 0)
 	{
-		tokens[*k][l] = 0;
-		*k += 1;
+		tokens[mem->k][l] = 0;
+		mem->k += 1;
 	}
 }
 
 char	**tokenizer(char *str, t_mem *mem)
 {
-	int		i;
-	int		j;
-	int		k;
 	char	**tokens;
 
-	i = 0;
-	k = 0;
+	mem->i = 0;
+	mem->k = 0;
 	tokens = malloc(sizeof(char *) * (count_token(str, mem) + 1));
-	while (str[i])
+	while (str[mem->i])
 	{
-		j = 0;
-		while (str[i] == ' ')
-			i++;
-		quote_skip2(str, &i, &j, mem);
-		tokenizer_help(str, tokens, &i, &j, &k);
-		if (str[i] == '|')
-			skip_pipe(str, tokens, &i, &k);
-		else if (str[i] == '>' || str[i] == '<')
-			skip_redir2(str, tokens, &i, &k);
-		else if (str[i] == '&' || str[i] == ' ')
-			skip_ampersand(str, tokens, &i, &k);
+		mem->j = 0;
+		while (str[mem->i] == ' ')
+			mem->i++;
+		quote_skip2(str, mem);
+		tokenizer_help(str, tokens, mem);
+		if (str[mem->i] == '|')
+			skip_pipe(str, tokens, mem);
+		else if (str[mem->i] == '>' || str[mem->i] == '<')
+			skip_redir2(str, tokens, mem);
+		else if (str[mem->i] == '&' || str[mem->i] == ' ')
+			skip_ampersand(str, tokens, mem);
 	}
-	tokens[k] = 0;
+	tokens[mem->k] = 0;
 	return (tokens);
 }

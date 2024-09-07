@@ -1,9 +1,0 @@
-child.c:	cmd->command = get_command(mem->paths, list->value);
-child.c:			execve(cmd.command, cmd.args, mem->envp);
-child.c:			execve(cmd.command, cmd.args, mem->envp);
-child.c:	dup2(mem->saved_stdin, STDIN_FILENO);
-child.c:	dup2(mem->saved_stdout, STDOUT_FILENO);
-child.c:	close(mem->saved_stdin);
-child.c:	close(mem->saved_stdout);
-execute.c:	temp = mem->tokens;
-execute.c:	if (!expand(&temp, mem->values))

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/30 13:15:08 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/30 17:28:50 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 16:53:15 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,10 @@ int	is_end_command(t_token *arg)
 	if (!ft_strcmp(arg->value, "|"))
 		return (PIPE);
 	return (0);
+}
+
+void	increase_i_j(int *i, int *j)
+{
+	(*i)++;
+	(*j)++;
 }

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:46:20 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 14:47:58 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 19:15:58 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ void	redirect(t_cmd *cmd)
 static void	execute_builtins(t_token *list, t_cmd *cmd, t_mem *mem)
 {
 	do_builtins(list, mem);
+	if (cmd->infile > STDIN_FILENO)
+		close(cmd->infile);
+	if (cmd->outfile > STDOUT_FILENO)
+		close(cmd->outfile);
 	free(cmd->command);
 	free_tab(cmd->args);
 	exit(0);

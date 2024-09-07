@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 14:41:55 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 16:54:14 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,9 @@ typedef struct s_cmd
 
 typedef struct s_mem
 {
+	int		i;
+	int		j;
+	int		k;
 	char	*input;
 	int		found;
 	int		squote;
@@ -119,10 +122,11 @@ int		is_redirect(char *s);
 int		is_logical(char *s);
 int		is_end_command(t_token *arg);
 int		check_metas(char **tokens);
+void	increase_i_j(int *i, int *j);
 
 // tokenizer
-void	quote_skip2_helper(char *str, int *i, t_mem *mem);
-void	quote_skip2(char *str, int *i, int *j, t_mem *mem);
+void	quote_skip2_helper(char *str, t_mem *mem);
+void	quote_skip2(char *str, t_mem *mem);
 void	quote_skip(char *str, int *i, t_mem *mem);
 void	skip_redir(char *str, int *count, int *i);
 int		count_token(char *str, t_mem *mem);
