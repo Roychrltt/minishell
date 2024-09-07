@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 00:52:47 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 01:02:18 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,10 @@ int	ft_command(t_token *list, t_mem *mem)
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
 	do_command(list, &cmd, mem, 1);
+	if (cmd.infile > STDIN_FILENO)
+		close(cmd.infile);
+	if (cmd.outfile > STDOUT_FILENO)
+		close(cmd.outfile);
 	close(cmd.fd[1]);
 	dup2(cmd.fd[0], STDIN_FILENO);
 	close(cmd.fd[0]);
