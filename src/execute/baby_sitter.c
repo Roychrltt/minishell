@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:46:20 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 19:15:58 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 00:44:20 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 		perror("Fork error");
 	if (pid == 0)
 	{
+		redirect(cmd);
 		if (status == 1)
 		{
 			close(cmd->fd[0]);

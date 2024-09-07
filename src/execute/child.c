@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 19:15:50 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 00:52:47 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,7 @@ int	ft_command(t_token *list, t_mem *mem)
 		perror("Pipe error");
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
-	redirect(&cmd);
 	do_command(list, &cmd, mem, 1);
-	if (cmd.infile > STDIN_FILENO)
-		close(cmd.infile);
-	if (cmd.outfile > STDOUT_FILENO)
-		close(cmd.outfile);
 	close(cmd.fd[1]);
 	dup2(cmd.fd[0], STDIN_FILENO);
 	close(cmd.fd[0]);
@@ -110,30 +105,3 @@ int	last_child(t_token *list, t_mem *mem)
 		unlink(".here_doc.tmp");
 	return (1);
 }
-/*
-   int	pipex(int count, char **tokens, char **envp)
-   {
-   int		i;
-   int		infile;
-   int		outfile;
-
-   if (!ft_strcmp(tokens[0], "<<"))
-   {
-   if (argc < 6)
-   exit_handler_here_doc();
-   i = 3;
-   infile = get_here_doc_input(tokens);
-   }
-   else
-   {
-   i = 2;
-   infile = open_file(argv[1], 0);
-   }
-   outfile = open_file(argv[argc - 1], 1);
-   dup2(infile, STDIN_FILENO);
-   close(infile);
-   while (i < argc - 2)
-   ft_pipe(argv[i++], envp);
-   last_child(outfile, argc, argv, envp);
-   result_handler(argc);
-   }*/
