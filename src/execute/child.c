@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 23:52:06 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 15:19:30 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,7 @@ int	ft_command(t_token *list, t_mem *mem)
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
 	redirect(&cmd);
-	if (is_builtins(cmd.command))
-		do_builtins(list, mem);
-	else
-		do_command(&cmd, mem, 1);
+	do_command(list, &cmd, mem, 1);
 	if (cmd.infile > STDIN_FILENO)
 		close(cmd.infile);
 	if (cmd.outfile > STDOUT_FILENO)
@@ -100,7 +97,7 @@ int	last_child(t_token *list, t_mem *mem)
 	if (is_builtins(cmd.command))
 		do_builtins(list, mem);
 	else
-		do_command(&cmd, mem, 0);
+		do_command(list, &cmd, mem, 0);
 	if (cmd.infile > STDIN_FILENO)
 		close(cmd.infile);
 	if (cmd.outfile > STDOUT_FILENO)

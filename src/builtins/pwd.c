@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:00:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 23:48:24 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 13:05:30 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int	check_cd(t_token *token)
 		printf("minishell: cd : %s: No such file or directory\n", token->value);
 		return (0);
 	}
-	if (token->next && ft_strlen(token->next->value))
+	if (!is_end_command(token->next))
 	{
 		printf("minishell: cd: too many arguments\n");
 		return (0);

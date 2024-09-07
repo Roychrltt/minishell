@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/06 19:00:04 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/07 14:50:28 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,10 +79,8 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	printf "$(ERASE)$(BLUE) > Compilation: $(RESET) $<"
 
 clean:
-	printf "$(ERASE)$(GREEN)Cleaning up...$(RESET)"
 	$(MAKE) -sC libft clean
 	$(RM) ${OBJ}
-	printf "$(ERASE)$(GREEN)🧼 Clean finished! 🧼$(RESET)"
 
 fclean: clean
 	printf "$(ERASE)$(GREEN)Fcleaning up...$(RESET)"

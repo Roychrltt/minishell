@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 23:40:20 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 10:41:29 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ int	g_pid = 0;
 
 static void	begin_of_all(t_mem *mem, char **argv, char **envp)
 {
+	if (!getenv("PATH"))
+	{
+		printf("minishell shut down due to lack of environment variables\n");
+		exit(0);
+	}
 	sig_init_signals();
 	mem->saved_stdin = dup(STDIN_FILENO);
 	mem->saved_stdout = dup(STDOUT_FILENO);
@@ -41,6 +46,9 @@ static int	init_mem(t_mem *mem)
 	mem->paths = get_paths(mem->my_env);
 	if (!mem->paths)
 		return (free_tab(mem->args), 0);
+	mem->tokens = tokens_to_list(mem->args);
+	if (!mem->tokens)
+		return (free_tab(mem->args), free_tab(mem->paths), 0);
 	return (1);
 }
 
@@ -65,7 +73,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_mem	mem;
 
-	(void)argc;
+	if (argc > 1)
+		return (printf("minishell does not support arguments for now\n"), 1);
 	begin_of_all(&mem, argv, envp);
 	while (1)
 	{
@@ -76,11 +85,10 @@ int	main(int argc, char **argv, char **envp)
 			printf("exit\n");
 			break ;
 		}
-		if (!init_mem(&mem))
-			continue ;
 		if (*(mem.input))
 			add_history(mem.input);
-		mem.tokens = tokens_to_list(mem.args);
+		if (!init_mem(&mem))
+			continue ;
 		if (mem.tokens)
 			execute(&mem);
 		free_mem(&mem);

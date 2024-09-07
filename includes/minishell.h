@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 23:28:34 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/07 14:41:55 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int		last_child(t_token *list, t_mem *mem);
 
 // baby_sitter
 void	redirect(t_cmd *cmd);
-void	do_command(t_cmd *cmd, t_mem *mem, int status);
+void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status);
 
 // utils
 
@@ -172,7 +172,6 @@ int		open_here_doc(void);
 int		open_file(char *file, int n);
 char	**get_paths(t_env *env);
 char	*get_command(char **paths, char *cmd);
-
 
 // more_utils
 int		count_args(t_token *list);
