@@ -6,13 +6,14 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 02:25:41 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 18:54:06 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <dirent.h>
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -165,9 +166,10 @@ int		execute(t_mem *mem);
 int		exec_command(t_cmd *cmd, t_token *list, t_mem *mem);
 int		ft_command(t_token *list, t_mem *mem);
 int		last_child(t_token *list, t_mem *mem);
+void get_exit_stat(char *s, t_mem *mem);
 
-// baby_sitter
-void	redirect(t_cmd *cmd);
+	// baby_sitter
+	void redirect(t_cmd *cmd);
 void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status);
 
 // utils
@@ -187,6 +189,8 @@ void	result_handler(int argc);
 
 // ---signals--- //
 void	sig_init_signals(void);
-void	sigint_handler(int signum);
+void	sigint_handler(int signo);
+void	child_sig_init(void);
+void	sigquit_handler(int signo);
 
 #endif

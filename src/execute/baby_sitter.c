@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:46:20 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 02:24:51 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 19:46:55 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,19 @@ static void	execute_builtins(t_token *list, t_cmd *cmd, t_mem *mem)
 		close(cmd->outfile);
 	free(cmd->command);
 	free_tab(cmd->args);
+	close(mem->saved_stdin);
+	close(mem->saved_stdout);
 	exit(0);
 }
 
 void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
+	g_pid = fork();
+	if (g_pid < 0)
 		perror("Fork error");
-	if (pid == 0)
+	if (g_pid == 0)
 	{
+		child_sig_init();
 		redirect(cmd);
 		if (status == 1)
 		{
@@ -64,5 +65,5 @@ void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 		else
 			execve(cmd->command, cmd->args, mem->envp);
 	}
-	waitpid(pid, &(mem->status), 0);
+	// waitpid(g_pid, &(mem->status), 0);
 }

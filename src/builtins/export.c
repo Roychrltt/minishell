@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 15:59:05 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 02:10:03 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 19:59:40 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ int	ft_export(t_env *env, t_token *arg, t_mem *mem)
 	while (!is_end_command(temp))
 	{
 		if (is_valid_for_export(temp->value))
+		{
 			add_env(temp->value, &env);
+			add_env(temp->value, &(mem->my_env));
+		}
 		else
 		{
 			printf("minishell: export: '%s': not a valid identifier\n",

@@ -92,14 +92,18 @@ int	ft_command(t_token *list, t_mem *mem)
 	return (1);
 }
 
-static void	get_exit_stat(char *s, t_mem *mem)
+void	get_exit_stat(char *s, t_mem *mem)
 {
 	if (is_builtins(s))
 		return ;
-	if (WIFEXITED(mem->status))
+	if (WIFSIGNALED(mem->status))
+		mem->exit_stat = 128 + WTERMSIG(mem->status);
+	else if (WIFEXITED(mem->status))
 		mem->exit_stat = WEXITSTATUS(mem->status);
-	else
-		mem->exit_stat = 1;
+	else if (WIFSTOPPED(mem->status))
+		mem->exit_stat = 128 + WSTOPSIG(mem->status);
+	if (mem->exit_stat == 128 + SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)\n", 2);
 }
 
 int	last_child(t_token *list, t_mem *mem)
@@ -117,9 +121,6 @@ int	last_child(t_token *list, t_mem *mem)
 		close(cmd.infile);
 	if (cmd.outfile > STDOUT_FILENO)
 		close(cmd.outfile);
-	dup2(mem->saved_stdin, STDIN_FILENO);
-	dup2(mem->saved_stdout, STDOUT_FILENO);
-	get_exit_stat(cmd.command, mem);
 	free_tab(cmd.args);
 	free(cmd.command);
 	if (cmd.heredoc)

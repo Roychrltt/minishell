@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 13:31:24 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 19:34:22 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	begin_of_all(t_mem *mem, char **argv, char **envp)
 		printf("Error: Shut down due to lack of environment variables\n");
 		exit(0);
 	}
-	sig_init_signals();
 	mem->saved_stdin = dup(STDIN_FILENO);
 	mem->saved_stdout = dup(STDOUT_FILENO);
 	mem->argv = argv;
@@ -40,9 +39,8 @@ static int	init_mem(t_mem *mem)
 	}
 	mem->word = 0;
 	mem->status = 0;
-	mem->count = count_token(mem->input, mem);
 	mem->args = tokenizer(mem->input, mem);
-	if (!mem->args)
+	if (!mem->args || !mem->args[0])
 		return (free(mem->input), 0);
 	if (!check_metas(mem->args))
 	{
@@ -84,6 +82,8 @@ int	main(int argc, char **argv, char **envp)
 	begin_of_all(&mem, argv, envp);
 	while (1)
 	{
+		g_pid = 0;
+		sig_init_signals();
 		mem.input = readline("minishell$>");
 		if (!mem.input || !ft_strcmp(mem.input, "exit"))
 		{

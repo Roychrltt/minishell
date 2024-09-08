@@ -34,6 +34,9 @@ int	execute(t_mem *mem)
 	int		i;
 	int		pipe_num;
 
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	temp = mem->tokens;
 	if (!expand(&temp, mem->values, mem))
 		return (0);
@@ -48,5 +51,14 @@ int	execute(t_mem *mem)
 		i++;
 	}
 	last_child(temp, mem);
+	i = 0;
+	while (i <= pipe_num)
+	{
+		wait(&mem->status);
+		i++;
+	}
+	dup2(mem->saved_stdin, STDIN_FILENO);
+	dup2(mem->saved_stdout, STDOUT_FILENO);
+	get_exit_stat("", mem);
 	return (1);
 }

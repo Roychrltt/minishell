@@ -63,16 +63,15 @@ int	get_here_doc_input(char *eof)
 		perror(".here_doc.tmp open failure");
 	while (1)
 	{
-		write (1, ">", 1);
-		input = get_next_line(STDIN_FILENO);
+		input = readline(">");
 		if (!input)
 			printf("Invalid input\n");
-		if (ft_strncmp(input, eof, ft_strlen(eof)) == 0)
+		if (ft_strcmp(input, eof) == 0)
 		{
 			free(input);
 			break ;
 		}
-		write(file, input, ft_strlen(input));
+		ft_putendl_fd(input, file);
 		free(input);
 	}
 	close(file);
