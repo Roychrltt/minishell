@@ -1,6 +1,0 @@
-builtins.c:		return (ft_cd(mem->my_env, mem->values, arg));
-builtins.c:		return (ft_pwd(mem->values));
-builtins.c:		return (ft_export(mem->values, arg));
-builtins.c:		return (ft_unset(mem->my_env, mem->values, arg));
-builtins.c:		return (ft_env(mem->my_env));
-echo.c:	mem->exit_stat = 0;

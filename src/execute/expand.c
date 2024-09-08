@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 16:08:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/02 15:56:06 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 01:46:02 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@ static int	is_name_char(int c)
 	return (ft_isalnum(c) || c == '_');
 }
 
-static void	ft_replace(t_expand *t, char *str, t_env *env)
+static void	ft_replace(t_expand *t, char *str, t_env *env, t_mem *mem)
 {
 	t->n = 0;
 	(t->i)++;
 	if (!str[t->i])
 		t->sub = ft_strdup("$");
+	else if (str[t->i] == '?' && !str[t->i + 1])
+	{
+		(t->n)++;
+		t->sub = ft_itoa(mem->exit_stat);
+	}
 	else
 	{
 		while (is_name_char((int)str[t->i + t->n]))
@@ -37,7 +42,7 @@ static void	ft_replace(t_expand *t, char *str, t_env *env)
 	}
 }
 
-static char	*expansion(char *str, t_env *env)
+static char	*expansion(char *str, t_env *env, t_mem *mem)
 {
 	t_expand	t;
 
@@ -49,7 +54,7 @@ static char	*expansion(char *str, t_env *env)
 	while (t.i < t.len)
 	{
 		if (str[t.i] == '$')
-			ft_replace(&t, str, env);
+			ft_replace(&t, str, env, mem);
 		else
 		{
 			t.n = ft_strchr(str + t.i, '$');
@@ -65,7 +70,7 @@ static char	*expansion(char *str, t_env *env)
 	return (t.s);
 }
 
-int	expand(t_token	**list, t_env *env)
+int	expand(t_token	**list, t_env *env, t_mem *mem)
 {
 	t_token	*temp;
 	char	*s;
@@ -81,7 +86,7 @@ int	expand(t_token	**list, t_env *env)
 			return (0);
 		if ((temp->type == DOUBLEQUOTE || temp->type == ARGUMENT)
 			&& ft_strlen(temp->value) > 1)
-			s = expansion(s, env);
+			s = expansion(s, env, mem);
 		if (!s)
 			return (0);
 		free(temp->value);

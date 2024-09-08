@@ -6,13 +6,13 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:00:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 13:05:30 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 01:59:53 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	ft_pwd(t_env *env)
+int	ft_pwd(t_env *env, t_mem *mem)
 {
 	char	*pwd;
 	t_env	*temp;
@@ -34,6 +34,7 @@ int	ft_pwd(t_env *env)
 		return (1);
 	}
 	printf("%s\n", pwd);
+	mem->exit_stat = 0;
 	return (0);
 }
 

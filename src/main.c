@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 19:32:40 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:25:55 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static int	init_mem(t_mem *mem)
 	mem->squote = 0;
 	mem->dquote = 0;
 	mem->word = 0;
+	mem->status = 0;
 	mem->count = count_token(mem->input, mem);
 	mem->args = tokenizer(mem->input, mem);
 	if (!mem->args)

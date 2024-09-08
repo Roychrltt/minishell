@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 23:40:42 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:35:58 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	execute(t_mem *mem)
 	int		pipe_num;
 
 	temp = mem->tokens;
-	if (!expand(&temp, mem->values))
+	if (!expand(&temp, mem->values, mem))
 		return (0);
 	i = 0;
 	pipe_num = count_pipes(temp);
@@ -48,9 +48,5 @@ int	execute(t_mem *mem)
 		i++;
 	}
 	last_child(temp, mem);
-	while (i-- >= 0)
-	{
-		wait(NULL);
-	}
 	return (1);
 }

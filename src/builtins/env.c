@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 11:26:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 17:47:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:00:45 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_env	*sort_env(char **envp)
 	return (list);
 }
 
-int	ft_env(t_env *env)
+int	ft_env(t_env *env, t_mem *mem)
 {
 	t_env	*temp;
 
@@ -82,6 +82,7 @@ int	ft_env(t_env *env)
 			printf("%s=\"%s\"\n", temp->key, temp->value);
 		temp = temp->next;
 	}
+	mem->exit_stat = 0;
 	return (0);
 }
 

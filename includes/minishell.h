@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/07 16:54:14 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:25:41 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_mem
 	int		i;
 	int		j;
 	int		k;
+	int		status;
 	char	*input;
 	int		found;
 	int		squote;
@@ -144,10 +145,10 @@ int		is_builtins(char *s);
 int		do_builtins(t_token *arg, t_mem *mem);
 int		ft_echo(t_token *arg, t_mem *mem);
 int		ft_cd(t_token *arg, t_mem *mem);
-int		ft_pwd(t_env *env);
-int		ft_env(t_env *env);
-int		ft_export(t_env *env, t_token *arg);
-int		ft_unset(t_env *my_env, t_env *values, t_token *arg);
+int		ft_pwd(t_env *env, t_mem *mem);
+int		ft_env(t_env *env, t_mem *mem);
+int		ft_export(t_env *env, t_token *arg, t_mem *mem);
+int		ft_unset(t_env *my_env, t_env *values, t_token *arg, t_mem *mem);
 t_env	*env_new_node(char *s);
 t_env	*env_dup(char **envp);
 t_env	*sort_env(char **envp);
@@ -157,7 +158,7 @@ void	free_env(t_env *env);
 
 // ---execute--- //
 
-int		expand(t_token **list, t_env *env);
+int		expand(t_token **list, t_env *env, t_mem *mem);
 int		get_fds(t_token *list, t_cmd *cmd);
 int		execute(t_mem *mem);
 

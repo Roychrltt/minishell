@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 01:02:18 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:37:44 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,16 @@ int	ft_command(t_token *list, t_mem *mem)
 	return (1);
 }
 
+static void	get_exit_stat(char *s, t_mem *mem)
+{
+	if (is_builtins(s))
+		return ;
+	if (WIFEXITED(mem->status))
+		mem->exit_stat = WEXITSTATUS(mem->status);
+	else
+		mem->exit_stat = 1;
+}
+
 int	last_child(t_token *list, t_mem *mem)
 {
 	t_cmd	cmd;
@@ -103,6 +113,7 @@ int	last_child(t_token *list, t_mem *mem)
 		close(cmd.outfile);
 	dup2(mem->saved_stdin, STDIN_FILENO);
 	dup2(mem->saved_stdout, STDOUT_FILENO);
+	get_exit_stat(cmd.command, mem);
 	free_tab(cmd.args);
 	free(cmd.command);
 	if (cmd.heredoc)
