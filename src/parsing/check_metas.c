@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:15:55 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/08/30 13:17:50 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:54:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	check_meta_next(char *s1, char *s2)
 	{
 		if (is_meta_char(s2))
 		{
-			printf("minishell: parse error near \'%s\'", s2);
+			printf("minishell: parse error near \'%s\'\n", s2);
 			return (0);
 		}
 	}
@@ -26,7 +26,7 @@ static int	check_meta_next(char *s1, char *s2)
 	{
 		if (!ft_strcmp(s2, "|") || is_logical(s2))
 		{
-			printf("minishell: parse error near \'%s\'", s1);
+			printf("minishell: parse error near \'%s\'\n", s1);
 			return (0);
 		}
 	}
@@ -39,7 +39,7 @@ int	check_metas(char **tokens)
 
 	i = 0;
 	if (!ft_strcmp(tokens[0], "|") || is_logical(tokens[0]))
-		return (printf("minishell: syntax error near \'%s\'", tokens[0]), 0);
+		return (printf("minishell: syntax error near \'%s\'\n", tokens[0]), 0);
 	while (tokens[i + 1])
 	{
 		if (is_meta_char(tokens[i]))
@@ -50,6 +50,6 @@ int	check_metas(char **tokens)
 		i++;
 	}
 	if (is_meta_char(tokens[i]))
-		return (printf("minishell: syntax error near \'%s\'", tokens[i]), 0);
+		return (printf("minishell: syntax error near \'%s\'\n", tokens[i]), 0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 02:37:44 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:41:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ static int	init_cmd(t_cmd *cmd, t_token *list, t_mem *mem)
 		return (0);
 	cmd->command = get_command(mem->paths, list->value);
 	if (!cmd->command)
+	{
+		mem->exit_stat = 127;
 		return (0);
+	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:37:27 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 13:26:38 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:52:55 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,9 @@ char	**tokenizer(char *str, t_mem *mem)
 
 	mem->i = 0;
 	mem->k = 0;
+	mem->found = 0;
+	mem->squote = 0;
+	mem->dquote = 0;
 	tokens = malloc(sizeof(char *) * (count_token(str, mem) + 1));
 	while (str[mem->i])
 	{

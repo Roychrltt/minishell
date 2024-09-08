@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 02:25:55 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/08 02:52:59 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,27 @@ static void	begin_of_all(t_mem *mem, char **argv, char **envp)
 static int	init_mem(t_mem *mem)
 {
 	if (!check_quotes(mem->input))
+	{
+		mem->exit_stat = 2;
 		return (free(mem->input), 0);
-	mem->found = 0;
-	mem->squote = 0;
-	mem->dquote = 0;
+	}
 	mem->word = 0;
 	mem->status = 0;
 	mem->count = count_token(mem->input, mem);
 	mem->args = tokenizer(mem->input, mem);
 	if (!mem->args)
-		return (0);
+		return (free(mem->input), 0);
+	if (!check_metas(mem->args))
+	{
+		mem->exit_stat = 2;
+		return (free(mem->input), free_tab(mem->args), 0);
+	}
 	mem->paths = get_paths(mem->my_env);
 	if (!mem->paths)
-		return (free_tab(mem->args), 0);
+		return (free(mem->input), free_tab(mem->args), 0);
 	mem->tokens = tokens_to_list(mem->args);
 	if (!mem->tokens)
-		return (free_tab(mem->args), free_tab(mem->paths), 0);
+		return (free(mem->input), free_tab(mem->args), free_tab(mem->paths), 0);
 	return (1);
 }
 
