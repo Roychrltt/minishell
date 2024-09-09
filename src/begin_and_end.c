@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:47:56 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 17:02:19 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 00:22:15 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	begin_of_all(t_mem *mem, char **argv, char **envp)
 	mem->saved_stdin = dup(STDIN_FILENO);
 	mem->saved_stdout = dup(STDOUT_FILENO);
 	mem->argv = argv;
-	mem->exit_stat = 0;
 	mem->envp = envp;
+	mem->exit_stat = 0;
 	mem->values = sort_env(envp);
 	mem->my_env = env_dup(envp);
 }

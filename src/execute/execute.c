@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 18:12:55 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 00:30:23 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	execute(t_mem *mem)
 	if (!mem->pids)
 		return (0);
 	mem->index = 0;
+	signal(SIGINT, SIG_IGN);
 	while (mem->index < pipe_num)
 	{
 		ft_command(temp, mem);
@@ -85,6 +86,7 @@ int	execute(t_mem *mem)
 	}
 	last_child(temp, mem);
 	end_execution(mem, pipe_num);
-	get_exit_stat(mem->last_cmd, mem);
+	if (mem->cmd_exist)
+		get_exit_stat(mem->last_cmd, mem);
 	return (1);
 }

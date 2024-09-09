@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 17:12:02 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/09 23:49:49 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,10 @@ int	last_child(t_token *list, t_mem *mem)
 	if (is_builtins(cmd.command))
 		do_builtins(list, mem);
 	else
+	{
+		mem->wait = 1;
 		do_command(list, &cmd, mem, 0);
+	}
 	if (cmd.infile > STDIN_FILENO)
 		close(cmd.infile);
 	if (cmd.outfile > STDOUT_FILENO)

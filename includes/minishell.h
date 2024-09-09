@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 22:02:25 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/09 23:50:20 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_mem
 	int		i;
 	int		j;
 	int		k;
+	int		wait;
 	int		status;
 	char	*input;
 	int		found;
