@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 13:33:07 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/09 17:12:02 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,20 +92,6 @@ int	ft_command(t_token *list, t_mem *mem)
 	return (1);
 }
 
-void	get_exit_stat(char *s, t_mem *mem)
-{
-	if (is_builtins(s))
-		return ;
-	if (WIFSIGNALED(mem->status))
-		mem->exit_stat = 128 + WTERMSIG(mem->status);
-	else if (WIFEXITED(mem->status))
-		mem->exit_stat = WEXITSTATUS(mem->status);
-	else if (WIFSTOPPED(mem->status))
-		mem->exit_stat = 128 + WSTOPSIG(mem->status);
-	if (mem->exit_stat == 128 + SIGQUIT)
-		ft_putstr_fd("Quit (core dumped)\n", 2);
-}
-
 int	last_child(t_token *list, t_mem *mem)
 {
 	t_cmd	cmd;
@@ -121,9 +107,11 @@ int	last_child(t_token *list, t_mem *mem)
 		close(cmd.infile);
 	if (cmd.outfile > STDOUT_FILENO)
 		close(cmd.outfile);
-	free_tab(cmd.args);
-	free(cmd.command);
 	if (cmd.heredoc)
 		unlink(".here_doc.tmp");
+	free_tab(cmd.args);
+	mem->cmd_exist = 1;
+	mem->last_cmd = ft_strdup(cmd.command);
+	free(cmd.command);
 	return (1);
 }

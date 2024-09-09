@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/07 14:50:28 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/09 21:46:17 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ CFLAGS = -Wall -Wextra -Werror
 SRC_DIR = ./src/
 	  
 SRC_FILES = main.c \
+			begin_and_end.c \
 			signals.c \
 			builtins/builtins.c \
 			builtins/export.c \
@@ -35,6 +36,7 @@ SRC_FILES = main.c \
 			parsing/tokens_to_list.c \
 			execute/execute.c \
 			execute/expand.c \
+			execute/wildcards.c \
 			execute/utils.c \
 			execute/child.c \
 			execute/baby_sitter.c \

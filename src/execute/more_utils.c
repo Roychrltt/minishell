@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:35:18 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 19:02:10 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/09 12:44:30 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ int	get_here_doc_input(char *eof)
 	while (1)
 	{
 		input = readline(">");
-		if (!input)
-			printf("Invalid input\n");
-		if (ft_strcmp(input, eof) == 0)
+		if (!input || ft_strcmp(input, eof) == 0)
 		{
 			free(input);
 			break ;

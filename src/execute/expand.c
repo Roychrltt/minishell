@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 16:08:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 01:46:02 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/09 21:53:02 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ int	expand(t_token	**list, t_env *env, t_mem *mem)
 			return (0);
 		free(temp->value);
 		temp->value = s;
+		if (temp->type == ARGUMENT
+			&& ft_strchr(temp->value, '*') < ft_strlen(temp->value))
+			expand_from_wc(&temp);
 		temp = temp->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:46:20 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 19:46:55 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/09 14:43:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ static void	execute_builtins(t_token *list, t_cmd *cmd, t_mem *mem)
 
 void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 {
-	g_pid = fork();
-	if (g_pid < 0)
+	mem->pids[mem->index] = fork();
+	if (mem->pids[mem->index] < 0)
 		perror("Fork error");
-	if (g_pid == 0)
+	if (mem->pids[mem->index] == 0)
 	{
 		child_sig_init();
 		redirect(cmd);
@@ -65,5 +65,4 @@ void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 		else
 			execve(cmd->command, cmd->args, mem->envp);
 	}
-	// waitpid(g_pid, &(mem->status), 0);
 }

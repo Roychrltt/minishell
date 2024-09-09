@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 18:54:06 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/09 22:02:25 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ typedef struct s_mem
 	char	**paths;
 	t_token	*tokens;
 	t_cmd	*cmds;
+	pid_t	*pids;
+	int		index;
+	int		cmd_exist;
+	char	*last_cmd;
 }	t_mem;
 
 // ---parsing--- //
@@ -160,20 +164,20 @@ void	free_env(t_env *env);
 // ---execute--- //
 
 int		expand(t_token **list, t_env *env, t_mem *mem);
+void	expand_from_wc(t_token **token);
 int		get_fds(t_token *list, t_cmd *cmd);
 int		execute(t_mem *mem);
 
 int		exec_command(t_cmd *cmd, t_token *list, t_mem *mem);
 int		ft_command(t_token *list, t_mem *mem);
 int		last_child(t_token *list, t_mem *mem);
-void get_exit_stat(char *s, t_mem *mem);
+void	get_exit_stat(char *s, t_mem *mem);
 
-	// baby_sitter
-	void redirect(t_cmd *cmd);
+// baby_sitter
+void	redirect(t_cmd *cmd);
 void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status);
 
 // utils
-
 char	*my_strjoin(char *s1, char *s2);
 int		open_here_doc(void);
 int		open_file(char *file, int n);
@@ -191,6 +195,12 @@ void	result_handler(int argc);
 void	sig_init_signals(void);
 void	sigint_handler(int signo);
 void	child_sig_init(void);
-void	sigquit_handler(int signo);
+
+// ---main--- //
+
+void	begin_of_all(t_mem *mem, char **argv, char **envp);
+int		init_mem(t_mem *mem);
+void	free_mem(t_mem *mem);
+void	end_of_all(t_mem *mem);
 
 #endif
