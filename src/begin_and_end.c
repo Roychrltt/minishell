@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:47:56 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 19:10:09 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 00:42:23 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,5 @@ void	end_of_all(t_mem *mem)
 	free_env(mem->values);
 	free_env(mem->my_env);
 	rl_clear_history();
-	printf("\n");
+	printf("exit\n");
 }

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 17:31:14 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 00:34:00 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ static void	end_execution(t_mem *mem, int num)
 	int		i;
 
 	i = 0;
+	dup2(mem->saved_stdin, STDIN_FILENO);
+	dup2(mem->saved_stdout, STDOUT_FILENO);
 	while (i < num)
 	{
 		if (mem->pids[i] != -1)
@@ -63,8 +65,6 @@ static void	end_execution(t_mem *mem, int num)
 		if (mem->pids[i] != -1)
 			waitpid(mem->pids[i], &(mem->status), 0);
 	}
-	dup2(mem->saved_stdin, STDIN_FILENO);
-	dup2(mem->saved_stdout, STDOUT_FILENO);
 	free(mem->pids);
 }
 

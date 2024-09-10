@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:46:20 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 23:47:37 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 00:47:25 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,32 @@ static void	execute_builtins(t_token *list, t_cmd *cmd, t_mem *mem)
 	exit(0);
 }
 
+static void	clear_execve(t_cmd *cmd, t_mem *mem)
+{
+	perror("execve");
+	if (cmd->infile > STDIN_FILENO)
+		close(cmd->infile);
+	if (cmd->outfile > STDOUT_FILENO)
+		close(cmd->outfile);
+	free(cmd->command);
+	free_tab(cmd->args);
+	close(mem->saved_stdin);
+	close(mem->saved_stdout);
+	exit(0);
+}
+
+static void	deal_pipe(t_cmd *cmd)
+{
+	close(cmd->fd[0]);
+	if (cmd->outfile <= STDOUT_FILENO)
+	{
+		dup2(cmd->fd[1], STDOUT_FILENO);
+		close(cmd->fd[1]);
+	}
+	else
+		close(cmd->fd[1]);
+}
+
 void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 {
 	mem->pids[mem->index] = fork();
@@ -47,22 +73,16 @@ void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 		perror("Fork error");
 	if (mem->pids[mem->index] == 0)
 	{
-		child_sig_init();
 		redirect(cmd);
+		child_sig_init();
 		if (status == 1)
-		{
-			close(cmd->fd[0]);
-			if (cmd->outfile <= STDOUT_FILENO)
-			{
-				dup2(cmd->fd[1], STDOUT_FILENO);
-				close(cmd->fd[1]);
-			}
-			else
-				close(cmd->fd[1]);
-		}
+			deal_pipe(cmd);
 		if (is_builtins(cmd->command))
 			execute_builtins(list, cmd, mem);
 		else
-			execve(cmd->command, cmd->args, mem->envp);
+		{
+			if (execve(cmd->command, cmd->args, mem->envp) == -1)
+				clear_execve(cmd, mem);
+		}
 	}
 }
