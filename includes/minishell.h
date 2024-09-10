@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 23:50:20 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 14:39:58 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ typedef struct s_mem
 	t_cmd	*cmds;
 	pid_t	*pids;
 	int		index;
+	int		pipe_num;
 	int		cmd_exist;
 	char	*last_cmd;
 }	t_mem;

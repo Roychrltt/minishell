@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 12:59:43 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 15:04:38 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,47 @@ static void	end_execution(t_mem *mem, int num)
 	i = 0;
 	while (i < num)
 	{
-		waitpid(mem->pids[i], &(mem->status), 0);
+		if (mem->pids[i] != -1)
+			waitpid(mem->pids[i], &(mem->status), 0);
 		i++;
 	}
 	if (mem->wait)
-		waitpid(mem->pids[i], &(mem->status), 0);
+	{
+		if (mem->pids[i] != -1)
+			waitpid(mem->pids[i], &(mem->status), 0);
+	}
 	dup2(mem->saved_stdin, STDIN_FILENO);
 	dup2(mem->saved_stdout, STDOUT_FILENO);
 	free(mem->pids);
 }
 
+static void	mem_prep(t_mem *mem)
+{
+	int	i;
+
+	i = 0;
+	mem->index = 0;
+	while (i <= mem->pipe_num)
+	{
+		mem->pids[i] = -1;
+		i++;
+	}
+}
+
 int	execute(t_mem *mem)
 {
 	t_token	*temp;
-	int		pipe_num;
 
 	temp = mem->tokens;
 	if (!expand(&(mem->tokens), mem->values, mem))
 		return (0);
-	pipe_num = count_pipes(temp);
-	mem->pids = malloc((pipe_num + 1) * sizeof (pid_t *));
+	mem->pipe_num = count_pipes(temp);
+	mem->pids = malloc((mem->pipe_num + 1) * sizeof (pid_t *));
 	if (!mem->pids)
 		return (0);
-	mem->index = 0;
+	mem_prep(mem);
 	signal(SIGINT, SIG_IGN);
-	while (mem->index < pipe_num)
+	while (mem->index < mem->pipe_num)
 	{
 		ft_command(temp, mem);
 		while (!is_end_command(temp))
@@ -87,7 +103,7 @@ int	execute(t_mem *mem)
 		(mem->index)++;
 	}
 	last_child(temp, mem);
-	end_execution(mem, pipe_num);
+	end_execution(mem, mem->pipe_num);
 	if (mem->cmd_exist)
 		get_exit_stat(mem->last_cmd, mem);
 	return (1);
