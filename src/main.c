@@ -6,11 +6,11 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 17:19:20 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 19:09:57 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../includes/minishell.h>
+#include "../includes/minishell.h"
 
 int	g_pid = 0;
 
@@ -25,6 +25,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		sig_init_signals();
 		mem.input = readline("minishell$>");
+		if (g_pid != 0)
+			mem.exit_stat = g_pid;
 		if (!mem.input)
 			break ;
 		if (*(mem.input))
@@ -38,6 +40,5 @@ int	main(int argc, char **argv, char **envp)
 			break ;
 	}
 	end_of_all(&mem);
-	printf("exit\n");
 	return (mem.exit_stat);
 }

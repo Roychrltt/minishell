@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 17:28:40 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 22:00:31 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 18:58:30 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int	is_match(char *name, char *str)
 
 	i = 0;
 	j = 0;
+	if (str[0] != '*' && str[0] != name[0])
+		return (0);
 	while (str[i])
 	{
 		while (str[i] == '*')

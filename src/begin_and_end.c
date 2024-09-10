@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:47:56 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 17:17:01 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 19:10:09 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	begin_of_all(t_mem *mem, char **argv, char **envp)
 	mem->saved_stdout = dup(STDOUT_FILENO);
 	mem->argv = argv;
 	mem->envp = envp;
-	mem->exit_stat = 0;
 	mem->values = sort_env(envp);
 	mem->my_env = env_dup(envp);
 }
@@ -59,6 +58,7 @@ int	init_mem(t_mem *mem)
 
 void	free_mem(t_mem *mem)
 {
+	g_pid = 0;
 	free(mem->input);
 	if (mem->cmd_exist)
 		free(mem->last_cmd);
@@ -74,4 +74,5 @@ void	end_of_all(t_mem *mem)
 	free_env(mem->values);
 	free_env(mem->my_env);
 	rl_clear_history();
+	printf("\n");
 }
