@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:21:31 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/08 02:15:28 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:53:03 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ int	is_builtins(char *s)
 	return (0);
 }
 
-static int	ft_exit(t_mem *mem)
-{
-	(void)mem;
-	return (1);
-}
-
 int	do_builtins(t_token *arg, t_mem *mem)
 {
 	if (!ft_strcmp(arg->value, "echo"))
@@ -46,7 +40,7 @@ int	do_builtins(t_token *arg, t_mem *mem)
 	else if (!ft_strcmp(arg->value, "env"))
 		return (ft_env(mem->my_env, mem));
 	else if (!ft_strcmp(arg->value, "exit"))
-		return (ft_exit(mem));
+		return (ft_exit(arg, mem));
 	else
 		return (0);
 }

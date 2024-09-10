@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 14:39:58 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 17:32:13 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <fcntl.h>
+# include <limits.h>
+# include <stdint.h>
 # include <sys/uio.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -92,6 +94,7 @@ typedef struct s_mem
 	int		j;
 	int		k;
 	int		wait;
+	int		exit;
 	int		status;
 	char	*input;
 	int		found;
@@ -156,6 +159,7 @@ int		ft_pwd(t_env *env, t_mem *mem);
 int		ft_env(t_env *env, t_mem *mem);
 int		ft_export(t_env *env, t_token *arg, t_mem *mem);
 int		ft_unset(t_env *my_env, t_env *values, t_token *arg, t_mem *mem);
+int		ft_exit(t_token *arg, t_mem *mem);
 t_env	*env_new_node(char *s);
 t_env	*env_dup(char **envp);
 t_env	*sort_env(char **envp);
@@ -167,6 +171,7 @@ void	free_env(t_env *env);
 
 int		expand(t_token **list, t_env *env, t_mem *mem);
 void	expand_from_wc(t_token **token);
+int		command_check(t_token *list);
 int		get_fds(t_token *list, t_cmd *cmd);
 int		execute(t_mem *mem);
 

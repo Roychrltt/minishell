@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 16:08:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 21:53:02 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 17:37:46 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,34 @@ int	expand(t_token	**list, t_env *env, t_mem *mem)
 			&& ft_strchr(temp->value, '*') < ft_strlen(temp->value))
 			expand_from_wc(&temp);
 		temp = temp->next;
+	}
+	return (1);
+}
+
+int	command_check(t_token *list)
+{
+	t_token	*temp;
+	int		n;
+
+	temp = list;
+	n = 0;
+	while (temp)
+	{
+		if (is_end_command(temp) && n)
+			n = 0;
+		else if (is_end_command(temp) && !n)
+		{
+			printf("Error: command missing\n");
+			return (0);
+		}
+		if (temp->type == COMMAND)
+			n = 1;
+		temp = temp->next;
+	}
+	if (!n)
+	{
+		printf("Error: command missing\n");
+		return (0);
 	}
 	return (1);
 }

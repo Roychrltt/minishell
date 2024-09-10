@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:40:25 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 15:04:40 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 17:19:20 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		sig_init_signals();
 		mem.input = readline("minishell$>");
-		if (!mem.input || !ft_strcmp(mem.input, "exit"))
-		{
-			free(mem.input);
-			printf("exit\n");
+		if (!mem.input)
 			break ;
-		}
 		if (*(mem.input))
 			add_history(mem.input);
 		if (!init_mem(&mem))
@@ -38,7 +34,10 @@ int	main(int argc, char **argv, char **envp)
 		if (mem.tokens)
 			execute(&mem);
 		free_mem(&mem);
+		if (mem.exit == 1)
+			break ;
 	}
 	end_of_all(&mem);
-	return (0);
+	printf("exit\n");
+	return (mem.exit_stat);
 }

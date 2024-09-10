@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 15:04:38 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 17:31:14 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ int	execute(t_mem *mem)
 	t_token	*temp;
 
 	temp = mem->tokens;
-	if (!expand(&(mem->tokens), mem->values, mem))
+	if (!command_check(mem->tokens)
+		|| !expand(&(mem->tokens), mem->values, mem))
 		return (0);
 	mem->pipe_num = count_pipes(temp);
 	mem->pids = malloc((mem->pipe_num + 1) * sizeof (pid_t *));

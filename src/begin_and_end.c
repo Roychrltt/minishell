@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/09 14:47:56 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 15:10:53 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 17:17:01 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	init_mem(t_mem *mem)
 	mem->wait = 0;
 	mem->word = 0;
 	mem->status = 0;
+	mem->exit = 0;
 	mem->args = tokenizer(mem->input, mem);
 	if (!mem->args || !mem->args[0])
 		return (free(mem->input), 0);

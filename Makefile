@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/09 21:46:17 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/10 17:39:44 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC_FILES = main.c \
 			builtins/echo.c \
 			builtins/env.c \
 			builtins/pwd.c \
+			builtins/exit.c \
 			parsing/check_quotes.c \
 			parsing/check_metas.c \
 			parsing/check_metas_utils.c \
@@ -82,7 +83,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 
 clean:
 	$(MAKE) -sC libft clean
-	$(RM) ${OBJ}
+	$(RM) ./.obj/
 
 fclean: clean
 	printf "$(ERASE)$(GREEN)Fcleaning up...$(RESET)"

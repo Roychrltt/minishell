@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:00:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 16:19:01 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/10 16:05:35 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ static void	update_pwd(t_env *env)
 
 static int	check_cd(t_token *token)
 {
+	t_token	*temp;
+
+	temp = token->next;
 	if (is_end_command(token))
 	{
 		printf("minishell: cd: too few arguments\n");
@@ -96,10 +99,15 @@ static int	check_cd(t_token *token)
 		printf("minishell: cd : %s: No such file or directory\n", token->value);
 		return (0);
 	}
-	if (!is_end_command(token->next))
+	while (!is_end_command(temp))
 	{
-		printf("minishell: cd: too many arguments\n");
-		return (0);
+		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
+			|| temp->type == DOUBLEQUOTE)
+		{
+			printf("minishell: cd: too many arguments\n");
+			return (0);
+		}
+		temp = temp->next;
 	}
 	return (1);
 }
