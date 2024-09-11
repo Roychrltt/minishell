@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 15:19:21 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 00:34:00 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 00:57:29 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	execute(t_mem *mem)
 	t_token	*temp;
 
 	temp = mem->tokens;
-	if (!command_check(mem->tokens)
+	if (!command_check(mem->tokens, mem)
 		|| !expand(&(mem->tokens), mem->values, mem))
 		return (0);
 	mem->pipe_num = count_pipes(temp);

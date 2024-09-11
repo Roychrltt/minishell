@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/19 14:21:31 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 16:53:03 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 01:27:51 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	is_builtins(char *s)
 
 int	do_builtins(t_token *arg, t_mem *mem)
 {
+	while (arg->type != COMMAND)
+		arg = arg->next;
 	if (!ft_strcmp(arg->value, "echo"))
 		return (ft_echo(arg, mem));
 	else if (!ft_strcmp(arg->value, "cd"))

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 17:32:13 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 00:57:53 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ void	free_env(t_env *env);
 
 int		expand(t_token **list, t_env *env, t_mem *mem);
 void	expand_from_wc(t_token **token);
-int		command_check(t_token *list);
+int		command_check(t_token *list, t_mem *mem);
 int		get_fds(t_token *list, t_cmd *cmd);
 int		execute(t_mem *mem);
 
