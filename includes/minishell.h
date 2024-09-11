@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 00:57:53 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 14:33:57 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void	free_env(t_env *env);
 int		expand(t_token **list, t_env *env, t_mem *mem);
 void	expand_from_wc(t_token **token);
 int		command_check(t_token *list, t_mem *mem);
-int		get_fds(t_token *list, t_cmd *cmd);
+int		get_fds(t_token *list, t_cmd *cmd, t_mem *mem);
 int		execute(t_mem *mem);
 
 int		exec_command(t_cmd *cmd, t_token *list, t_mem *mem);
@@ -187,7 +187,7 @@ void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status);
 // utils
 char	*my_strjoin(char *s1, char *s2);
 int		open_here_doc(void);
-int		open_file(char *file, int n);
+int		open_file(char *file, int n, t_mem *mem);
 char	**get_paths(t_env *env);
 char	*get_command(char **paths, char *cmd);
 
@@ -195,7 +195,7 @@ char	*get_command(char **paths, char *cmd);
 int		count_args(t_token *list);
 int		get_args(char ***args, t_token *list);
 void	free_tab(char **tab);
-int		get_here_doc_input(char *eof);
+int		get_here_doc_input(char *eof, t_mem *mem);
 void	result_handler(int argc);
 
 // ---signals--- //

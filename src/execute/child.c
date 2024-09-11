@@ -6,13 +6,13 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 23:49:49 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 14:31:15 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	get_fds(t_token *list, t_cmd *cmd)
+int	get_fds(t_token *list, t_cmd *cmd, t_mem *mem)
 {
 	t_token	*temp;
 
@@ -23,7 +23,7 @@ int	get_fds(t_token *list, t_cmd *cmd)
 		{
 			if (cmd->infile > 0)
 				close(cmd->infile);
-			cmd->infile = open_file(temp->next->value, temp->type);
+			cmd->infile = open_file(temp->next->value, temp->type, mem);
 			if (temp->type == HEREDOC)
 				cmd->heredoc = 1;
 		}
@@ -31,7 +31,7 @@ int	get_fds(t_token *list, t_cmd *cmd)
 		{
 			if (cmd->outfile > 1)
 				close(cmd->outfile);
-			cmd->outfile = open_file(temp->next->value, temp->type);
+			cmd->outfile = open_file(temp->next->value, temp->type, mem);
 		}
 		if (cmd->infile == -1 || cmd->outfile == -1)
 			return (0);
@@ -45,7 +45,7 @@ static int	init_cmd(t_cmd *cmd, t_token *list, t_mem *mem)
 	cmd->infile = -2;
 	cmd->outfile = -2;
 	cmd->heredoc = 0;
-	if (!get_fds(list, cmd))
+	if (!get_fds(list, cmd, mem))
 	{
 		mem->exit_stat = 1;
 		return (0);

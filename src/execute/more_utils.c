@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:35:18 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 12:44:30 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 14:37:32 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	get_args(char ***args, t_token *list)
 	return (1);
 }
 
-int	get_here_doc_input(char *eof)
+int	get_here_doc_input(char *eof, t_mem *mem)
 {
 	char	*input;
 	int		file;
@@ -63,13 +63,15 @@ int	get_here_doc_input(char *eof)
 		perror(".here_doc.tmp open failure");
 	while (1)
 	{
-		input = readline(">");
-		if (!input || ft_strcmp(input, eof) == 0)
+		write (mem->saved_stdin, ">", 1);
+		input = get_next_line(mem->saved_stdin);
+		if (!input || ft_strcmp(input, eof) == 10)
 		{
-			free(input);
+			if (input)
+				free(input);
 			break ;
 		}
-		ft_putendl_fd(input, file);
+		ft_putstr_fd(input, file);
 		free(input);
 	}
 	close(file);
