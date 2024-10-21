@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/28 14:21:24 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/05 15:26:00 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 16:18:42 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,6 @@ static void	list_get_type(t_token **list)
 	while (temp)
 	{
 		temp->type = get_token_type(temp->value, temp->prev->value, &new_cmd);
-		if (temp->type == ARGUMENT)
-		{
-			if (temp->value && temp->value[0] == '"')
-				temp->type = DOUBLEQUOTE;
-			else if (temp->value && temp->value[0] == '\'')
-				temp->type = SINGLEQUOTE;
-		}
 		temp = temp->next;
 	}
 }

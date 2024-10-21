@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/31 16:08:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 00:57:17 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 17:48:44 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	ft_replace(t_expand *t, char *str, t_env *env, t_mem *mem)
 	}
 }
 
-static char	*expansion(char *str, t_env *env, t_mem *mem)
+char	*expansion(char *str, t_env *env, t_mem *mem)
 {
 	t_expand	t;
 
@@ -70,7 +70,7 @@ static char	*expansion(char *str, t_env *env, t_mem *mem)
 	return (t.s);
 }
 
-int	expand(t_token	**list, t_env *env, t_mem *mem)
+int	expand(t_token **list, t_env *env, t_mem *mem)
 {
 	t_token	*temp;
 	char	*s;
@@ -78,20 +78,18 @@ int	expand(t_token	**list, t_env *env, t_mem *mem)
 	temp = *list;
 	while (temp)
 	{
-		if (temp->type == SINGLEQUOTE || temp->type == DOUBLEQUOTE)
-			s = ft_substr(temp->value, 1, ft_strlen(temp->value) - 2);
-		else
+		if (temp->type == ARGUMENT || temp->type == COMMAND
+			|| temp->type == INFILE || temp->type == OUTFILE)
+		{
 			s = ft_strdup(temp->value);
-		if (!s)
-			return (0);
-		if ((temp->type == DOUBLEQUOTE || temp->type == ARGUMENT)
-			&& ft_strlen(temp->value) > 1)
-			s = expansion(s, env, mem);
-		if (!s)
-			return (0);
-		free(temp->value);
-		temp->value = s;
-		if (temp->type == ARGUMENT
+			if (s && ft_strlen(s) > 1)
+				s = remove_quotes(s, env, mem);
+			if (!s)
+				return (0);
+			free(temp->value);
+			temp->value = s;
+		}
+		if ((temp->type == ARGUMENT || temp->type == OUTFILE)
 			&& ft_strchr(temp->value, '*') < ft_strlen(temp->value))
 			expand_from_wc(&temp);
 		temp = temp->next;

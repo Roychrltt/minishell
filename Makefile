@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/10 17:39:44 by xiaxu            ###   ########.fr        #
+#    Updated: 2024/09/11 17:03:16 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC_FILES = main.c \
 			parsing/tokens_to_list.c \
 			execute/execute.c \
 			execute/expand.c \
+			execute/remove_quotes.c \
 			execute/wildcards.c \
 			execute/utils.c \
 			execute/child.c \

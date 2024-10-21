@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 14:31:15 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 18:39:37 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@ int	get_fds(t_token *list, t_cmd *cmd, t_mem *mem)
 	return (1);
 }
 
+static void	close_file(t_cmd *cmd)
+{
+	if (cmd->infile > 0)
+		close(cmd->infile);
+	if (cmd->outfile > 0)
+		close(cmd->outfile);
+}
+
 static int	init_cmd(t_cmd *cmd, t_token *list, t_mem *mem)
 {
 	cmd->infile = -2;
@@ -64,7 +72,7 @@ static int	init_cmd(t_cmd *cmd, t_token *list, t_mem *mem)
 	if (!cmd->command)
 	{
 		mem->exit_stat = 127;
-		return (0);
+		return (close_file(cmd), 0);
 	}
 	return (1);
 }

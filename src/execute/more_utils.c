@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:35:18 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 14:37:32 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 16:19:24 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	count_args(t_token *list)
 	i = 0;
 	while (!is_end_command(temp))
 	{
-		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
-			|| temp->type == DOUBLEQUOTE)
+		if (temp->type == ARGUMENT)
 			i++;
 		temp = temp->next;
 	}
@@ -38,8 +37,7 @@ int	get_args(char ***args, t_token *list)
 	temp = list;
 	while (!is_end_command(temp))
 	{
-		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
-			|| temp->type == DOUBLEQUOTE || temp->type == COMMAND)
+		if (temp->type == ARGUMENT || temp->type == COMMAND)
 		{
 			(*args)[i] = ft_strdup(temp->value);
 			if (!(*args)[i])

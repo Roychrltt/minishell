@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/21 16:23:17 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 01:21:04 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 16:16:44 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int	ft_echo(t_token *arg, t_mem *mem)
 		temp = temp->next;
 	while (!is_end_command(temp))
 	{
-		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
-			|| temp->type == DOUBLEQUOTE)
+		if (temp->type == ARGUMENT)
 		{
 			if ((n && temp != arg->next->next) || (!n && temp != arg->next))
 				printf(" ");

@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 14:33:57 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 17:14:58 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,6 @@ typedef enum e_token_type
 	PIPE,
 	AND,
 	OR,
-	SINGLEQUOTE,
-	DOUBLEQUOTE,
 	COMMAND
 }	t_token_type;
 
@@ -170,6 +168,8 @@ void	free_env(t_env *env);
 // ---execute--- //
 
 int		expand(t_token **list, t_env *env, t_mem *mem);
+char	*expansion(char *str, t_env *env, t_mem *mem);
+char	*remove_quotes(char *str, t_env *env, t_mem *mem);
 void	expand_from_wc(t_token **token);
 int		command_check(t_token *list, t_mem *mem);
 int		get_fds(t_token *list, t_cmd *cmd, t_mem *mem);
