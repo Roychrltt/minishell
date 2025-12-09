@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/06 18:46:20 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 00:47:25 by xiaxu            ###   ########.fr       */
+/*   Updated: 2025/03/07 14:03:13 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,18 @@
 void	redirect(t_cmd *cmd)
 {
 	if (cmd->infile > STDIN_FILENO)
-	{
 		dup2(cmd->infile, STDIN_FILENO);
-		close(cmd->infile);
-	}
 	if (cmd->outfile > STDOUT_FILENO)
-	{
 		dup2(cmd->outfile, STDOUT_FILENO);
-		close(cmd->outfile);
-	}
 }
 
 static void	execute_builtins(t_token *list, t_cmd *cmd, t_mem *mem)
 {
 	do_builtins(list, mem);
-	if (cmd->infile > STDIN_FILENO)
+	/*if (cmd->infile > STDIN_FILENO)
 		close(cmd->infile);
 	if (cmd->outfile > STDOUT_FILENO)
-		close(cmd->outfile);
+		close(cmd->outfile);*/
 	free(cmd->command);
 	free_tab(cmd->args);
 	close(mem->saved_stdin);
@@ -58,12 +52,8 @@ static void	deal_pipe(t_cmd *cmd)
 {
 	close(cmd->fd[0]);
 	if (cmd->outfile <= STDOUT_FILENO)
-	{
 		dup2(cmd->fd[1], STDOUT_FILENO);
-		close(cmd->fd[1]);
-	}
-	else
-		close(cmd->fd[1]);
+	close(cmd->fd[1]);
 }
 
 void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
@@ -74,9 +64,14 @@ void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 	if (mem->pids[mem->index] == 0)
 	{
 		redirect(cmd);
+	//	fprintf(stderr, "infile: %d, fd[0]: %d\n", cmd->infile, cmd->fd[0]);
 		child_sig_init();
 		if (status == 1)
 			deal_pipe(cmd);
+		if (cmd->infile > STDIN_FILENO)
+			close(cmd->infile);
+		if (cmd->outfile > STDOUT_FILENO)
+			close(cmd->outfile);
 		if (is_builtins(cmd->command))
 			execute_builtins(list, cmd, mem);
 		else

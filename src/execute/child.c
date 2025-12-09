@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:41:50 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/09 23:49:49 by xiaxu            ###   ########.fr       */
+/*   Updated: 2025/03/07 14:03:07 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,11 @@ int	last_child(t_token *list, t_mem *mem)
 
 	if (!init_cmd(&cmd, list, mem))
 		return (0);
-	redirect(&cmd);
 	if (is_builtins(cmd.command))
+	{
+		redirect(&cmd);
 		do_builtins(list, mem);
+	}
 	else
 	{
 		mem->wait = 1;

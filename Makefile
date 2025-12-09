@@ -6,7 +6,7 @@
 #    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2024/09/10 17:39:44 by xiaxu            ###   ########.fr        #
+#    Updated: 2025/12/09 22:04:40 by xiaxu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,13 +45,13 @@ SRC_FILES = main.c \
 
 SRC = $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-#INC = -Iincludes/ -Ilibft 
+INC = -Iincludes/ -Ilibft 
 
-INC = -Iincludes/ -Ilibft -I/opt/homebrew/include
+#INC = -Iincludes/ -I/opt/homebrew/opt/readline/include \
 
-#LDFLAGS = -Llibft -lft -lreadline
+LDFLAGS = -Llibft -lft -lreadline
 
-LDFLAGS = -Llibft -lft -L/opt/homebrew/lib -lreadline
+#LDFLAGS = -Llibft -lft -L/opt/homebrew/lib -lreadline
 
 OBJ_DIR = .obj/
 
