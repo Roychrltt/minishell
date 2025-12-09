@@ -1,4 +1,4 @@
-###Minishell
+### Minishell
 
 A lightweight UNIX shell implementation inspired by bash.
 
@@ -10,9 +10,9 @@ Minishell is a simplified shell designed to replicate essential behavior of bash
 - Interactive prompt with command history
 - Command execution via fork, execve, and related system calls
 - Parsing with support for:
-  - Quotes (" and ')
+  - Quotes (``"`` and ``'``)
   - Pipes (|)
-  - Redirections (>, >>, <, <<)
+  - Redirections (``>``, ``>>``, ``<``, ``<<``)
 - Built-in commands:
   - cd
   - echo
@@ -26,9 +26,10 @@ Minishell is a simplified shell designed to replicate essential behavior of bash
 
 ## Compilation
 ``make``
+
 ``.minishell``
 
 ## Usage
 When launched, Minishell displays a prompt and waits for user input:
-``minishell$ echo hello
-hello``
+```minishell$ echo hello
+hello```
