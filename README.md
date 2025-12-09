@@ -11,7 +11,7 @@ Minishell is a simplified shell designed to replicate essential behavior of bash
 - Command execution via fork, execve, and related system calls
 - Parsing with support for:
   - Quotes (``"`` and ``'``)
-  - Pipes (|)
+  - Pipes (``|``)
   - Redirections (``>``, ``>>``, ``<``, ``<<``)
 - Built-in commands:
   - cd
@@ -31,5 +31,7 @@ Minishell is a simplified shell designed to replicate essential behavior of bash
 
 ## Usage
 When launched, Minishell displays a prompt and waits for user input:
-```minishell$ echo hello
-hello```
+```
+minishell$ echo hello
+hello
+```
