@@ -37,7 +37,9 @@ hello
 ```
 
 You can use pipelines and redirections:
-``minishell$ ls -l | grep .c > out.txt``
+```
+minishell$ ls -l | grep .c > out.txt
+```
 
 Here-documents:
 ```
