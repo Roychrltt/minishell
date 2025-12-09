@@ -35,3 +35,19 @@ When launched, Minishell displays a prompt and waits for user input:
 minishell$ echo hello
 hello
 ```
+
+You can use pipelines and redirections:
+``minishell$ ls -l | grep .c > out.txt``
+
+Here-documents:
+```
+minishell$ cat << EOF
+> hello
+> EOF
+hello
+```
+
+## Signal Behavior
+- ``ctrl-C`` prints a new prompt
+- ``ctrl-D`` exits the shell
+- ``ctrl-/`` is ignored in interactive mode
