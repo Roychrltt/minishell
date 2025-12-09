@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/24 15:00:37 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 16:05:35 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 18:24:31 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,20 +89,20 @@ static int	check_cd(t_token *token)
 	t_token	*temp;
 
 	temp = token->next;
-	if (is_end_command(token))
+	if (is_end_command(temp))
 	{
 		printf("minishell: cd: too few arguments\n");
 		return (0);
 	}
-	if (chdir(token->value) == -1 && (is_end_command(token->next)))
+	if (chdir(temp->value) == -1 && (is_end_command(temp->next)))
 	{
-		printf("minishell: cd : %s: No such file or directory\n", token->value);
+		printf("minishell: cd : %s: no such file or directory\n", temp->value);
 		return (0);
 	}
+	temp = temp->next;
 	while (!is_end_command(temp))
 	{
-		if (temp->type == ARGUMENT || temp->type == SINGLEQUOTE
-			|| temp->type == DOUBLEQUOTE)
+		if (temp->type == ARGUMENT)
 		{
 			printf("minishell: cd: too many arguments\n");
 			return (0);
@@ -114,7 +114,7 @@ static int	check_cd(t_token *token)
 
 int	ft_cd(t_token *arg, t_mem *mem)
 {
-	if (!check_cd(arg->next))
+	if (!check_cd(arg))
 	{
 		mem->exit_stat = 1;
 		return (0);

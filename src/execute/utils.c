@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/18 16:36:30 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/06 23:51:04 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 14:31:38 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	open_here_doc(void)
 	return (fd);
 }
 
-int	open_file(char *file, int n)
+int	open_file(char *file, int n, t_mem *mem)
 {
 	int	fd;
 
@@ -68,7 +68,7 @@ int	open_file(char *file, int n)
 			perror("Outfile open failure");
 	}
 	else
-		fd = get_here_doc_input(file);
+		fd = get_here_doc_input(file, mem);
 	return (fd);
 }
 

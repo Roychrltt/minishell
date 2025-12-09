@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   baby_sitter.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/06 18:46:20 by xiaxu             #+#    #+#             */
-/*   Updated: 2025/03/07 14:03:13 by xiaxu            ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "../../includes/minishell.h"
 
 void	redirect(t_cmd *cmd)
@@ -76,7 +64,7 @@ void	do_command(t_token *list, t_cmd *cmd, t_mem *mem, int status)
 			execute_builtins(list, cmd, mem);
 		else
 		{
-			if (execve(cmd->command, cmd->args, mem->envp) == -1)
+			if (execve(cmd->command, cmd->args, mem->envp))
 				clear_execve(cmd, mem);
 		}
 	}

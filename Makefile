@@ -1,15 +1,3 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/08/07 12:18:43 by xiaxu             #+#    #+#              #
-#    Updated: 2025/12/09 22:04:40 by xiaxu            ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell
 
 CC = cc 
@@ -37,6 +25,7 @@ SRC_FILES = main.c \
 			parsing/tokens_to_list.c \
 			execute/execute.c \
 			execute/expand.c \
+			execute/remove_quotes.c \
 			execute/wildcards.c \
 			execute/utils.c \
 			execute/child.c \

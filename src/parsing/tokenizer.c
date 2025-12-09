@@ -106,7 +106,7 @@ char	**tokenizer(char *str, t_mem *mem)
 	while (str[mem->i])
 	{
 		mem->j = 0;
-		while (str[mem->i] == ' ')
+		while (str[mem->i] == ' ' || str[mem->i] == '\t')
 			mem->i++;
 		quote_skip2(str, mem);
 		tokenizer_help(str, tokens, mem);

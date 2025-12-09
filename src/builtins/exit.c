@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:52:24 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/10 17:19:56 by xiaxu            ###   ########.fr       */
+/*   Updated: 2024/09/11 16:17:46 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,9 @@ int	ft_exit(t_token *arg, t_mem *mem)
 	n = 0;
 	while (!is_end_command(temp))
 	{
-		if ((temp->type == ARGUMENT || temp->type == SINGLEQUOTE
-				|| temp->type == DOUBLEQUOTE) && n == 0)
+		if ((temp->type == ARGUMENT) && n == 0)
 			deal_exit(&n, temp->value, mem);
-		else if ((temp->type == ARGUMENT || temp->type == SINGLEQUOTE
-				|| temp->type == DOUBLEQUOTE) && n == 1)
+		else if ((temp->type == ARGUMENT) && n == 0)
 		{
 			ft_putstr_fd("minishell: exit: too many arguments\n", 2);
 			mem->exit_stat = 1;
