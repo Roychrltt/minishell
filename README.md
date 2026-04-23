@@ -1,10 +1,10 @@
-### Minishell
+### 🐚 Minishell
 
-A lightweight UNIX shell implementation inspired by bash.
+A lightweight UNIX shell implementation inspired by bash. 💻
 
-## Overview
+## 🔎 Overview
 
-Minishell is a simplified shell designed to replicate essential behavior of bash, including command parsing, environment variable handling, pipelines, redirections, and built-in commands.
+Minishell is a simplified shell designed to replicate essential behavior of bash, including command parsing, environment variable handling, pipelines, redirections, and built-in commands. 🛠️
 
 ## Features
 - Interactive prompt with command history
