@@ -6,7 +6,7 @@
 /*   By: xiaxu <xiaxu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 12:45:48 by xiaxu             #+#    #+#             */
-/*   Updated: 2024/09/11 17:14:58 by xiaxu            ###   ########.fr       */
+/*   Updated: 2026/04/23 12:38:33 by xiaxu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include "../libft/libft.h"
-
+#define CYAN    "\033[0;36m"
+#define MAGENTA "\033[0;35m"
+#define RESET   "\033[0m"
 extern pid_t	g_pid;
 
 typedef enum e_token_type

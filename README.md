@@ -5,6 +5,7 @@ A lightweight UNIX shell implementation inspired by bash. 💻
 ## 🔎 Overview
 
 Minishell is a simplified shell designed to replicate essential behavior of bash, including command parsing, environment variable handling, pipelines, redirections, and built-in commands. 🛠️
+![banner](images/begin.png)
 
 ## Features
 - Interactive prompt with command history
@@ -48,6 +49,7 @@ minishell$ cat << EOF
 > EOF
 hello
 ```
+![show](images/show.gif)
 
 ## Signal Behavior
 - ``ctrl-C`` prints a new prompt
