@@ -1,4 +1,4 @@
-### 🐚 Minishell
+# 🐚 Minishell
 
 A lightweight UNIX shell implementation inspired by bash. 💻
 
