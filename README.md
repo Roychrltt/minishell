@@ -49,7 +49,7 @@ minishell$ cat << EOF
 > EOF
 hello
 ```
-![show](images/show.gif)
+![case](images/case.gif)
 
 ## Signal Behavior
 - ``ctrl-C`` prints a new prompt
